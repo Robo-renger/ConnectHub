@@ -1,0 +1,22 @@
+[ {
+  "id" : 0,
+  "email" : "john.doe@example.com",
+  "username" : "Johns Doe",
+  "password" : "12345",
+  "dateOfBirth" : "1995-05-15",
+  "status" : "offline"
+}, {
+  "id" : 0,
+  "email" : "john.doe@example.com",
+  "username" : "Johns Doe",
+  "password" : "12345",
+  "dateOfBirth" : "1995-05-15",
+  "status" : "offline"
+}, {
+  "id" : 0,
+  "email" : "john.doe@example.com",
+  "username" : "Johns Doe",
+  "password" : "12345",
+  "dateOfBirth" : "1995-05-15",
+  "status" : "offline"
+} ]
