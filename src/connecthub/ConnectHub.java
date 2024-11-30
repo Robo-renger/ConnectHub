@@ -15,7 +15,7 @@ public class ConnectHub {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.err.println("test");
+        System.err.println("test tany");
     }
     
 }
