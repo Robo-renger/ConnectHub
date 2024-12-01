@@ -7,6 +7,7 @@ import connecthub.entities.User;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class UserMapper {
 
@@ -14,15 +15,30 @@ public class UserMapper {
     private static final String DATABASE_FILE = "users.json";
 
     static {
-        // Set the database file for DataBaseManager during class loading
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+        // Set the database file for DataBaseManager during class loading
     }
 
-    // Retrieve a single user by email
+    // Retrieve a single user by id
+    public static Optional<User> get(List<Predicate<User>> filters) {
+        try {
+            List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
+            });
+
+            return users.stream()
+                    .filter(user -> filters.stream().allMatch(filter -> filter.test(user))) // Apply all filters
+                    .findFirst();  // Return the first matching user
+        } catch (IOException e) {
+            System.out.println("Error retrieving user: " + e.getMessage());
+            return Optional.empty();
+        }
+    }
+
     public static Optional<User> get(int userId) {
         try {
-            List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {});
-            return users.stream().filter(user -> user.getEmail().equals(userId)).findFirst();
+            List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
+            });
+            return users.stream().filter(user -> user.getID() == userId).findFirst();
         } catch (IOException e) {
             System.out.println("Error retrieving user: " + e.getMessage());
             return Optional.empty();
@@ -31,8 +47,11 @@ public class UserMapper {
 
     // Retrieve all users
     public static List<User> getAll() {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+//        System.out.println("aloooo");
         try {
-            return DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {});
+            return DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
+            });
         } catch (IOException e) {
             System.out.println("Error retrieving all users: " + e.getMessage());
             return List.of(); // Return an empty list on failure
@@ -49,9 +68,10 @@ public class UserMapper {
     }
 
     // Delete a user by email
-    public static boolean delete(String email) {
+    public static boolean delete(int id) {
         try {
-            return DataBaseManager.getDBM().deleteEntity(new TypeReference<List<User>>() {}, user -> user.getEmail().equals(email));
+            return DataBaseManager.getDBM().deleteEntity(new TypeReference<List<User>>() {
+            }, user -> user.getID() == id);
         } catch (IOException e) {
             System.out.println("Error deleting user: " + e.getMessage());
             return false;
@@ -59,12 +79,20 @@ public class UserMapper {
     }
 
     // Update an existing user
-    public static boolean update(User updatedUser) {
+    public static boolean update(int id, User updatedUser) {
         try {
-            return DataBaseManager.getDBM().updateEntity(new TypeReference<List<User>>() {}, updatedUser, user -> user.getEmail().equals(updatedUser.getEmail()));
+            updatedUser.setID(id);
+
+            return DataBaseManager.getDBM().updateEntity(
+                    new TypeReference<List<User>>() {
+            },
+                    updatedUser,
+                    user -> user.getID() == id
+            );
         } catch (IOException e) {
             System.out.println("Error updating user: " + e.getMessage());
             return false;
         }
     }
+
 }

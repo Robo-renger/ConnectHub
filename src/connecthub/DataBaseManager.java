@@ -1,4 +1,5 @@
 package connecthub;
+
 import connecthub.interfaces.Identifiable;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,24 +30,32 @@ public class DataBaseManager {
     }
 
     public void setDataBaseFile(String MapperDBFile) {
+        System.out.println("db set to " + MapperDBFile);
         this.dbFile = MapperDBFile;
     }
 
     private void initializeDatabase() {
-        File file = new File(dbFile);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-                objectMapper.writeValue(file, new ArrayList<>()); // Initialize with an empty list
-            } catch (IOException e) {
-                System.out.println("Error initializing database: " + e.getMessage());
+        System.out.println(dbFile);
+        try {
+            File file = new File(dbFile);
+            if (!file.exists()) {
+                try {
+                    file.createNewFile();
+                    objectMapper.writeValue(file, new ArrayList<>()); // Initialize with an empty list
+                } catch (IOException e) {
+                    System.out.println("Error initializing database: " + e.getMessage());
+                }
             }
+        } catch (NullPointerException e) {
+//            System.out.println("");
         }
+
     }
 
     // Create: Add a new entity to the database, automatically generating and setting an ID
     public <T extends Identifiable> void createEntityWithID(T entity) throws IOException {
-        List<T> entities = readEntities(new TypeReference<List<T>>() {});
+        List<T> entities = readEntities(new TypeReference<List<T>>() {
+        });
         int latestId = getLatestID(entities);
         entity.setID(latestId + 1); // Increment ID by one
         entities.add(entity);

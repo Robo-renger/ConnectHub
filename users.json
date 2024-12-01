@@ -1,22 +1,41 @@
-[ {
-  "id" : 0,
-  "email" : "john.doe@example.com",
-  "username" : "Johns Doe",
-  "password" : "12345",
-  "dateOfBirth" : "1995-05-15",
-  "status" : "offline"
-}, {
-  "id" : 0,
-  "email" : "john.doe@example.com",
-  "username" : "Johns Doe",
-  "password" : "12345",
-  "dateOfBirth" : "1995-05-15",
-  "status" : "offline"
-}, {
-  "id" : 0,
-  "email" : "john.doe@example.com",
-  "username" : "Johns Doe",
-  "password" : "12345",
-  "dateOfBirth" : "1995-05-15",
-  "status" : "offline"
-} ]
+  [ {
+    "id" : 9,
+    "email" : "roborenger72@gmail.com",
+    "username" : "Ziad",
+    "password" : "p31/peptRrJC9SU2P78QAXPEgF48yQW6aeKpvDyuoEM=",
+    "dateOfBirth" : [ 2003, 10, 26 ],
+    "status" : "offline",
+    "type" : "User"
+  }, {
+    "id" : 11,
+    "email" : "roborenger72@gmail.com",
+    "username" : "Ziad",
+    "password" : "SvkFrcrXM4UtSUlQLRERf0teUwNOHj8clGBeCwx6cWI=",
+    "dateOfBirth" : [ 2003, 10, 26 ],
+    "status" : "offline",
+    "type" : "User"
+  }, {
+    "id" : 13,
+    "email" : "roborenger72@gmail.com",
+    "username" : "Ziad",
+    "password" : "dUawmY38FPasBuVMn2wUjJcdVdBr/pcougxadU0bOvU=",
+    "dateOfBirth" : [ 2003, 10, 26 ],
+    "status" : "offline",
+    "type" : "User"
+  }, {
+    "id" : 14,
+    "email" : "roborenger72@gmail.com",
+    "username" : "Ziad",
+    "password" : "p40sQ2FDc+c2/kkHjPe6tFZvIlBq9Rj0i/vmPnfOc8k=",
+    "dateOfBirth" : [ 2003, 10, 26 ],
+    "status" : "offline",
+    "type" : "User"
+  }, {
+    "id" : 15,
+    "email" : "roborenger72@gmail.com",
+    "username" : "Ziad",
+    "password" : "UOqo2TMv6vVNaOgULsu6FVG7NcyyjKMR+KABHv95EnM=",
+    "dateOfBirth" : [ 2003, 10, 26 ],
+    "status" : "offline",
+    "type" : "User"
+  }]

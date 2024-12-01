@@ -1,5 +1,6 @@
 package connecthub.entities;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import connecthub.*;
 import java.time.LocalDate;
 
@@ -9,15 +10,25 @@ import java.security.spec.InvalidKeySpecException;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
+@JsonTypeName("User") // Matches the type name in @JsonSubTypes
 public class User implements Identifiable {
 
     private int id;
     private String email;
     private String username;
     private String password;
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateOfBirth;
+
     private String status;
+    private static final String type = "User";
 
     public User() {
         // Default constructor for Jackson
@@ -87,5 +98,9 @@ public class User implements Identifiable {
         } catch (InvalidKeySpecException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public String getType() {
+        return User.type;
     }
 }
