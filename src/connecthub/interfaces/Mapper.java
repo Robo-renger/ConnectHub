@@ -6,13 +6,14 @@ import connecthub.entities.User;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+
 //UTILITY INTERFACE
 
 public interface Mapper<T, ID> {
 
     // Get the database file for this entity
-    String getDatabaseFile();
-
+    void setDataBaseFile();
+    
     // Retrieve a single entity using entity properties
     Optional<T> get(List<Predicate<User>> filters);
 

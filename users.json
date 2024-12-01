@@ -38,4 +38,5 @@
     "dateOfBirth" : [ 2003, 10, 26 ],
     "status" : "offline",
     "type" : "User"
-  }]
+  }
+]
