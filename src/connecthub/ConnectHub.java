@@ -44,11 +44,12 @@ public class ConnectHub {
         //Update User using ID
         User updatedUser = new User("roborenger72@gmail.com", "sha3boly", "12341231", LocalDate.of(2003, 10, 26));
         UserMapper.update(12,updatedUser);
-
+        
         //Retrieve User by Filters
         Predicate<User> filterByEmail = user -> user.getEmail().equals("roborenger72@gmail.com");
         Predicate<User> filterByStatus = user -> user.getStatus().equals("offline");
         Predicate<User> filterById = user -> user.getID() == 15;
+        
         List<Predicate<User>> filters = List.of(filterByEmail, filterByStatus, filterById);
 
         // Retrieve the user based on the filters

@@ -22,7 +22,6 @@ public class FileHandler {
         this.objectMapper = new ObjectMapper();
         this.objectMapper.registerModule(new JavaTimeModule());
         this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
         File file = new File(fileName);
         if (!file.exists() || file.length() == 0) {
             try {

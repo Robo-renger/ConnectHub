@@ -33,7 +33,6 @@ public class PasswordHasher {
         byte[] hashedPassword = factory.generateSecret(spec).getEncoded();
         return Base64.getEncoder().encodeToString(hashedPassword);
     }
-
     // Verify a password by comparing it with a stored hash
     public static boolean verifyPassword(String password, String hashedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException {
         String hashedInputPassword = hashPassword(password);
