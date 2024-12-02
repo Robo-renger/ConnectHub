@@ -1,0 +1,15 @@
+[ {
+  "id" : 3,
+  "userID" : 9,
+  "bio" : "Hello, world!",
+  "profilePhotoPath" : "new/path/profile.jpg",
+  "coverPhotoPath" : "new/path/cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 2,
+  "userID" : 11,
+  "bio" : "Updated Bio",
+  "profilePhotoPath" : "new/path/profile.jpg",
+  "coverPhotoPath" : "new/path/cover.jpg",
+  "type" : "Profile"
+} ]
