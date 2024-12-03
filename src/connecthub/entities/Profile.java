@@ -13,8 +13,9 @@ public class Profile implements Identifiable {
     private String profilePhotoPath;
     private String coverPhotoPath;
     private static final String TYPE = "Profile";
-
-    public Profile() {}
+    
+//    Default constructor for Jackson
+    public Profile() {} 
 
     public Profile(int userID, String bio, String profilePhotoPath, String coverPhotoPath) {
         this.userID = userID;

@@ -7,10 +7,16 @@ package connecthub;
 import connecthub.entities.User;
 import connecthub.mappers.UserMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
+import connecthub.entities.Content;
+import connecthub.entities.Post;
 import connecthub.entities.Profile;
+import connecthub.entities.Story;
+import connecthub.mappers.ContentMapper;
 import connecthub.mappers.ProfileMapper;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -51,10 +57,10 @@ public class ConnectHub {
 //        testRetrieveUserById();
 
 //        System.out.println(Validator.validate(0, "user123@gmail.com"));
-//        System.out.println(Validator.validate(0, "User123@GMAIL.com"));  
+//        System.out.println(Validator.validate(0, "User123@GMAIL.com"));
 
         // ########### Profile test cases ###########
-
+        
         // Test Case 1: Create a new profile
 //        testCreateProfile();
 
@@ -76,8 +82,34 @@ public class ConnectHub {
         // Test Case 7: Handle empty database
 //        testEmptyDatabase();
 
+        // ########### Content test cases ###########  
+        
+        // Test Case 1: Create a new post
+//          testCreatePost();
+
+        // Test Case 2: Create a new story
+//        testCreateStory();
+
+        // Test Case 3: Retrieve all content
+//        testGetAllContent();
+
+        // Test Case 4: Update an existing post
+//        testUpdatePost();
+
+        // Test Case 5: Delete a post by ID
+//        testDeletePost();
+
+        // Test Case 6: Retrieve a post by ID
+//        testRetrievePostById();
+
+        // Test Case 7: Retrieve a story by ID
+//        testRetrieveStoryById();
+
+        // Test Case 8: Test expiration logic for story
+//        testStoryExpiration();
+
     }
-    
+
     // ########### User test cases ###########  
     
     private static void testCreateUser() {
@@ -93,8 +125,8 @@ public class ConnectHub {
         if (usersList.isEmpty()) {
             System.out.println("No users found.");
         } else {
-            usersList.forEach(user -> System.out.println("ID: " + user.getID() + " Name: " + user.getUsername() +
-                    ", Email: " + user.getEmail() + " Password: " + user.getPassword() + " Date: " + user.getDateOfBirth()));
+            usersList.forEach(user -> System.out.println("ID: " + user.getID() + " Name: " + user.getUsername()
+                    + ", Email: " + user.getEmail() + " Password: " + user.getPassword() + " Date: " + user.getDateOfBirth()));
         }
     }
 
@@ -126,7 +158,7 @@ public class ConnectHub {
                 () -> System.out.println("No user found with the given filters.")
         );
     }
-    
+
     private static void testRetrieveUserById() {
         System.out.println("Running Test Case 6: Retrieve User by ID");
         Optional<User> userByID = UserMapper.get(15);
@@ -135,10 +167,10 @@ public class ConnectHub {
                 () -> System.out.println("No user found with the given ID.")
         );
     }
+
+    // ########### Profile test cases ###########
     
-    // ########### Profile test cases ###########    
-    
-     private static void testCreateProfile() {
+    private static void testCreateProfile() {
         System.out.println("Running Test Case 1: Create Profile");
         Profile profile = new Profile(1, "Hello, world!", "path/to/profile.jpg", "path/to/cover.jpg");
         ProfileMapper.create(profile);
@@ -205,4 +237,101 @@ public class ConnectHub {
             System.out.println("Unexpected data found in empty database.");
         }
     }
+
+    // ########### Content test cases ###########
+    
+    private static void testCreatePost() {
+        System.out.println("Running Test Case 1: Create Post");
+        Post newPost = new Post(1, "This is a test post.");
+        ContentMapper.create(newPost);
+        System.out.println("Post created successfully.");
+    }
+
+    private static void testCreateStory() {
+        System.out.println("Running Test Case 2: Create Story");
+        Story newStory = new Story(2, "This is a test story.");
+        ContentMapper.create(newStory);
+        System.out.println("Story created successfully.");
+    }
+
+    private static void testGetAllContent() {
+        System.out.println("Running Test Case 3: Get All Content");
+        List<Content> contentList = ContentMapper.getAll();
+        if (contentList.isEmpty()) {
+            System.out.println("No content found.");
+        } else {
+            contentList.forEach(content -> System.out.println("ID: " + content.getID() + " Content: " + content.getContent()));
+        }
+    }
+
+    private static void testUpdatePost() {
+        System.out.println("Running Test Case 4: Update Post");
+        Post updatedPost = new Post(1, "Updated content for post.");
+        ContentMapper.update(1, updatedPost);
+        System.out.println("Post updated successfully.");
+    }
+
+    private static void testDeletePost() {
+        System.out.println("Running Test Case 5: Delete Post");
+        ContentMapper.delete(1);
+        System.out.println("Post deleted successfully.");
+    }
+
+    private static void testRetrievePostById() {
+        System.out.println("Running Test Case 6: Retrieve Post by ID");
+        Optional<Content> contentOptional = ContentMapper.get(3); // This returns Optional<Content>
+
+        contentOptional.ifPresentOrElse(
+                content -> {
+                    if (content instanceof Post) {
+                        Post post = (Post) content;
+                        System.out.println("Post found: " + post.getContent());
+                    } else {
+                        System.out.println("Found content is not a Post.");
+                    }
+                },
+                () -> System.out.println("No content found with the given ID.")
+        );
+    }
+
+    private static void testRetrieveStoryById() {
+        System.out.println("Running Test Case 7: Retrieve Story by ID");
+        Optional<Content> contentOptional = ContentMapper.get(2); // This returns Optional<Content>
+
+        contentOptional.ifPresentOrElse(
+                content -> {
+                    if (content instanceof Story) {
+                        Story story = (Story) content;
+                        System.out.println("Story found: " + story.getContent());
+                    } else {
+                        System.out.println("Found content is not a Story.");
+                    }
+                },
+                () -> System.out.println("No content found with the given ID.")
+        );
+    }
+
+    private static void testStoryExpiration() {
+        System.out.println("Running Test Case 8: Test Story Expiration");
+//        Story story = new Story(3, "Story that should expire.");
+//        story.setTimestamp(LocalDateTime.now().minus(25, ChronoUnit.HOURS));  // Set story's timestamp to 25 hours ago
+
+        Optional<Content> contentOptional = ContentMapper.get(1); // This returns Optional<Content>
+
+        contentOptional.ifPresentOrElse(
+                content -> {
+                    if (content instanceof Story) {
+                        if (content.isExpired()) {
+                            System.out.println("Story expired as expected.");
+                        } else {
+                            System.out.println("Story did not expire as expected.");
+                        }
+                    } else {
+                        System.out.println("Found content is not a Story.");
+                    }
+                },
+                () -> System.out.println("No content found with the given ID.")
+        );
+    }
+
 }
