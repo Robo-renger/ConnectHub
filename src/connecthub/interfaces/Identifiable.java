@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 )
 @JsonSubTypes({
     @JsonSubTypes.Type(value = connecthub.entities.User.class, name = "User"), // User entity
+    @JsonSubTypes.Type(value = connecthub.entities.Profile.class, name = "Profile"), // Profile entity
 //    @JsonSubTypes.Type(value = connecthub.entities.Admin.class, name = "Admin"), // Example Admin entity
 //    @JsonSubTypes.Type(value = connecthub.entities.Customer.class, name = "Customer") // Example Customer entity
 })
