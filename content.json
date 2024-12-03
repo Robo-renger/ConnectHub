@@ -40,4 +40,18 @@
   "timestamp" : [ 2024, 12, 3, 21, 12, 54, 730562600 ],
   "expired" : false,
   "type" : "Story"
+}, {
+  "id" : 8,
+  "authorId" : 1,
+  "content" : "This is a test post.",
+  "timestamp" : [ 2024, 12, 3, 21, 40, 51, 670333700 ],
+  "expired" : false,
+  "type" : "Post"
+}, {
+  "id" : 9,
+  "authorId" : 2,
+  "content" : "This is a test story.",
+  "timestamp" : [ 2024, 12, 3, 21, 40, 55, 542315200 ],
+  "expired" : false,
+  "type" : "Story"
 } ]
