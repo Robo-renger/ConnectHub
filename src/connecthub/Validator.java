@@ -1,9 +1,5 @@
 package connecthub;
 
-/**
- *
- * @author Mohamed Hossam
- */
 public class Validator {
     private static final String EMAIL_REGEX = "^[a-z0-9]+@[a-z]+\\.[a-z]+$";
     
