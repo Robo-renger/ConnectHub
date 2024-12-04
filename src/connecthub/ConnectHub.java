@@ -8,10 +8,13 @@ import connecthub.entities.User;
 import connecthub.mappers.UserMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import connecthub.entities.Content;
+import connecthub.entities.Friend;
+import connecthub.entities.FriendRequest;
 import connecthub.entities.Post;
 import connecthub.entities.Profile;
 import connecthub.entities.Story;
 import connecthub.mappers.ContentMapper;
+import connecthub.mappers.FriendMapper;
 import connecthub.mappers.ProfileMapper;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -108,6 +111,31 @@ public class ConnectHub {
         // Test Case 8: Test expiration logic for story
 //        testStoryExpiration();
 
+    // ########### Friend Management Test Cases ###########
+
+     FriendsManager friendsManager = new FriendsManager();
+        
+        // Test Case 1: Send a friend request
+//        testSendFriendRequest(friendsManager);
+
+        // Test Case 2: Accept a friend request
+//        testAcceptFriendRequest(friendsManager);
+
+        // Test Case 3: Reject a friend request
+//        testRejectFriendRequest(friendsManager);
+
+        // Test Case 4: Block a user
+//        testBlockUser(friendsManager);
+
+        // Test Case 5: Get all friends
+//        testGetFriends(friendsManager);
+
+        // Test Case 6: Get all friend requests
+//        testGetFriendRequests(friendsManager);
+
+        // Test Case 7: Get all blocked users
+//        testGetBlockedUsers(friendsManager);
+    
     }
 
     // ########### User test cases ###########  
@@ -333,5 +361,67 @@ public class ConnectHub {
                 () -> System.out.println("No content found with the given ID.")
         );
     }
+    
+    // ########### Friends Management test cases ###########
+    // Test Case 1: Send a friend request
+    public static void testSendFriendRequest(FriendsManager friendsManager) {
+        System.out.println("Test Case 1: Send a friend request");
+        friendsManager.sendFriendRequest(4, 5);  // Sender ID: 1, Receiver ID: 2
+        System.out.println("Friend request sent from User 1 to User 2");
+    }
 
+    // Test Case 2: Accept a friend request
+    public static void testAcceptFriendRequest(FriendsManager friendsManager) {
+        System.out.println("Test Case 2: Accept a friend request");
+        
+        // Assuming that a friend request from User 1 to User 2 exists in the list
+        FriendRequest request = friendsManager.getFriendRequests().get(0); // Get first request
+        friendsManager.acceptFriendRequest(request);
+        System.out.println("Friend request from User 1 to User 2 accepted");
+    }
+
+    // Test Case 3: Reject a friend request
+    public static void testRejectFriendRequest(FriendsManager friendsManager) {
+        System.out.println("Test Case 3: Reject a friend request");
+        
+        // Assuming a second friend request exists
+        FriendRequest request = friendsManager.getFriendRequests().get(0); // Get second request
+        friendsManager.rejectFriendRequest(request);
+        System.out.println("Friend request from User 2 to User 3 rejected");
+    }
+
+    // Test Case 4: Block a user
+    public static void testBlockUser(FriendsManager friendsManager) {
+        System.out.println("Test Case 4: Block a user");
+
+        // Block User 2 by User 1
+        friendsManager.blockUser(6, 9);
+        System.out.println("User X blocked User Y");
+
+        // Block User 3 by User 1 (testing prevention of duplicate blocks)
+//        friendsManager.blockUser(9, 13);
+//        System.out.println("User 1 blocked User 3");
+
+        // Block User 2 by User 1 again (should prevent duplicate block)
+//        friendsManager.blockUser(9, 13);
+//        System.out.println("Attempt to block User 2 again (duplicate block prevented)");
+    }
+
+    // Test Case 5: Get all friends
+    public static void testGetFriends(FriendsManager friendsManager) {
+        System.out.println("Test Case 5: Get all friends");
+        friendsManager.getFriends().forEach(friend -> System.out.println("Friend: User " + friend.getUserId() + " and User " + friend.getFriendId()));
+    }
+
+    // Test Case 6: Get all friend requests
+    public static void testGetFriendRequests(FriendsManager friendsManager) {
+        System.out.println("Test Case 6: Get all friend requests");
+        friendsManager.getFriendRequests().forEach(request -> System.out.println("Friend Request: " + request.getSenderId() + " to " + request.getReceiverId()));
+    }
+
+    // Test Case 7: Get all blocked users
+    public static void testGetBlockedUsers(FriendsManager friendsManager) {
+        System.out.println("Test Case 7: Get all blocked users");
+        friendsManager.getBlocks().forEach(block -> System.out.println("Blocked: User " + block.getUserId() + " blocked User " + block.getBlockedId()));
+    }
 }
