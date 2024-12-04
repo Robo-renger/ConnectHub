@@ -4,17 +4,20 @@
  */
 package Frontend;
 
+import connecthub.entities.User;
+
 /**
  *
  * @author Mahinour Mohamed
  */
 public class AddStory extends javax.swing.JFrame {
-
+     User u;
     /**
      * Creates new form AddStory
      */
-    public AddStory() {
+    public AddStory(User u) {
         initComponents();
+        this.u=u;
     }
 
     /**

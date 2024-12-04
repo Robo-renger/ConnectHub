@@ -1,9 +1,14 @@
 package Frontend;
 
 public class FirstPage extends javax.swing.JFrame {
-
-    public FirstPage() {
+     private static FirstPage f=null;
+    private FirstPage() {
         initComponents();
+    }
+    public static FirstPage getInstanceOf(){
+        if(f==null)
+            new FirstPage();
+        return f;
     }
 
     @SuppressWarnings("unchecked")
@@ -73,14 +78,14 @@ public class FirstPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void signinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinActionPerformed
-        Login l = new Login(this);
+        Login l = new Login();
         l.setVisible(true);
         l.setLocationRelativeTo(null);
         setVisible(false);
     }//GEN-LAST:event_signinActionPerformed
 
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
-        SignUp s = new SignUp(this);
+        SignUp s = new SignUp();
         s.setVisible(true);
         s.setLocationRelativeTo(null);
         setVisible(false);

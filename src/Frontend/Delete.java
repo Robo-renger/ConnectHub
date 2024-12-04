@@ -4,21 +4,29 @@
  */
 package Frontend;
 
+import connecthub.entities.Content;
+import connecthub.entities.Profile;
 import connecthub.entities.User;
+import connecthub.mappers.ContentMapper;
+import connecthub.mappers.ProfileMapper;
+import connecthub.mappers.UserMapper;
+import java.util.List;
 
 /**
  *
  * @author Mahinour Mohamed
  */
-public class Logout extends javax.swing.JFrame {
+public class Delete extends javax.swing.JFrame {
     User u;
+    Profile p;
     Login l;
     /**
-     * Creates new form Logout
+     * Creates new form Delete
      */
-    public Logout(User u,Login l) {
+    public Delete(User u,Profile p,Login l) {
         initComponents();
         this.u=u;
+        this.p=p;
         this.l=l;
     }
 
@@ -32,10 +40,10 @@ public class Logout extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        logout = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Logout");
+        setTitle("Delete Account");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -43,15 +51,15 @@ public class Logout extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Ebrima", 1, 24)); // NOI18N
-        jLabel1.setText("Are you sure to logout");
+        jLabel1.setText("Are you sure to delete this account");
 
-        logout.setBackground(new java.awt.Color(204, 0, 0));
-        logout.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
-        logout.setForeground(new java.awt.Color(255, 255, 255));
-        logout.setText("Logout");
-        logout.addActionListener(new java.awt.event.ActionListener() {
+        delete.setBackground(new java.awt.Color(204, 0, 0));
+        delete.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        delete.setForeground(new java.awt.Color(255, 255, 255));
+        delete.setText("Delete");
+        delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logoutActionPerformed(evt);
+                deleteActionPerformed(evt);
             }
         });
 
@@ -60,50 +68,54 @@ public class Logout extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(134, 134, 134)
-                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(34, 34, 34))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(157, 157, 157)
+                .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(80, 80, 80)
                 .addComponent(jLabel1)
-                .addGap(44, 44, 44)
-                .addComponent(logout)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addComponent(delete)
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        FrontProfile f=FrontProfile.getInstanceOf();
-       f.setVisible(true);
-       f.setLocation(null);
-       setVisible(false);
+      FrontProfile f= FrontProfile.getInstanceOf();
+      f.setVisible(true);
+      f.setLocation(null);
+      setVisible(false);
         
     }//GEN-LAST:event_formWindowClosing
 
-    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
-        u.setStatus("offline");
-        l.setVisible(true);
-        l.setLocation(null);
-        setVisible(false);
-    }//GEN-LAST:event_logoutActionPerformed
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+       UserMapper.delete(u.getID());
+       ProfileMapper.delete(u.getID());
+        List<Content>cont=ContentMapper.getAll();
+        for (int i = 0; i < cont.size(); i++) {
+            if(cont.get(i).getAuthorId()==u.getID())
+                ContentMapper.delete(cont.get(i).getID());
+        }
+       l.setVisible(true);
+       l.setLocation(null);
+       setVisible(false);
+    }//GEN-LAST:event_deleteActionPerformed
 
     /**
      * @param args the command line arguments
      */
     
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton delete;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JButton logout;
     // End of variables declaration//GEN-END:variables
 }

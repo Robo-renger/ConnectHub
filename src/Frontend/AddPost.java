@@ -1,9 +1,12 @@
 package Frontend;
 
-public class AddPost extends javax.swing.JFrame {
+import connecthub.entities.User;
 
-    public AddPost() {
+public class AddPost extends javax.swing.JFrame {
+     User u;
+    public AddPost(User u) {
         initComponents();
+        this.u=u;
     }
 
     @SuppressWarnings("unchecked")

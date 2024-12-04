@@ -1,6 +1,8 @@
 package Frontend;
 
+import connecthub.entities.Profile;
 import connecthub.entities.User;
+import connecthub.mappers.ProfileMapper;
 import connecthub.mappers.UserMapper;
 import java.awt.HeadlessException;
 import java.util.Arrays;
@@ -9,11 +11,11 @@ import java.util.function.Predicate;
 
 public class Login extends javax.swing.JFrame {
 
-    FirstPage f;
+    
 
-    public Login(FirstPage f) {
+    public Login() {
         initComponents();
-        this.f = f;
+       
     }
 
     @SuppressWarnings("unchecked")
@@ -107,8 +109,8 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        f.setVisible(true);
-        f.setLocationRelativeTo(null);
+        FirstPage.getInstanceOf().setVisible(true);
+        FirstPage.getInstanceOf().setLocationRelativeTo(null);
     }//GEN-LAST:event_formWindowClosing
 
     private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
@@ -129,8 +131,17 @@ public class Login extends javax.swing.JFrame {
 
             if (optionalUser.isPresent()) {
                 User loggedInUser = optionalUser.get();
+                Optional<Profile> pro = ProfileMapper.get(loggedInUser.getID());
+                Profile loggedInProfile= pro.get();
                 javax.swing.JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + loggedInUser.getUsername(), "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            
+                loggedInUser.setStatus("online");
+                FrontProfile front= FrontProfile.getInstanceOf();
+                front.setU(loggedInUser);
+                front.setP(loggedInProfile);
+                front.setL(this);
+                 front.setVisible(true);
+                 front.setLocation(null);
+                 setVisible(false);
                 
             
             }

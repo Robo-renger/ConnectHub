@@ -4,17 +4,20 @@
  */
 package Frontend;
 
+import connecthub.entities.User;
+
 /**
  *
  * @author Mahinour Mohamed
  */
 public class FriendsList extends javax.swing.JFrame {
-
+    User u;
     /**
      * Creates new form FriendsList
      */
-    public FriendsList() {
+    public FriendsList(User u) {
         initComponents();
+        this.u=u;
     }
 
     /**
@@ -28,8 +31,8 @@ public class FriendsList extends javax.swing.JFrame {
 
         block = new javax.swing.JToggleButton();
         remove = new javax.swing.JToggleButton();
-        viewStories = new javax.swing.JToggleButton();
-        viewPosts = new javax.swing.JToggleButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,55 +56,50 @@ public class FriendsList extends javax.swing.JFrame {
             }
         });
 
-        viewStories.setBackground(new java.awt.Color(0, 51, 102));
-        viewStories.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
-        viewStories.setForeground(new java.awt.Color(255, 255, 255));
-        viewStories.setText("View Stories");
-        viewStories.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewStoriesActionPerformed(evt);
-            }
-        });
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        viewPosts.setBackground(new java.awt.Color(0, 51, 102));
-        viewPosts.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
-        viewPosts.setForeground(new java.awt.Color(255, 255, 255));
-        viewPosts.setText("View Posts");
-        viewPosts.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewPostsActionPerformed(evt);
+            },
+            new String [] {
+                "Name", "Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        jScrollPane2.setViewportView(jTable2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(viewPosts, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(viewStories))
+                        .addGap(27, 27, 27)
+                        .addComponent(block, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(71, 71, 71)
+                        .addComponent(remove, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(block, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
-                        .addComponent(remove, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)))
-                .addGap(45, 45, 45))
+                        .addGap(17, 17, 17)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(238, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(block)
                     .addComponent(remove))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(viewPosts)
-                    .addComponent(viewStories))
-                .addGap(12, 12, 12))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -115,14 +113,6 @@ public class FriendsList extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_removeActionPerformed
 
-    private void viewStoriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewStoriesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_viewStoriesActionPerformed
-
-    private void viewPostsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPostsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_viewPostsActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -130,8 +120,8 @@ public class FriendsList extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton block;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable2;
     private javax.swing.JToggleButton remove;
-    private javax.swing.JToggleButton viewPosts;
-    private javax.swing.JToggleButton viewStories;
     // End of variables declaration//GEN-END:variables
 }
