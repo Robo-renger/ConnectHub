@@ -21,6 +21,7 @@ public class FirstPage extends javax.swing.JFrame {
         signin.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
         signin.setForeground(new java.awt.Color(255, 255, 255));
         signin.setText("Login in");
+        signin.setText("Login in");
         signin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 signinActionPerformed(evt);
@@ -72,17 +73,27 @@ public class FirstPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void signinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinActionPerformed
-
+        Login l = new Login(this);
+        l.setVisible(true);
+        l.setLocationRelativeTo(null);
+        setVisible(false);
     }//GEN-LAST:event_signinActionPerformed
 
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
-        // TODO add your handling code here:
+        SignUp s = new SignUp(this);
+        s.setVisible(true);
+        s.setLocationRelativeTo(null);
+        setVisible(false);
     }//GEN-LAST:event_signupActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FirstPage().setVisible(true);
+
+                FirstPage fp = new FirstPage();
+                fp.setVisible(true);
+                fp.setLocationRelativeTo(null);
+
             }
         });
     }

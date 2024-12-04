@@ -2,9 +2,6 @@ package Frontend;
 
 public class AddPost extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AddPost
-     */
     public AddPost() {
         initComponents();
     }
