@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public interface Identifiable {
 
     int getID();
-
+    
     void setID(int id);
     
     String getType();

@@ -8,12 +8,12 @@ package Frontend;
  *
  * @author Mahinour Mohamed
  */
-public class AddStory extends javax.swing.JFrame {
+public class ViewPosts extends javax.swing.JFrame {
 
     /**
-     * Creates new form AddStory
+     * Creates new form ViewPosts
      */
-    public AddStory() {
+    public ViewPosts() {
         initComponents();
     }
 
@@ -45,8 +45,7 @@ public class AddStory extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
-
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
