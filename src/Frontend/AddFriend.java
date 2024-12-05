@@ -4,17 +4,20 @@
  */
 package Frontend;
 
+import connecthub.entities.User;
+
 /**
  *
  * @author Mahinour Mohamed
  */
 public class AddFriend extends javax.swing.JFrame {
-
+    User u;
     /**
      * Creates new form AddFriend
      */
-    public AddFriend() {
+    public AddFriend(User u) {
         initComponents();
+        this.u=u;
     }
 
     /**
@@ -27,7 +30,7 @@ public class AddFriend extends javax.swing.JFrame {
     private void initComponents() {
 
         label = new javax.swing.JLabel();
-        currentPass = new javax.swing.JTextField();
+        name = new javax.swing.JTextField();
         search = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
@@ -45,9 +48,9 @@ public class AddFriend extends javax.swing.JFrame {
         label.setForeground(new java.awt.Color(0, 51, 102));
         label.setText("Name:");
 
-        currentPass.addActionListener(new java.awt.event.ActionListener() {
+        name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                currentPassActionPerformed(evt);
+                nameActionPerformed(evt);
             }
         });
 
@@ -85,7 +88,7 @@ public class AddFriend extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(currentPass, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(28, 28, 28)
                             .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -97,7 +100,7 @@ public class AddFriend extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(currentPass, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(name, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addComponent(search))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -109,12 +112,12 @@ public class AddFriend extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void currentPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentPassActionPerformed
+    private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
 
-    }//GEN-LAST:event_currentPassActionPerformed
+    }//GEN-LAST:event_nameActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-
+         
     }//GEN-LAST:event_searchActionPerformed
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
@@ -132,10 +135,10 @@ public class AddFriend extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton add;
-    private javax.swing.JTextField currentPass;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label;
+    private javax.swing.JTextField name;
     private javax.swing.JToggleButton search;
     // End of variables declaration//GEN-END:variables
 }
