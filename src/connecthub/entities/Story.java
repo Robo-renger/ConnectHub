@@ -6,17 +6,17 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 @JsonTypeName("Story") // Matches the type name in @JsonSubTypes
-public class Story extends Content{
+public class Story extends Content {
 
     private static final String TYPE = "Story";
-    
-    public Story() {} // Default constructor for Jackson
-    
+
+    public Story() {
+    } // Default constructor for Jackson
+
     public Story(int authorId, String content) {
         super(authorId, content);
     }
 
-    @Override
     public boolean isExpired() {
         boolean expiry = getTimestamp().plus(24, ChronoUnit.HOURS).isBefore(LocalDateTime.now());
         super.setExpiry(expiry);
@@ -27,5 +27,15 @@ public class Story extends Content{
     public String getType() {
         return TYPE;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Story {"
+                + "contentId=" + super.getID()
+                + ", authorId=" + super.getAuthorId()
+                + ", content='" + super.getContent() + '\''
+                + ", expired=" + isExpired()
+                + ", timestamp=" + super.getTimestamp()
+                + '}';
+    }
 }

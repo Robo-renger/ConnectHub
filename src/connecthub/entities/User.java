@@ -37,9 +37,28 @@ public class User implements Identifiable {
     public User(String email, String username, String password, LocalDate dateOfBirth) {
         this.username = username;
         this.email = email;
-        this.password = password;
+        try {
+            this.password = PasswordHasher.hashPassword(password);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeySpecException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dateOfBirth = dateOfBirth;
         this.status = "offline";
+    }
+
+    @Override
+    public String toString() {
+        return "User{"
+                + "id=" + id
+                + ", email='" + email + '\''
+                + ", username='" + username + '\''
+                + ", password='" + password + '\''
+                + ", dateOfBirth=" + dateOfBirth
+                + ", status='" + status + '\''
+                + ", type='" + type + '\''
+                + '}';
     }
 
     //GETTERS

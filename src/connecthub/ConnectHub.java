@@ -1,14 +1,18 @@
 package connecthub;
 
 import connecthub.entities.User;
+import connecthub.builders.*;
 import connecthub.mappers.UserMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import connecthub.entities.Content;
+import connecthub.entities.ContentType;
 import connecthub.entities.Friend;
 import connecthub.entities.FriendRequest;
 import connecthub.entities.Post;
 import connecthub.entities.Profile;
 import connecthub.entities.Story;
+import connecthub.interfaces.Builder;
+import connecthub.interfaces.Identifiable;
 import connecthub.mappers.ContentMapper;
 import connecthub.mappers.FriendMapper;
 import connecthub.mappers.ProfileMapper;
@@ -29,106 +33,72 @@ public class ConnectHub {
         // TODO code application logic here
 
         // ########### User test cases ###########
-        
         // Test Case 1: Create a new user
 //        testCreateUser();
-
         // Test Case 2: Retrieve all users
 //        testGetAllUsers();
-
         // Test Case 3: Delete a user by ID
 //        testDeleteUserById();
-
         // Test Case 4: Update an existing user
 //        testUpdateUser();
-
         // Test Case 5: Retrieve a user with filters
 //        testRetrieveUserWithFilters();
-
         // Test Case 6: Retrieve a user by ID
 //        testRetrieveUserById();
-
 //        System.out.println(Validator.validate(0, "user123@gmail.com"));
 //        System.out.println(Validator.validate(0, "User123@GMAIL.com"));
-
         // ########### Profile test cases ###########
-        
         // Test Case 1: Create a new profile
 //        testCreateProfile();
-
         // Test Case 2: Retrieve all profiles
 //        testGetAllProfiles();
-
         // Test Case 3: Retrieve a profile by user ID
 //        testGetProfileByUserId();
-
         // Test Case 4: Update an existing profile
 //        testUpdateProfile();
-
         // Test Case 5: Delete a profile
 //        testDeleteProfile();
-
         // Test Case 6: Handle non-existing user ID
 //        testNonExistingUserId();
-
         // Test Case 7: Handle empty database
 //        testEmptyDatabase();
-
         // ########### Content test cases ###########  
-        
         // Test Case 1: Create a new post
 //          testCreatePost();
-
         // Test Case 2: Create a new story
 //        testCreateStory();
-
         // Test Case 3: Retrieve all content
 //        testGetAllContent();
-
         // Test Case 4: Update an existing post
 //        testUpdatePost();
-
         // Test Case 5: Delete a post by ID
 //        testDeletePost();
-
         // Test Case 6: Retrieve a post by ID
 //        testRetrievePostById();
-
         // Test Case 7: Retrieve a story by ID
 //        testRetrieveStoryById();
-
         // Test Case 8: Test expiration logic for story
 //        testStoryExpiration();
-
-    // ########### Friend Management Test Cases ###########
-
-     FriendsManager friendsManager = new FriendsManager();
-        
+        // ########### Friend Management Test Cases ###########
+//        FriendsManager friendsManager = new FriendsManager();
         // Test Case 1: Send a friend request
 //        testSendFriendRequest(friendsManager);
-
         // Test Case 2: Accept a friend request
 //        testAcceptFriendRequest(friendsManager);
-
         // Test Case 3: Reject a friend request
 //        testRejectFriendRequest(friendsManager);
-
         // Test Case 4: Block a user
 //        testBlockUser(friendsManager);
-
         // Test Case 5: Get all friends
 //        testGetFriends(friendsManager);
-
         // Test Case 6: Get all friend requests
 //        testGetFriendRequests(friendsManager);
-
         // Test Case 7: Get all blocked users
 //        testGetBlockedUsers(friendsManager);
-    
+        testDPEntityCreation();
     }
 
     // ########### User test cases ###########  
-    
     private static void testCreateUser() {
         System.out.println("Running Test Case 1: Create User");
         User newUser = new User("roborenger72@gmail.com", "Ziad", "12341231", LocalDate.of(2003, 10, 26));
@@ -186,7 +156,6 @@ public class ConnectHub {
     }
 
     // ########### Profile test cases ###########
-    
     private static void testCreateProfile() {
         System.out.println("Running Test Case 1: Create Profile");
         Profile profile = new Profile(1, "Hello, world!", "path/to/profile.jpg", "path/to/cover.jpg");
@@ -256,7 +225,6 @@ public class ConnectHub {
     }
 
     // ########### Content test cases ###########
-    
     private static void testCreatePost() {
         System.out.println("Running Test Case 1: Create Post");
         Post newPost = new Post(1, "This is a test post.");
@@ -350,7 +318,7 @@ public class ConnectHub {
                 () -> System.out.println("No content found with the given ID.")
         );
     }
-    
+
     // ########### Friends Management test cases ###########
     // Test Case 1: Send a friend request
     public static void testSendFriendRequest(FriendsManager friendsManager) {
@@ -362,7 +330,7 @@ public class ConnectHub {
     // Test Case 2: Accept a friend request
     public static void testAcceptFriendRequest(FriendsManager friendsManager) {
         System.out.println("Test Case 2: Accept a friend request");
-        
+
         // Assuming that a friend request from User 1 to User 2 exists in the list
         FriendRequest request = friendsManager.getFriendRequests().get(0); // Get first request
         friendsManager.acceptFriendRequest(request);
@@ -372,7 +340,7 @@ public class ConnectHub {
     // Test Case 3: Reject a friend request
     public static void testRejectFriendRequest(FriendsManager friendsManager) {
         System.out.println("Test Case 3: Reject a friend request");
-        
+
         // Assuming a second friend request exists
         FriendRequest request = friendsManager.getFriendRequests().get(0); // Get second request
         friendsManager.rejectFriendRequest(request);
@@ -390,7 +358,6 @@ public class ConnectHub {
         // Block User 3 by User 1 (testing prevention of duplicate blocks)
 //        friendsManager.blockUser(9, 13);
 //        System.out.println("User 1 blocked User 3");
-
         // Block User 2 by User 1 again (should prevent duplicate block)
 //        friendsManager.blockUser(9, 13);
 //        System.out.println("Attempt to block User 2 again (duplicate block prevented)");
@@ -413,4 +380,32 @@ public class ConnectHub {
         System.out.println("Test Case 7: Get all blocked users");
         friendsManager.getBlocks().forEach(block -> System.out.println("Blocked: User " + block.getUserId() + " blocked User " + block.getBlockedId()));
     }
+    // ########### DPs test cases ###########
+
+    public static void testDPEntityCreation() {
+        System.out.println("Test Case 1: constructing a user using factory");
+        UserBuilder userBuilder = UserBuilder.getInstance()
+                .setEmail("user@example.com")
+                .setUsername("john_doe")
+                .setPassword("securePassword")
+                .setDateOfBirth(LocalDate.of(1990, 1, 1));
+        User newUser = (User) Factory.createEntity(userBuilder.getInstance());
+        System.out.println(newUser);
+        //////////////////////////////////////////////////////////////////////////
+        System.out.println("Test Case 2: constructing a post using factory");
+        ContentBuilder contentBuilder = ContentBuilder.getInstance()
+                .setContent("zrbew lnew")
+                .setAuthorId(30)
+                .setContentType(ContentType.POST);
+        Content newPost = (Post) Factory.createEntity(contentBuilder.getInstance());
+        System.out.println(newPost);
+        System.out.println("Test Case 3: constructing a story using factory");
+        contentBuilder
+                .setContent("zrbew lnew")
+                .setAuthorId(30)
+                .setContentType(ContentType.STORY);
+        Content newStory  = (Story) Factory.createEntity(contentBuilder.getInstance());
+        System.out.println(newStory);
+    }
+
 }
