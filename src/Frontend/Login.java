@@ -11,11 +11,9 @@ import java.util.function.Predicate;
 
 public class Login extends javax.swing.JFrame {
 
-    
-
     public Login() {
         initComponents();
-       
+
     }
 
     @SuppressWarnings("unchecked")
@@ -118,36 +116,54 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        String loginUsername = username.getText();
-        String loginUserpassword = password.getText(); // Assuming this gets the password
+        String loginUsername = username.getText().trim();
+        String loginUserpassword = password.getText().trim();
+
+        // Validate input fields
+        if (loginUsername.isEmpty() || loginUserpassword.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Username or password cannot be empty!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         // Define predicates for username and password
         Predicate<User> usernameFilter = user -> user.getUsername().equals(loginUsername);
         Predicate<User> passwordFilter = user -> user.getPassword().equals(loginUserpassword);
 
-        // Use the `get` method to find a matching user
-        Optional<User> optionalUser = UserMapper.get(Arrays.asList(usernameFilter, passwordFilter));
+        // Debugging filters and users
         try {
+            System.out.println("Filters created. Username: " + loginUsername + ", Password: " + loginUserpassword);
+
+            // Use the `get` method to find a matching user
+            Optional<User> optionalUser = UserMapper.get(Arrays.asList(usernameFilter, passwordFilter));
 
             if (optionalUser.isPresent()) {
                 User loggedInUser = optionalUser.get();
+                System.out.println("User found: " + loggedInUser);
+
                 Optional<Profile> pro = ProfileMapper.get(loggedInUser.getID());
-                Profile loggedInProfile= pro.get();
-                javax.swing.JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + loggedInUser.getUsername(), "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                loggedInUser.setStatus("online");
-                FrontProfile front= FrontProfile.getInstanceOf();
-                front.setU(loggedInUser);
-                front.setP(loggedInProfile);
-                front.setL(this);
-                 front.setVisible(true);
-                 front.setLocation(null);
-                 setVisible(false);
-                
-            
+                if (pro.isPresent()) {
+                    Profile loggedInProfile = pro.get();
+
+                    // Successful login
+                    javax.swing.JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + loggedInUser.getUsername(), "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+                    loggedInUser.setStatus("online");
+                    FrontProfile front = FrontProfile.getInstanceOf();
+                    front.setU(loggedInUser);
+                    front.setP(loggedInProfile);
+                    front.setL(this);
+                    front.setVisible(true);
+                    front.setLocation(null);
+                    setVisible(false);
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Profile not found for user!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Invalid username or password!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Invalid username or password!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-
+            javax.swing.JOptionPane.showMessageDialog(this, "An error occurred during login: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }//GEN-LAST:event_loginActionPerformed
 
