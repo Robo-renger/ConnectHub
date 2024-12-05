@@ -2,6 +2,7 @@ package connecthub.entities;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import connecthub.interfaces.Identifiable;
+import javax.swing.ImageIcon;
 
 @JsonTypeName("Profile")
 public class Profile implements Identifiable {
@@ -74,5 +75,5 @@ public class Profile implements Identifiable {
     {
         bio = data;
     }
-
+  
 }

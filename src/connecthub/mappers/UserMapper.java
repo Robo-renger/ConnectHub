@@ -19,7 +19,7 @@ public class UserMapper {
         // Set the database file for DataBaseManager during class loading
     }
 
-    // Retrieve a single user by Filters(name or email,.....)
+    // Retrieve a single user by Filters(username or email,.....)
     public static Optional<User> get(List<Predicate<User>> filters) {
         try {
             List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {

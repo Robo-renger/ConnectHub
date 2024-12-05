@@ -4,16 +4,19 @@
  */
 package Frontend;
 
+import connecthub.entities.User;
+import connecthub.mappers.UserMapper;
+
 /**
  *
  * @author Mahinour Mohamed
  */
 public class UpdatePass extends javax.swing.JFrame {
-
+    User u;
     /**
      * Creates new form UpdatePrivacy
      */
-    public UpdatePass() {
+    public UpdatePass(User u) {
         initComponents();
     }
 
@@ -26,7 +29,7 @@ public class UpdatePass extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        password = new javax.swing.JToggleButton();
+        update = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         newPass = new javax.swing.JTextField();
@@ -40,13 +43,13 @@ public class UpdatePass extends javax.swing.JFrame {
             }
         });
 
-        password.setBackground(new java.awt.Color(0, 51, 102));
-        password.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
-        password.setForeground(new java.awt.Color(255, 255, 255));
-        password.setText("Update password");
-        password.addActionListener(new java.awt.event.ActionListener() {
+        update.setBackground(new java.awt.Color(0, 51, 102));
+        update.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        update.setForeground(new java.awt.Color(255, 255, 255));
+        update.setText("Update password");
+        update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordActionPerformed(evt);
+                updateActionPerformed(evt);
             }
         });
 
@@ -90,7 +93,7 @@ public class UpdatePass extends javax.swing.JFrame {
                                 .addComponent(currentPass, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(109, 109, 109)
-                        .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(update, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -105,7 +108,7 @@ public class UpdatePass extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(newPass, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addComponent(password)
+                .addComponent(update)
                 .addGap(26, 26, 26))
         );
 
@@ -116,16 +119,30 @@ public class UpdatePass extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
 
-    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordActionPerformed
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+       try{
+        String current=currentPass.getText();
+        String update=newPass.getText();
+        if(current.isEmpty()||update.isEmpty())
+              javax.swing.JOptionPane.showMessageDialog(null, "Some fields are Empty!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        else if(currentPass.getText().equals(u.getID()))
+        {  u.setPassword(newPass.getText());
+           UserMapper.update(u.getID(), u);
+        }
+        else
+              javax.swing.JOptionPane.showMessageDialog(null, "Incorrect Password!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+       }
+       catch(Exception e){
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+       }
+    }//GEN-LAST:event_updateActionPerformed
 
     private void newPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPassActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_newPassActionPerformed
 
     private void currentPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentPassActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_currentPassActionPerformed
 
     /**
@@ -138,6 +155,6 @@ public class UpdatePass extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField newPass;
-    private javax.swing.JToggleButton password;
+    private javax.swing.JToggleButton update;
     // End of variables declaration//GEN-END:variables
 }

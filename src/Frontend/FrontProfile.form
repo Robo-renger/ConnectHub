@@ -33,14 +33,14 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="profilePhoto" min="-2" pref="121" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                      <Component id="jLabel2" min="-2" pref="426" max="-2" attributes="0"/>
+                      <Component id="coverPhoto" min="-2" pref="426" max="-2" attributes="0"/>
                   </Group>
                   <Component id="bio" alignment="0" min="-2" pref="138" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="editProfile" min="-2" max="-2" attributes="0"/>
-                          <Component id="editProfile2" min="-2" pref="126" max="-2" attributes="0"/>
+                          <Component id="newsfeed" min="-2" pref="126" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -55,7 +55,7 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="156" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" pref="141" max="-2" attributes="0"/>
+              <Component id="username" min="-2" pref="141" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
@@ -73,10 +73,10 @@
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="profilePhoto" alignment="3" min="-2" pref="132" max="-2" attributes="0"/>
-                  <Component id="jLabel2" alignment="3" min="-2" pref="132" max="-2" attributes="0"/>
+                  <Component id="coverPhoto" alignment="3" min="-2" pref="132" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" pref="35" max="-2" attributes="0"/>
+              <Component id="username" min="-2" pref="35" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="bio" min="-2" pref="118" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
@@ -86,7 +86,7 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="editProfile2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="newsfeed" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="friends" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="logout" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -101,28 +101,25 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel"/>
-      </Properties>
+    <Component class="javax.swing.JLabel" name="username">
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="coverPhoto">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+          <Color blue="66" green="33" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="jnajnajs"/>
+        <Property name="opaque" type="boolean" value="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="profilePhoto">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel3"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="66" green="33" red="0" type="rgb"/>
+        </Property>
+        <Property name="opaque" type="boolean" value="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="bio">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel3"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JToggleButton" name="editProfile">
       <Properties>
@@ -158,7 +155,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JToggleButton" name="editProfile2">
+    <Component class="javax.swing.JToggleButton" name="newsfeed">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="66" green="33" red="0" type="rgb"/>
@@ -172,7 +169,7 @@
         <Property name="text" type="java.lang.String" value="Newsfeed"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editProfile2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newsfeedActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="friends">

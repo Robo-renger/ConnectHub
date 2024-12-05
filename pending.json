@@ -1,0 +1,7 @@
+[ {
+  "id" : 4,
+  "senderId" : 4,
+  "receiverId" : 5,
+  "status" : "PENDING",
+  "type" : "FriendRequest"
+} ]
