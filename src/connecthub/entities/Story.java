@@ -1,6 +1,7 @@
 package connecthub.entities;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import connecthub.mappers.ContentMapper;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -20,6 +21,9 @@ public class Story extends Content {
     public boolean isExpired() {
         boolean expiry = getTimestamp().plus(24, ChronoUnit.HOURS).isBefore(LocalDateTime.now());
         super.setExpiry(expiry);
+        
+        if(expiry) ContentMapper.delete(this.getID());
+        
         return expiry;
     }
 

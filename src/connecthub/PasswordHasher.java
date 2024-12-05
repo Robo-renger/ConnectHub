@@ -12,7 +12,7 @@ public class PasswordHasher {
     private static final int KEY_LENGTH = 256;
 
     // Static salt used for all passwords
-    private static final String STATIC_SALT = generateStaticSalt();
+    private static final String STATIC_SALT = "Zerbew";
 
     // Generate a static salt once
     private static String generateStaticSalt() {

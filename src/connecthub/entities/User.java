@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import connecthub.mappers.UserMapper;
 
 @JsonTypeName("User") // Matches the type name in @JsonSubTypes
 public class User implements Identifiable {
@@ -35,13 +36,22 @@ public class User implements Identifiable {
     }
 
     public User(String email, String username, String password, LocalDate dateOfBirth) {
+        Validator validator = Validator.getInstance();
+        
         this.username = username;
+        
+        validator.setStrategy(new EmailValidation());
+        if(!validator.validate(email))
+        {
+            UserMapper.delete(id);
+            return;
+        }
+        
         this.email = email;
+        
         try {
             this.password = PasswordHasher.hashPassword(password);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvalidKeySpecException ex) {
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.dateOfBirth = dateOfBirth;

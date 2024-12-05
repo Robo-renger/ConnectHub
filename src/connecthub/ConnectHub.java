@@ -95,13 +95,17 @@ public class ConnectHub {
 //        testGetFriendRequests(friendsManager);
         // Test Case 7: Get all blocked users
 //        testGetBlockedUsers(friendsManager);
-        testDPEntityCreation();
+//        testDPEntityCreation();
+        
+        CredentialsValidation validation = new CredentialsValidation("Islam", "12345");
+        boolean isValid = validation.validate("");  // 'data' is not needed and can be passed as an empty string or placeholder
+
     }
 
     // ########### User test cases ###########  
     private static void testCreateUser() {
         System.out.println("Running Test Case 1: Create User");
-        User newUser = new User("roborenger72@gmail.com", "Ziad", "12341231", LocalDate.of(2003, 10, 26));
+        User newUser = new User("roborenger72@gmail.com", "Islam", "12345", LocalDate.of(2003, 10, 26));
         UserMapper.create(newUser);
         System.out.println("User created successfully.");
     }
