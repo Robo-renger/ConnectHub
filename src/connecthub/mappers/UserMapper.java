@@ -19,7 +19,7 @@ public class UserMapper {
         // Set the database file for DataBaseManager during class loading
     }
 
-    // Retrieve a single user by id
+    // Retrieve a single user by Filters(name or email,.....)
     public static Optional<User> get(List<Predicate<User>> filters) {
         try {
             List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
@@ -34,6 +34,7 @@ public class UserMapper {
         }
     }
 
+    // Retrieve a single user by id
     public static Optional<User> get(int userId) {
         try {
             List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
@@ -84,11 +85,11 @@ public class UserMapper {
             updatedUser.setID(id);
 
             return DataBaseManager.getDBM().updateEntity(
-                    new TypeReference<List<User>>() {
-            },
+                    new TypeReference<List<User>>() {},
                     updatedUser,
                     user -> user.getID() == id
             );
+            
         } catch (IOException e) {
             System.out.println("Error updating user: " + e.getMessage());
             return false;
