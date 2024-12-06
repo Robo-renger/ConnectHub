@@ -12,11 +12,13 @@ import connecthub.entities.User;
  */
 public class FriendsRequest extends javax.swing.JFrame {
     User u;
+    FriendsManagement f;
     /**
      * Creates new form FriendsRequest
      */
-    public FriendsRequest(User u) {
+    public FriendsRequest(User u,FriendsManagement f) {
         initComponents();
+        this.f=f;
         this.u=u;
     }
 

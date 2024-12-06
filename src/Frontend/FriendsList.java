@@ -4,11 +4,14 @@
  */
 package Frontend;
 
+import connecthub.controllers.FriendController;
 import connecthub.entities.Friend;
 import connecthub.entities.User;
 import connecthub.mappers.FriendMapper;
+import connecthub.mappers.UserMapper;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,21 +20,33 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FriendsList extends javax.swing.JFrame {
     User u;
+    FriendsManagement f;
     /**
      * Creates new form FriendsList
      */
-    public FriendsList(User u) {
+    public FriendsList(User u,FriendsManagement f) {
         initComponents();
         this.u=u;
+        this.f=f;
         FriendsTable();
     }
     // Fill the table
     private void FriendsTable() {
-        List<Friend> friends = FriendMapper.getAll();
+       try{
+        List<Friend> friends = FriendController.getAllFriends(u.getID());
         DefaultTableModel t = (DefaultTableModel) table.getModel();
         for (Friend friend : friends) {
-            t.addRow(new Object[]{});
-        }
+            Optional<User>user=UserMapper.get(friend.getUserId());
+            if(user.isPresent()){
+                User s=user.get();
+            t.addRow(new Object[]{s.getUsername(),s.getStatus()});
+            
+            }
+        }}
+       catch(Exception e){
+          javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+       }
     }
 
     /**
@@ -48,7 +63,13 @@ public class FriendsList extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("My friends");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         block.setBackground(new java.awt.Color(0, 51, 102));
         block.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
@@ -120,14 +141,27 @@ public class FriendsList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void blockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockActionPerformed
+      try{
+          
       
-        
+      }
+      catch(Exception e){
+          javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+      }        
         
     }//GEN-LAST:event_blockActionPerformed
 
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_removeActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+      f.setVisible(true);
+      f.setLocation(null);
+        setVisible(false);
+        
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

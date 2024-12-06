@@ -113,7 +113,7 @@ public class FriendsManagement extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void friendsRequestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsRequestsActionPerformed
-       FriendsRequest f=new FriendsRequest(u);
+       FriendsRequest f=new FriendsRequest(u,this);
         f.setVisible(true);
         f.setLocation(null);
         setVisible(false);
@@ -127,14 +127,14 @@ public class FriendsManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void addFriendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFriendActionPerformed
-       AddFriend a=new AddFriend(u);
+       AddFriend a=new AddFriend(u,this);
        a.setVisible(true);
        a.setLocation(null);
         setVisible(false);
     }//GEN-LAST:event_addFriendActionPerformed
 
     private void friendsListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsListActionPerformed
-      FriendsList f=new FriendsList(u);
+      FriendsList f=new FriendsList(u,this);
       f.setVisible(true);
       f.setLocation(null);
       setVisible(false);
@@ -142,7 +142,7 @@ public class FriendsManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_friendsListActionPerformed
 
     private void friendSuggestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendSuggestionActionPerformed
-        FriendSuggestion f= new FriendSuggestion(u);
+        FriendSuggestion f= new FriendSuggestion(u,this);
         f.setVisible(true);
         f.setLocation(null);
         setVisible(false);

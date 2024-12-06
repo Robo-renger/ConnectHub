@@ -5,6 +5,7 @@
 package Frontend;
 
 import connecthub.entities.User;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -12,15 +13,26 @@ import connecthub.entities.User;
  */
 public class FriendSuggestion extends javax.swing.JFrame {
     User u;
+    FriendsManagement f;
     /**
      * Creates new form FriendSuggestion
      */
-    public FriendSuggestion(User u) {
+    public FriendSuggestion(User u,FriendsManagement f) {
         initComponents();
         this.u=u;
+        this.f=f;
         
       
     }
+    private void FillList(){
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+     
+        for (User user : users) {
+            listModel.addElement(user.getName());
+        }
+        list.setModel(listModel);
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,17 +43,10 @@ public class FriendSuggestion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        suggestedList = new javax.swing.JList<>();
         label = new javax.swing.JLabel();
         add = new javax.swing.JToggleButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         list = new javax.swing.JList<>();
-
-        jLabel1.setText("jLabel1");
-
-        jScrollPane1.setViewportView(suggestedList);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Suggested Friends");
@@ -65,25 +70,24 @@ public class FriendSuggestion extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane2.setViewportView(list);
+        jScrollPane1.setViewportView(list);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(79, 79, 79))))
+                .addContainerGap(89, Short.MAX_VALUE)
+                .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(79, 79, 79))
             .addGroup(layout.createSequentialGroup()
                 .addGap(114, 114, 114)
                 .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,7 +95,7 @@ public class FriendSuggestion extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(add)
                 .addGap(16, 16, 16))
@@ -106,7 +110,9 @@ public class FriendSuggestion extends javax.swing.JFrame {
     }//GEN-LAST:event_addActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+         f.setVisible(true);
+         f.setLocation(null);
+         setVisible(false);
     }//GEN-LAST:event_formWindowClosing
 
     /**
@@ -115,11 +121,8 @@ public class FriendSuggestion extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton add;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel label;
     private javax.swing.JList<String> list;
-    private javax.swing.JList<String> suggestedList;
     // End of variables declaration//GEN-END:variables
 }

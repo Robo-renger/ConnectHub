@@ -12,12 +12,14 @@ import connecthub.entities.User;
  */
 public class AddFriend extends javax.swing.JFrame {
     User u;
+    FriendsManagement f;
     /**
      * Creates new form AddFriend
      */
-    public AddFriend(User u) {
+    public AddFriend(User u,FriendsManagement f) {
         initComponents();
         this.u=u;
+        this.f=f;
     }
 
     /**
@@ -125,7 +127,9 @@ public class AddFriend extends javax.swing.JFrame {
     }//GEN-LAST:event_addActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+        f.setVisible(true);
+        f.setLocation(null);
+        setVisible(false);
     }//GEN-LAST:event_formWindowClosing
 
     /**
