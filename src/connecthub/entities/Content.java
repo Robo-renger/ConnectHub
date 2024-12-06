@@ -9,13 +9,14 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import connecthub.interfaces.Identifiable;
 import java.time.LocalDateTime;
 
-@JsonPropertyOrder({ "id", "authorId", "content", "timestamp", "expired", "type" })
+@JsonPropertyOrder({ "id", "authorId", "content", "imagePath","timestamp", "expired", "type" })
 public abstract class Content implements Identifiable{
 
     // Attributes
     private int contentId; 
     private int authorId;  // Reference to the user who created it
-    private String content; // Text with optional images (images stored as paths)
+    private String content; // Caption
+    private String imagePath; // Image
     private boolean expired;
     
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -24,9 +25,10 @@ public abstract class Content implements Identifiable{
 
     public Content() {} // Default constructor for Jackson
     
-    public Content(int authorId, String content) {
+    public Content(int authorId, String content, String imagePath) {
         this.authorId = authorId;
         this.content = content;
+        this.imagePath = imagePath;
         this.timestamp = LocalDateTime.now();
     }
 
@@ -44,6 +46,10 @@ public abstract class Content implements Identifiable{
         return content;
     }
     
+    public String getImagePath() {
+        return imagePath;
+    }
+    
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
@@ -56,6 +62,10 @@ public abstract class Content implements Identifiable{
     
     public void setContent(String content) {
         this.content = content;
+    }
+    
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
     
     public void setTimestamp(LocalDateTime timestamp) {

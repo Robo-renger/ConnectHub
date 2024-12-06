@@ -14,8 +14,8 @@ public class Story extends Content {
     public Story() {
     } // Default constructor for Jackson
 
-    public Story(int authorId, String content) {
-        super(authorId, content);
+    public Story(int authorId, String content, String imagePath) {
+        super(authorId, content, imagePath);
     }
 
     public boolean isExpired() {
