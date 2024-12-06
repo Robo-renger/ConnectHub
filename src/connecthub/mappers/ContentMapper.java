@@ -11,32 +11,38 @@ import java.util.Optional;
 public class ContentMapper {
 
 //    Static database file path
-    private static final String DATABASE_FILE = "content.json"; 
-    
+    private static final String DATABASE_FILE = "content.json";
+
 //    Set the database file for DataBaseManager during class loading
-    static {DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);}
+    static {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+    }
 
 //    Create a new content (Post or Story)
     public static void create(Content content) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             DataBaseManager.getDBM().createEntityWithID(content);
         } catch (IOException e) {
             System.out.println("Error creating content: " + e.getMessage());
         }
     }
-    
+
 //    Retrieve all content (Posts and Stories)
     public static List<Content> getAll() {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
-            return DataBaseManager.getDBM().readEntities(new TypeReference<List<Content>>() {}); 
+            return DataBaseManager.getDBM().readEntities(new TypeReference<List<Content>>() {
+            });
         } catch (IOException e) {
             System.out.println("Error retrieving all content: " + e.getMessage());
-            return List.of(); 
-        }    
+            return List.of();
+        }
     }
-    
+
 //    Retrieve a specific content by content ID (Post or Story)
     public static Optional<Content> get(int contentId) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             List<Content> contentList = getAll();
             return contentList.stream().filter(content -> content.getID() == contentId).findFirst();
@@ -45,26 +51,29 @@ public class ContentMapper {
             return Optional.empty();
         }
     }
-    
+
 //    Update a specific content by ID (Post or Story)
     public static boolean update(int id, Content updatedContent) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             updatedContent.setID(id);
 
             return DataBaseManager.getDBM().updateEntity(
-                    new TypeReference<List<Content>>() {},
+                    new TypeReference<List<Content>>() {
+            },
                     updatedContent,
                     content -> content.getID() == id
             );
-            
+
         } catch (IOException e) {
             System.out.println("Error updating content: " + e.getMessage());
             return false;
         }
     }
-    
+
 //    Delete a specific content by ID (Post or Story)
     public static boolean delete(int id) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             return DataBaseManager.getDBM().deleteEntity(new TypeReference<List<Content>>() {
             }, content -> content.getID() == id);

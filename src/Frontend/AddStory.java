@@ -11,21 +11,27 @@ import java.awt.Image;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Mahinour Mohamed
  */
 public class AddStory extends javax.swing.JFrame {
-     User u;
-     Newsfeed newsfeed;
+
+    User u;
+    Newsfeed newsfeed;
+
     /**
      * Creates new form AddStory
      */
-    public AddStory(User u,Newsfeed newsfeed) {
+    public AddStory(User u, Newsfeed newsfeed) {
+        if (u == null || newsfeed == null) {
+            throw new IllegalArgumentException("User and Newsfeed cannot be null");
+        }
         initComponents();
-        this.u=u;
-        this.newsfeed=newsfeed;
+        this.u = u;
+        this.newsfeed = newsfeed;
     }
 
     /**
@@ -120,37 +126,47 @@ public class AddStory extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     // Add new Story
     private void postActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postActionPerformed
-        try{
+        try {
             JFileChooser x = new JFileChooser();
             x.showOpenDialog(this);
             File f = x.getSelectedFile();
-            ImageIcon i=new ImageIcon(f.getAbsolutePath());
+            ImageIcon i = new ImageIcon(f.getAbsolutePath());
             Image img = i.getImage();
             // Resize the image
-            Image scaledImg = img.getScaledInstance(photo.getWidth(),photo.getHeight(), Image.SCALE_SMOOTH);
+            Image scaledImg = img.getScaledInstance(photo.getWidth(), photo.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon scaledIcon = new ImageIcon(scaledImg);
             photo.setIcon(scaledIcon);
-            if(f != null)
-            { Story s=new Story(u.getID(),content.getText(),f.getAbsolutePath());
-            ContentMapper.create(s);}
-        }
-        catch(Exception e){
+            if (f != null) {
+                Story s = new Story(u.getID(), content.getText(), f.getAbsolutePath());
+                ContentMapper.create(s);
+            }
+        } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_postActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        newsfeed.setVisible(true);
-        newsfeed.setLocation(null);
-        setVisible(false);
-        
+        if (u == null || newsfeed == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            newsfeed.setVisible(true);
+            newsfeed.setLocation(null);
+            setVisible(false);
+        } catch (Exception e) {
+        }
+
     }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea content;

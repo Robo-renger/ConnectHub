@@ -6,21 +6,24 @@ package Frontend;
 
 import connecthub.entities.User;
 import connecthub.mappers.UserMapper;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Mahinour Mohamed
  */
 public class Logout extends javax.swing.JFrame {
+    
     User u;
     Login l;
+
     /**
      * Creates new form Logout
      */
-    public Logout(User u,Login l) {
+    public Logout(User u, Login l) {
         initComponents();
-        this.u=u;
-        this.l=l;
+        this.u = u;
+        this.l = l;
     }
 
     /**
@@ -79,20 +82,39 @@ public class Logout extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            // Sign out the user
+            UserMapper.signOut();
 
-        UserMapper.signOut();
-        FrontProfile f= FrontProfile.getInstanceOf();
-      f.setVisible(true);
-      f.setLocation(null);
-      setVisible(false);
-        
+            // Close the current profile window
+            FrontProfile f = FrontProfile.getInstanceOf();
+            f.setVisible(false); // Hide the current window
+
+            // Redirect to the FirstPage
+            FirstPage fp = FirstPage.getInstanceOf();
+            fp.setLocationRelativeTo(null); // Center the window
+            fp.setVisible(true);
+            this.setVisible(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "An error occurred during logout: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); // Print the stack trace for debugging
+        }
+
     }//GEN-LAST:event_logoutActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton logout;

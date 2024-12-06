@@ -7,11 +7,15 @@ package Frontend;
 import connecthub.controllers.ContentController;
 import connecthub.controllers.FriendController;
 import connecthub.entities.Content;
+import connecthub.entities.Profile;
 import connecthub.entities.User;
 import connecthub.mappers.ContentMapper;
+import connecthub.mappers.ProfileMapper;
+import connecthub.mappers.UserMapper;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,15 +24,30 @@ import javax.swing.DefaultListModel;
 public class Newsfeed extends javax.swing.JFrame {
 
     User u;
+    Profile p;
     List<Content> allStories;
     List<Content> allPosts;
 
     /**
      * Creates new form Newsfeed
      */
-    public Newsfeed(User u) {
+    public Newsfeed(User u, Profile p) {
+        if (u == null || p == null) {
+            throw new IllegalArgumentException("User and Profile cannot be null");
+        }
         initComponents();
-        this.u = u;
+        Optional<User> logged = UserMapper.getLoggedInUser();
+        if (!logged.isEmpty()) {
+            this.u = logged.get();
+        }
+        for (Profile profile : ProfileMapper.getAll()) {
+            if (profile.getUserID() == this.u.getID()) {
+                this.p = profile;
+            }
+        }
+        if (this.u == null || this.p == null) {
+            throw new IllegalArgumentException("User and Profile cannot be null");
+        }
         FillPostList();
         FillStoryList();
     }
@@ -198,25 +217,66 @@ public class Newsfeed extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        FrontProfile f = FrontProfile.getInstanceOf();
-        f.setVisible(true);
-        f.setLocation(null);
-        setVisible(false);
+        if (u == null || p == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            FrontProfile f = FrontProfile.getInstanceOf();
+            f.setVisible(true);
+            f.setLocation(null);
+            setVisible(false);
+        } catch (Exception e) {
+        }
+
     }//GEN-LAST:event_formWindowClosing
 
     private void postActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postActionPerformed
-        AddPost p = new AddPost(u,this);
-        p.setVisible(true);
-        p.setLocation(null);
+        if (u == null || p == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        System.out.println("POST WE USER");
+        System.out.println(u);
+
+        System.out.println("POST IDD");
+        System.out.println(p.getID()); // Debugging log for profile ID
+
+        AddPost addPostWindow = new AddPost(u, this);
+        addPostWindow.setVisible(true);
+        addPostWindow.setLocationRelativeTo(null); // Center the window
         setVisible(false);
 
     }//GEN-LAST:event_postActionPerformed
 
     private void storyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storyActionPerformed
-        AddStory s = new AddStory(u,this);
-        s.setVisible(true);
-        s.setLocation(null);
-        setVisible(false);
+        if (u == null || p == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            AddStory s = new AddStory(u, this);
+            s.setVisible(true);
+            s.setLocationRelativeTo(null); // Center the window
+            setVisible(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "An error occurred while opening AddStory: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
 
     }//GEN-LAST:event_storyActionPerformed
 
@@ -231,14 +291,17 @@ public class Newsfeed extends javax.swing.JFrame {
             int i = Posts.getSelectedIndex();
             int j = Stories.getSelectedIndex();
             if (j > 0) {
+                System.out.println("STORYYYYYYYYYY: " + allStories.get(j).getID());
                 ShowContent s = new ShowContent(allStories.get(j));
 
             } else if (i > 0) {
+                System.out.println("pooooooooooooooost: " + allPosts.get(i).getID());
 
                 ShowContent s = new ShowContent(allPosts.get(i));
             }
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }

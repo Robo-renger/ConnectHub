@@ -7,6 +7,7 @@ package Frontend;
 import connecthub.PasswordHasher;
 import connecthub.entities.User;
 import connecthub.mappers.UserMapper;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +21,7 @@ public class UpdatePass extends javax.swing.JFrame {
      * Creates new form UpdatePrivacy
      */
     public UpdatePass(User u) {
+        this.u = u;
         initComponents();
     }
 
@@ -106,10 +108,22 @@ public class UpdatePass extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-          FrontProfile f=FrontProfile.getInstanceOf();
-          f.setVisible(true);
-          f.setLocation(null);
-          setVisible(false);
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            FrontProfile f = FrontProfile.getInstanceOf();
+            f.setVisible(true);
+            f.setLocation(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_formWindowClosing
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed

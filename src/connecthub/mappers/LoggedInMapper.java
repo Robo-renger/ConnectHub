@@ -39,6 +39,7 @@ public class LoggedInMapper {
 
     // Retrieve a single user by Filters(username or email, etc.)
     public static Optional<User> get(List<Predicate<User>> filters) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
             });
@@ -53,6 +54,7 @@ public class LoggedInMapper {
 
     // Retrieve a single user by id
     public static Optional<User> get(int userId) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
             });
@@ -77,6 +79,7 @@ public class LoggedInMapper {
 
     // Create a new user with unique email
     public static void create(User user) throws IllegalArgumentException {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
             });
@@ -94,6 +97,7 @@ public class LoggedInMapper {
 
     // Delete a user by id
     public static boolean delete(int id) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             return DataBaseManager.getDBM().deleteEntity(new TypeReference<List<User>>() {
             }, user -> user.getID() == id);
@@ -105,6 +109,7 @@ public class LoggedInMapper {
 
     // Update an existing user with unique email
     public static boolean update(int id, User updatedUser) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
             });

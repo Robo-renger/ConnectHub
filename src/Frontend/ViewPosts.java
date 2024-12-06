@@ -12,6 +12,7 @@ import connecthub.mappers.ContentMapper;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Mahinour Mohamed
  */
 public class ViewPosts extends javax.swing.JFrame {
-    
+
     User u;
     List<Content> allPosts;
 
@@ -30,9 +31,9 @@ public class ViewPosts extends javax.swing.JFrame {
         initComponents();
         this.u = u;
         FillPostList();
-        
+
     }
-    
+
     private void FillPostList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         allPosts = ContentController.getAllPosts(u.getID());
@@ -40,7 +41,7 @@ public class ViewPosts extends javax.swing.JFrame {
             listModel.addElement(content.getContent());
         }
         list.setModel(listModel);
-        
+
     }
 
     /**
@@ -114,21 +115,40 @@ public class ViewPosts extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        FrontProfile f = FrontProfile.getInstanceOf();
-        f.setVisible(true);
-        setVisible(false);
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            FrontProfile f = FrontProfile.getInstanceOf();
+            f.setVisible(true);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_formWindowClosing
 
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         try {
             int i = list.getSelectedIndex();
             if (i != 0) {
                 ShowContent s = new ShowContent(allPosts.get(i));
             }
-            
+
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            
+
         }
     }//GEN-LAST:event_viewActionPerformed
 

@@ -26,9 +26,11 @@ public class FrontProfile extends javax.swing.JFrame {
      */
     public static FrontProfile getInstanceOf(User u, Profile p) {
         if (front == null) {
+            if (u == null || p == null) {
+                throw new IllegalArgumentException("User and Profile cannot be null when initializing FrontProfile.");
+            }
             front = new FrontProfile(u, p);
         } else {
-            // Update user and profile if new ones are provided
             if (u != null && p != null) {
                 user = u;
                 profile = p;
@@ -46,6 +48,18 @@ public class FrontProfile extends javax.swing.JFrame {
     }
 
     private void initializeProfile(User u, Profile p) {
+        if (u == null || p == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Error initializing profile: User or profile data is missing.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        System.out.println("INITIALIZING: .....");
+        System.out.println(u);
+        System.out.println("INIT POST ID");
+        System.out.println(p.getID());
+
         user = u;
         profile = p;
 
@@ -264,34 +278,98 @@ public class FrontProfile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfileActionPerformed
-        EditProfile edit = new EditProfile(user, profile);
-        edit.setVisible(true);
-        edit.setLocation(null);
-        setVisible(false);
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            EditProfile edit = new EditProfile(user, profile);
+            edit.setVisible(true);
+            edit.setLocation(null);
+            setVisible(false);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_editProfileActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        System.out.println("EL USER");
+        System.out.println(user);
+        System.out.println(profile.getID());
+
         UpdatePass up = new UpdatePass(user);
         up.setVisible(true);
-        up.setLocation(null);
+        up.setLocationRelativeTo(null); // Center the window
         setVisible(false);
     }//GEN-LAST:event_updateActionPerformed
 
     private void newsfeedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newsfeedActionPerformed
-        Newsfeed news = new Newsfeed(user);
-        news.setVisible(true);
-        news.setLocation(null);
-        setVisible(false);
+
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Debugging statements to check the state of user and profile
+        System.out.println("Navigating to Newsfeed with:");
+        System.out.println("User: " + user);
+        System.out.println("Profile: " + profile);
+
+        try {
+            Newsfeed news = new Newsfeed(user, profile); // Ensure this constructor is safe
+            news.setVisible(true);
+            news.setLocationRelativeTo(null); // Center the window
+            setVisible(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "An error occurred while opening the Newsfeed: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); // Print stack trace for debugging
+        }
     }//GEN-LAST:event_newsfeedActionPerformed
 
     private void friendsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsActionPerformed
-        FriendsManagement f = new FriendsManagement(user);
-        f.setVisible(true);
-        f.setLocation(null);
-        setVisible(false);
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            FriendsManagement f = new FriendsManagement(user);
+            f.setVisible(true);
+            f.setLocation(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_friendsActionPerformed
 
     private void viewPostsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPostsActionPerformed
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         ViewPosts view = new ViewPosts(user);
         view.setVisible(true);
         view.setLocation(null);
@@ -299,23 +377,58 @@ public class FrontProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_viewPostsActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
-        Logout log = new Logout(user, loginPage);
-        log.setVisible(true);
-        log.setLocation(null);
-        setVisible(false);
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            Logout log = new Logout(user, loginPage);
+            log.setVisible(true);
+            log.setLocation(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_logoutActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-        Delete del = new Delete(user, profile, loginPage);
-        del.setVisible(true);
-        del.setLocation(null);
-        setVisible(false);
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            Delete del = new Delete(user, profile, loginPage);
+            del.setVisible(true);
+            del.setLocation(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_deleteActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        loginPage.setVisible(true);
-        loginPage.setLocation(null);
-        setVisible(false);
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            loginPage.setVisible(true);
+            loginPage.setLocation(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_formWindowClosing
 
     /**

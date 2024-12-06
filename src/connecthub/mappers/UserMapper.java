@@ -23,6 +23,8 @@ public class UserMapper {
 
     // Retrieve a single user by Filters(username or email, etc.)
     public static Optional<User> get(List<Predicate<User>> filters) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+
         try {
             List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
             });
@@ -37,6 +39,7 @@ public class UserMapper {
 
     // Retrieve a single user by id
     public static Optional<User> get(int userId) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
             });
@@ -61,6 +64,7 @@ public class UserMapper {
 
     // Create a new user with unique email
     public static void create(User user) throws IllegalArgumentException {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
             });
@@ -78,6 +82,7 @@ public class UserMapper {
 
     // Delete a user by id
     public static boolean delete(int id) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             return DataBaseManager.getDBM().deleteEntity(new TypeReference<List<User>>() {
             }, user -> user.getID() == id);
@@ -89,6 +94,8 @@ public class UserMapper {
 
     // Update an existing user with unique email
     public static boolean update(int id, User updatedUser) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+
         try {
             List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
             });
@@ -115,6 +122,7 @@ public class UserMapper {
     }
 
     public static Optional<User> login(String loginEmail, String loginUserpassword) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         connecthub.CredentialsValidation cv = new CredentialsValidation(loginEmail, loginUserpassword);
         if (cv.validate("")) {
             Predicate<User> emailFilter = user -> user.getEmail().equals(loginEmail);
@@ -137,6 +145,7 @@ public class UserMapper {
     }
 
     public static Optional<User> getLoggedInUser() {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         if (loggedInUser != null) {
             return Optional.of(loggedInUser); // Return the logged-in user wrapped in Optional
         }
@@ -144,9 +153,32 @@ public class UserMapper {
     }
 
     public static void signOut() {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+
         if (loggedInUser != null) {
-            delete(loggedInUser.getID());
+            // Delete from the LoggedInMapper
+            boolean deleted = LoggedInMapper.delete(loggedInUser.getID());
+            if (!deleted) {
+                System.out.println("Failed to delete logged-in user from LoggedInMapper.");
+            }
+
+            // Retrieve the user to update their status
+            Optional<User> logged = get(loggedInUser.getID());
+            if (logged.isPresent()) {
+                User toUpdate = logged.get();
+                toUpdate.setStatus("offline");
+                boolean updated = update(toUpdate.getID(), toUpdate);
+                if (!updated) {
+                    System.out.println("Failed to update user status to 'offline'.");
+                }
+            } else {
+                System.out.println("User not found in the database.");
+            }
+
+            // Clear the logged-in user reference
             loggedInUser = null;
+        } else {
+            System.out.println("No user is currently logged in.");
         }
     }
 }

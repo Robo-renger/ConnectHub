@@ -8,28 +8,58 @@ import connecthub.entities.Content;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Mahinour Mohamed
  */
 public class ShowContent extends javax.swing.JFrame {
-   Content x;
+
+    Content x;
+
     /**
      * Creates new form ShowContent
      */
     public ShowContent(Content x) {
+        if (x == null) {
+            JOptionPane.showMessageDialog(this, "No content to display.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        this.x = x;
         initComponents();
-        this.x=x;
-        content.setText(x.getContent());
-        content.setPreferredSize(new Dimension(content.getWidth(),content.getHeight()));
-         ImageIcon pro = new ImageIcon(x.getImagePath());
-        Image proImg = pro.getImage();
-        // Resize the image
-        Image scaledImg1 = proImg.getScaledInstance(photo.getWidth(), photo.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon proscaledIcon = new ImageIcon(scaledImg1); // Create new ImageIcon
-        ImageIcon icon = new ImageIcon(x.getImagePath());
-        photo.setIcon(icon);
+        initializeContent();
+        System.out.println("ana 5alst");
+        System.out.println(this.x.getImagePath());
+        System.out.println(this.x.getContent());
+    }
+
+    private void initializeContent() {
+        // Set the text content
+        content.setText("<html><p style='width: 400px;'>" + x.getContent() + "</p></html>"); // Wrap text
+        content.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        content.setPreferredSize(new Dimension(400, 120)); // Explicit size for content label
+
+        // Set the image
+        if (x.getImagePath() != null && !x.getImagePath().isEmpty()) {
+            try {
+                ImageIcon originalIcon = new ImageIcon(x.getImagePath());
+                Image img = originalIcon.getImage();
+
+                // Resize the image to fit the label
+                Image scaledImg = img.getScaledInstance(173, 154, Image.SCALE_SMOOTH); // Use fixed dimensions
+                photo.setIcon(new ImageIcon(scaledImg));
+            } catch (Exception e) {
+                System.out.println("ana gebtk hena");
+                photo.setText("Image not found.");
+                e.printStackTrace();
+            }
+        } else {
+            photo.setText("No image available.");
+        }
+
+        // Set preferred size for photo
+        photo.setPreferredSize(new Dimension(173, 154));
     }
 
     /**
@@ -76,7 +106,6 @@ public class ShowContent extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel content;

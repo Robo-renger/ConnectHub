@@ -13,6 +13,7 @@ import connecthub.mappers.UserMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,7 +24,7 @@ public class FriendsList extends javax.swing.JFrame {
 
     User u;
     FriendsManagement f;
-     List<User> friends;
+    List<User> friends;
 
     /**
      * Creates new form FriendsList
@@ -142,11 +143,18 @@ public class FriendsList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void blockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockActionPerformed
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         try {
-           int index=table.getSelectedRow();
-           if(index!=0){
-               FriendsManager.blockUser(u.getID(),friends.get(index).getID());
-           }
+            int index = table.getSelectedRow();
+            if (index != 0) {
+                FriendsManager.blockUser(u.getID(), friends.get(index).getID());
+            }
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
@@ -155,23 +163,42 @@ public class FriendsList extends javax.swing.JFrame {
     }//GEN-LAST:event_blockActionPerformed
 
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
-       try {
-           int index=table.getSelectedRow();
-           if(index!=0){
-               FriendController.removeFriend(u.getID(),friends.get(index).getID());
-           }
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int index = table.getSelectedRow();
+            if (index != 0) {
+                FriendController.removeFriend(u.getID(), friends.get(index).getID());
+            }
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
 
-        
+
     }//GEN-LAST:event_removeActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        f.setVisible(true);
-        f.setLocation(null);
-        setVisible(false);
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            f.setVisible(true);
+            f.setLocation(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
 
     }//GEN-LAST:event_formWindowClosing
 

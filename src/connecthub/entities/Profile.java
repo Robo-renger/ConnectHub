@@ -69,9 +69,9 @@ public class Profile implements Identifiable {
 
     public void setCoverPhotoPath(String data) {
         if (data.equals("")) {
-            coverPhotoPath = data;
+            coverPhotoPath = "src/assets/default-profile.png";
         } else {
-            coverPhotoPath = "src/assets/default-cover.jpg";
+            coverPhotoPath = data;
         }
     }
 

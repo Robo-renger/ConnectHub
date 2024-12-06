@@ -11,21 +11,24 @@ import java.awt.Image;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Mahinour Mohamed
  */
 public class EditProfile extends javax.swing.JFrame {
+
     User u;
     Profile p;
+
     /**
      * Creates new form EditProfile
      */
-    public EditProfile(User u,Profile p) {
+    public EditProfile(User u, Profile p) {
         initComponents();
-        this.u=u;
-        this.p=p;
+        this.u = u;
+        this.p = p;
         bioText.setVisible(false);
     }
 
@@ -121,58 +124,67 @@ public class EditProfile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void coverPhotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coverPhotoActionPerformed
-       try{ JFileChooser x = new JFileChooser();
-        x.showOpenDialog(this);
-        File f = x.getSelectedFile();
-       p.setCoverPhotoPath(f.getAbsolutePath());
-       ProfileMapper.update(p.getID(), p);
-       }
-       catch(Exception e){
-        javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-       }
+        try {
+            JFileChooser x = new JFileChooser();
+            x.showOpenDialog(this);
+            File f = x.getSelectedFile();
+            p.setCoverPhotoPath(f.getAbsolutePath());
+            ProfileMapper.update(p.getID(), p);
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_coverPhotoActionPerformed
 
     private void profilePhotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profilePhotoActionPerformed
-       try{
-        JFileChooser x = new JFileChooser();
-        x.showOpenDialog(this);
-        File f = x.getSelectedFile();
-       p.setProfilePhotoPath(f.getAbsolutePath());
-       ProfileMapper.update(p.getID(), p);
-       }
-       catch(Exception e){
-        javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-       }
+        try {
+            JFileChooser x = new JFileChooser();
+            x.showOpenDialog(this);
+            File f = x.getSelectedFile();
+            p.setProfilePhotoPath(f.getAbsolutePath());
+            ProfileMapper.update(p.getID(), p);
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_profilePhotoActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        FrontProfile front= FrontProfile.getInstanceOf();
-      front.setVisible(true);
-      front.setLocation(null);
-      setVisible(false);
-        
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            FrontProfile front = FrontProfile.getInstanceOf();
+            front.setVisible(true);
+            front.setLocation(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
+
     }//GEN-LAST:event_formWindowClosing
 
     private void bioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bioActionPerformed
-     bioText.setVisible(true);
-     try{
-         String bio=bioText.getText();
-         if(bio.isEmpty())
-              javax.swing.JOptionPane.showMessageDialog(null, "Some fields are empty!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-         else 
-         {  p.setBio(bio);
-            ProfileMapper.update(p.getID(), p);
-         }
-     }
-     catch(Exception e){
-        javax.swing.JOptionPane.showMessageDialog(null, "ERROR!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-     }   
+        bioText.setVisible(true);
+        try {
+            String bio = bioText.getText();
+            if (bio.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Some fields are empty!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            } else {
+                p.setBio(bio);
+                ProfileMapper.update(p.getID(), p);
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_bioActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton bio;
     private javax.swing.JTextArea bioText;

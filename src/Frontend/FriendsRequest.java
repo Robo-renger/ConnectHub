@@ -13,6 +13,7 @@ import connecthub.mappers.UserMapper;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,6 +36,13 @@ public class FriendsRequest extends javax.swing.JFrame {
     }
 
     private void fillList() {
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         DefaultListModel<String> listModel = new DefaultListModel<>();
         friendRequestList = FriendController.getFriendRequests(u.getID());
         for (FriendRequest friendRequest : friendRequestList) {
@@ -134,6 +142,13 @@ public class FriendsRequest extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void acceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptActionPerformed
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         try {
             int index = requestList.getSelectedIndex();
 
@@ -148,6 +163,13 @@ public class FriendsRequest extends javax.swing.JFrame {
     }//GEN-LAST:event_acceptActionPerformed
 
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         try {
             int index = requestList.getSelectedIndex();
 
@@ -166,10 +188,22 @@ public class FriendsRequest extends javax.swing.JFrame {
     }//GEN-LAST:event_removeActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-       f.setVisible(true);
-       f.setLocation(null);
-       setVisible(false);
-        
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            f.setVisible(true);
+            f.setLocation(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
+
     }//GEN-LAST:event_formWindowClosing
 
     /**

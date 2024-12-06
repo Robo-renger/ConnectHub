@@ -9,6 +9,7 @@ import connecthub.controllers.FriendController;
 import connecthub.entities.User;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -136,35 +137,50 @@ public class AddFriend extends javax.swing.JFrame {
     }//GEN-LAST:event_nameActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        try{
-        if (!name.getText().isEmpty()) {
-            users = FriendController.searchUsers(name.getText());
-
-        }}
-        catch(Exception e){
+        try {
+            if (!name.getText().isEmpty()) {
+                users = FriendController.searchUsers(name.getText());
+                for (User user : users) {
+                    System.out.println("USER");
+                    System.out.println(user);
+                }
+                System.out.println(name.getText());
+                fillList();
+            }
+        } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_searchActionPerformed
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-          try{
-        if (usersList.getSelectedIndex()!=0) {
-            FriendsManager.sendFriendRequest(u.getID(),users.get(usersList.getSelectedIndex()).getID());
+        try {
+            FriendsManager.sendFriendRequest(u.getID(), users.get(usersList.getSelectedIndex()).getID());
             fillList();
 
-        }}
-        catch(Exception e){
+        } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
-        
+
     }//GEN-LAST:event_addActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        f.setVisible(true);
-        f.setLocation(null);
-        setVisible(false);
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            f.setVisible(true);
+            f.setLocation(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_formWindowClosing
 
     /**
