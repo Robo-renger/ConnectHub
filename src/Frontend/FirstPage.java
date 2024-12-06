@@ -1,13 +1,17 @@
 package Frontend;
 
 public class FirstPage extends javax.swing.JFrame {
-     private static FirstPage f=null;
+
+    private static FirstPage f = null;
+
     private FirstPage() {
         initComponents();
     }
-    public static FirstPage getInstanceOf(){
-        if(f==null)
-            new FirstPage();
+
+    public static FirstPage getInstanceOf() {
+        if (f == null) {
+            f = new FirstPage();
+        }
         return f;
     }
 
