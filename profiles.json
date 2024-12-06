@@ -1,8 +1,0 @@
-[ {
-  "id" : 1,
-  "userID" : 48,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-} ]
