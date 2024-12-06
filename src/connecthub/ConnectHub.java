@@ -17,6 +17,7 @@ import connecthub.mappers.ContentMapper;
 import connecthub.mappers.FriendMapper;
 import connecthub.mappers.ProfileMapper;
 import java.io.IOException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -29,12 +30,12 @@ import java.util.logging.Logger;
 
 public class ConnectHub {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidKeySpecException {
         // TODO code application logic here
 
         // ########### User test cases ###########
         // Test Case 1: Create a new user
-//        testCreateUser();
+        testCreateUser();
         // Test Case 2: Retrieve all users
 //        testGetAllUsers();
         // Test Case 3: Delete a user by ID
@@ -95,13 +96,17 @@ public class ConnectHub {
 //        testGetFriendRequests(friendsManager);
         // Test Case 7: Get all blocked users
 //        testGetBlockedUsers(friendsManager);
-        testDPEntityCreation();
+//        testDPEntityCreation();
+//        
+//        CredentialsValidation validation = new CredentialsValidation("abdoIslam", "1111");
+//        boolean isValid = validation.validate("");  // 'data' is not needed and can be passed as an empty string or placeholder
+        
     }
 
     // ########### User test cases ###########  
-    private static void testCreateUser() {
+    private static void testCreateUser() throws InvalidKeySpecException {
         System.out.println("Running Test Case 1: Create User");
-        User newUser = new User("roborenger72@gmail.com", "Ziad", "12341231", LocalDate.of(2003, 10, 26));
+        User newUser = new User("roborenger72@gmail.com", "1", "1", LocalDate.of(2003, 10, 26));
         UserMapper.create(newUser);
         System.out.println("User created successfully.");
     }
@@ -123,7 +128,7 @@ public class ConnectHub {
         System.out.println("User deleted successfully.");
     }
 
-    private static void testUpdateUser() {
+    private static void testUpdateUser() throws InvalidKeySpecException {
         System.out.println("Running Test Case 4: Update User");
         User updatedUser = new User("roborenger72@gmail.com", "sha3boly", "12341231", LocalDate.of(2003, 10, 26));
         UserMapper.update(12, updatedUser);

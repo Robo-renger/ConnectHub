@@ -7,8 +7,11 @@ package Frontend;
 import connecthub.entities.User;
 import connecthub.mappers.UserMapper;
 import java.awt.HeadlessException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -169,6 +172,8 @@ public class SignUp extends javax.swing.JFrame {
         } catch (HeadlessException e) {
             System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (InvalidKeySpecException ex) {
+            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_createActionPerformed
 
