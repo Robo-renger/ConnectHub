@@ -4,6 +4,8 @@
  */
 package Frontend;
 
+import connecthub.Factory;
+import connecthub.builders.UserBuilder;
 import connecthub.entities.User;
 import connecthub.mappers.UserMapper;
 import java.awt.HeadlessException;
@@ -22,11 +24,9 @@ public class SignUp extends javax.swing.JFrame {
     /**
      * Creates new form SignUp
      */
-   
     public SignUp() {
-        
+
         initComponents();
-       
 
     }
 
@@ -156,13 +156,18 @@ public class SignUp extends javax.swing.JFrame {
         String enteredEmail = email.getText();
         String enteredUsername = username.getText();
         String enteredPassword = new String(password.getPassword());
-
+        System.out.println(enteredUsername + enteredPassword + enteredEmail);
         try {
             if (enteredEmail.equals("") || enteredUsername.equals("") || enteredPassword.equals("") || jDateChooser1.getDate() == null || jDateChooser1.getDate() == null) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Some fields are Empty!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             } else {
                 LocalDate date = jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                User newUser = new User(enteredEmail, enteredUsername, enteredPassword, date);
+                UserBuilder userBuilder = UserBuilder.getInstance()
+                        .setEmail(enteredEmail)
+                        .setUsername(enteredUsername)
+                        .setPassword(enteredPassword)
+                        .setDateOfBirth(date);
+                User newUser = (User) Factory.createEntity(userBuilder.getInstance());
                 UserMapper.create(newUser);
                 Login l = new Login();
                 l.setVisible(true);
@@ -172,8 +177,6 @@ public class SignUp extends javax.swing.JFrame {
         } catch (HeadlessException e) {
             System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        } catch (InvalidKeySpecException ex) {
-            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_createActionPerformed
 

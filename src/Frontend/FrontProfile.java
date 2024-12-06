@@ -14,53 +14,56 @@ public class FrontProfile extends javax.swing.JFrame {
 
     private static User u;
     private static Profile p;
-    private static FrontProfile front=null;
+    private static FrontProfile front = null;
     private static Login l;
+
     /**
      * Creates new form Profile
+     *
      * @param u
      * @param p
+     * @return 
      */
-    public static FrontProfile getInstanceOf(){
-     if(front==null)
-         front=new FrontProfile(u,p);
-     return front;
+    public static FrontProfile getInstanceOf() {
+        if (front == null) {
+            front = new FrontProfile(u, p);
+        }
+        return front;
     }
 
-    public static User getU() {
+    public User getU() {
         return u;
     }
 
-    public static void setU(User u) {
+    public void setU(User u) {
         FrontProfile.u = u;
     }
 
-    public static Profile getP() {
+    public Profile getP() {
         return p;
     }
 
-    public static void setP(Profile p) {
+    public void setP(Profile p) {
         FrontProfile.p = p;
     }
 
-    public static void setL(Login l) {
+    public void setL(Login l) {
         FrontProfile.l = l;
     }
-    
-    private FrontProfile(User u,Profile p) {
+
+    private FrontProfile(User u, Profile p) {
         initComponents();
-        FrontProfile.u=u;
         // Get user profile image
-        ImageIcon pro=new ImageIcon(p.getProfilePhotoPath());
+        ImageIcon pro = new ImageIcon(p.getProfilePhotoPath());
         Image proImg = pro.getImage();
         // Resize the image
-        Image scaledImg1 = proImg.getScaledInstance(profilePhoto.getWidth(), profilePhoto.getHeight(), Image.SCALE_SMOOTH); 
+        Image scaledImg1 = proImg.getScaledInstance(profilePhoto.getWidth(), profilePhoto.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon proscaledIcon = new ImageIcon(scaledImg1); // Create new ImageIcon
-         ImageIcon cover=new ImageIcon(p.getCoverPhotoPath());
-         //Get user cover photo
+        ImageIcon cover = new ImageIcon(p.getCoverPhotoPath());
+        //Get user cover photo
         Image coverImg = cover.getImage();
         // Resize the image
-        Image scaledImg2 = coverImg.getScaledInstance(coverPhoto.getWidth(), coverPhoto.getHeight(), Image.SCALE_SMOOTH); 
+        Image scaledImg2 = coverImg.getScaledInstance(coverPhoto.getWidth(), coverPhoto.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon coverscaledIcon = new ImageIcon(scaledImg2); // Create new ImageIcon
         profilePhoto.setIcon(proscaledIcon);
         coverPhoto.setIcon(coverscaledIcon);
@@ -239,51 +242,51 @@ public class FrontProfile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfileActionPerformed
-       EditProfile edit= new EditProfile(u,p);
+        EditProfile edit = new EditProfile(u, p);
         edit.setVisible(true);
-       edit.setLocation(null);
-       setVisible(false);
+        edit.setLocation(null);
+        setVisible(false);
     }//GEN-LAST:event_editProfileActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-        UpdatePass up=new UpdatePass(u);
+        UpdatePass up = new UpdatePass(u);
         up.setVisible(true);
         up.setLocation(null);
-          setVisible(false);
+        setVisible(false);
     }//GEN-LAST:event_updateActionPerformed
 
     private void newsfeedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newsfeedActionPerformed
         Newsfeed news = new Newsfeed(u);
         news.setVisible(true);
         news.setLocation(null);
-          setVisible(false);
+        setVisible(false);
     }//GEN-LAST:event_newsfeedActionPerformed
 
     private void friendsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsActionPerformed
-       FriendsManagement f=new FriendsManagement(u);
-       f.setVisible(true);
-       f.setLocation(null);
-         setVisible(false);
+        FriendsManagement f = new FriendsManagement(u);
+        f.setVisible(true);
+        f.setLocation(null);
+        setVisible(false);
     }//GEN-LAST:event_friendsActionPerformed
 
     private void viewPostsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPostsActionPerformed
-       ViewPosts view=new ViewPosts(u);
-       view.setVisible(true);
-       view.setLocation(null);
-         setVisible(false);
+        ViewPosts view = new ViewPosts(u);
+        view.setVisible(true);
+        view.setLocation(null);
+        setVisible(false);
     }//GEN-LAST:event_viewPostsActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
-      Logout log =new Logout(u,l);
-      log.setVisible(true);
-      log.setLocation(null);
+        Logout log = new Logout(u, l);
+        log.setVisible(true);
+        log.setLocation(null);
         setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-      Delete del=new Delete(u,p,l);
-      del.setVisible(true);
-      del.setLocation(null);
+        Delete del = new Delete(u, p, l);
+        del.setVisible(true);
+        del.setLocation(null);
         setVisible(false);
     }//GEN-LAST:event_deleteActionPerformed
 
@@ -296,8 +299,6 @@ public class FrontProfile extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bio;
