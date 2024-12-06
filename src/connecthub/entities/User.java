@@ -43,6 +43,7 @@ public class User implements Identifiable {
         validator.setStrategy(new EmailValidation());
         if (!validator.validate(email)) {
             UserMapper.delete(id);
+            System.out.println("8alat lklam dah ysa7by");
             return;
         }
 
