@@ -24,6 +24,7 @@ public class UserBuilder implements Builder<User> {
     private String password;
     private LocalDate dateOfBirth;
     private String status;
+    private User user = null;
     private static UserBuilder instance;
 
     // Private constructor to prevent instantiation
@@ -63,11 +64,33 @@ public class UserBuilder implements Builder<User> {
         return this;
     }
 
+    public UserBuilder setEntity(User user) {
+        this.user = user;
+        return this;
+    }
+
     @Override
     public User build() throws IllegalArgumentException {
+        if (this.user != null) {
+            this.buildExisting();
+        }
         User user = null;
         try {
             user = new User(email, username, password, dateOfBirth);
+        } catch (InvalidKeySpecException ex) {
+            Logger.getLogger(UserBuilder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            UserMapper.create(user);
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
+        return user;
+    }
+
+    public User buildExisting() throws IllegalArgumentException {
+        try {
+            user = new User(user.getEmail(), user.getUsername(), user.getUnHashedPass(), user.getDateOfBirth());
         } catch (InvalidKeySpecException ex) {
             Logger.getLogger(UserBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }

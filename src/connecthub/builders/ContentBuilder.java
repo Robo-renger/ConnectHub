@@ -6,6 +6,8 @@ package connecthub.builders;
 
 import connecthub.entities.Content;
 import connecthub.entities.ContentType;
+import static connecthub.entities.ContentType.POST;
+import static connecthub.entities.ContentType.STORY;
 import connecthub.entities.Post;
 import connecthub.entities.Story;
 import connecthub.interfaces.Builder;
@@ -21,6 +23,7 @@ public class ContentBuilder implements Builder<Content> {
     private String content;
     private static ContentBuilder instance;
     private ContentType type;
+    private Content existingContent = null;
 
     // Private constructor to prevent instantiation
     private ContentBuilder() {
@@ -52,9 +55,17 @@ public class ContentBuilder implements Builder<Content> {
     public ContentType getContentType() {
         return this.type;
     }
+    @Override
+    public ContentBuilder setEntity(Content existingContent) {
+        this.existingContent = existingContent;
+        return this;
+    }
 
     @Override
     public Content build() {
+        if (this.existingContent != null) {
+            buildExisting();
+        }
         Content newContent;
         if (null == this.type) {
             newContent = new Post(authorId, content);
@@ -70,6 +81,31 @@ public class ContentBuilder implements Builder<Content> {
                     newContent = new Post(authorId, content);
                     break;
             }
+        }
+        ContentMapper.create(newContent);
+        return newContent;
+    }
+
+    public Content buildExisting() {
+        Content newContent;
+        ContentType type;
+        if (this.existingContent.getType() == "Post") {
+            type = ContentType.POST;
+        } else if (existingContent.getType() == "Story") {
+            type = ContentType.STORY;
+        } else {
+            type = ContentType.POST;
+        }
+        switch (type) {
+            case POST:
+                newContent = new Post(authorId, content);
+                break;
+            case STORY:
+                newContent = new Story(authorId, content);
+                break;
+            default:
+                newContent = new Post(authorId, content);
+                break;
         }
         ContentMapper.create(newContent);
         return newContent;
