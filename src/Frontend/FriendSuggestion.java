@@ -4,7 +4,12 @@
  */
 package Frontend;
 
+import connecthub.controllers.FriendController;
+import connecthub.entities.Friend;
 import connecthub.entities.User;
+import connecthub.mappers.UserMapper;
+import java.util.List;
+import java.util.Optional;
 import javax.swing.DefaultListModel;
 
 /**
@@ -26,9 +31,12 @@ public class FriendSuggestion extends javax.swing.JFrame {
     }
     private void FillList(){
         DefaultListModel<String> listModel = new DefaultListModel<>();
-     
-        for (User user : users) {
-            listModel.addElement(user.getName());
+         List<Integer> friendsId = FriendController.suggestFriends(u.getID());
+        for (int id : friendsId) {
+            Optional<User>user=UserMapper.get(id);
+            if(user.isPresent()){
+                User s=user.get();
+            listModel.addElement(s.getUsername());
         }
         list.setModel(listModel);
     }

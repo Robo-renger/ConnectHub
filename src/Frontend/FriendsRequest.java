@@ -5,6 +5,7 @@
 package Frontend;
 
 import connecthub.entities.User;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -21,7 +22,15 @@ public class FriendsRequest extends javax.swing.JFrame {
         this.f=f;
         this.u=u;
     }
+    private void FillList() {
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+         List<Friend>f= FriendRequestMapper.getAll();
+        for (Content content : allPosts) {
+            listModel.addElement(content.getContent());
+        }
+        requestList.setModel(listModel);
 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

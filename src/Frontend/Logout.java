@@ -5,6 +5,7 @@
 package Frontend;
 
 import connecthub.entities.User;
+import connecthub.mappers.UserMapper;
 
 /**
  *
@@ -92,6 +93,7 @@ public class Logout extends javax.swing.JFrame {
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         u.setStatus("offline");
+        UserMapper.update(u.getID(), u);
         l.setVisible(true);
         l.setLocation(null);
         setVisible(false);

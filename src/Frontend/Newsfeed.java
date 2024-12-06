@@ -232,22 +232,24 @@ public class Newsfeed extends javax.swing.JFrame {
        int j=Stories.getSelectedIndex();
        if(j>0){
            for (Content story : allStories) {
+               if(j==story.getID()){
                Optional<Content> content=ContentMapper.get(story.getID());
                if(content.isPresent()){
                    Content foundContent=content.get();
                ShowContent s=new ShowContent(foundContent);
-               }
+               }}
            }
         
         
        }
        else if(i>0){
            for (Content post : allPosts) {
+               if(j==post.getID()){
                Optional<Content> content=ContentMapper.get(post.getID());
                if(content.isPresent()){
                    Content foundContent=content.get();
                ShowContent s=new ShowContent(foundContent);
-               }
+               }}
            }
         
         

@@ -4,9 +4,14 @@
  */
 package Frontend;
 
+import connecthub.controllers.ContentController;
+import connecthub.entities.Content;
 import connecthub.entities.Post;
 import connecthub.entities.User;
+import connecthub.mappers.ContentMapper;
 import java.util.List;
+import java.util.Optional;
+import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -14,16 +19,30 @@ import javax.swing.table.DefaultTableModel;
  * @author Mahinour Mohamed
  */
 public class ViewPosts extends javax.swing.JFrame {
-     User u;
+
+    User u;
+    List<Content> allPosts;
+
     /**
      * Creates new form ViewPosts
      */
     public ViewPosts(User u) {
         initComponents();
-        this.u=u;
-        
+        this.u = u;
+        FillPostList();
+
     }
-   
+
+    private void FillPostList() {
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        allPosts = ContentController.getAllPosts(u.getID());
+        for (Content content : allPosts) {
+            listModel.addElement(content.getContent());
+        }
+        list.setModel(listModel);
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,17 +114,33 @@ public class ViewPosts extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+        FrontProfile f = FrontProfile.getInstanceOf();
+        f.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_formWindowClosing
 
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
-       
+        try {
+            int i = list.getSelectedIndex();
+            for (Content post : allPosts) {
+                if (i == post.getID()) {
+                    Optional<Content> content = ContentMapper.get(post.getID());
+                    if (content.isPresent()) {
+                        Content foundContent = content.get();
+                        ShowContent s = new ShowContent(foundContent);
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_viewActionPerformed
 
     /**
      * @param args the command line arguments
      */
-   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label;
