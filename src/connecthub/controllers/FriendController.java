@@ -2,8 +2,10 @@ package connecthub.controllers;
 
 import connecthub.entities.Blocked;
 import connecthub.entities.Friend;
+import connecthub.entities.FriendRequest;
 import connecthub.entities.User;
 import connecthub.mappers.FriendMapper;
+import connecthub.mappers.FriendRequestMapper;
 import connecthub.mappers.UserMapper;
 import java.util.HashSet;
 import java.util.List;
@@ -126,6 +128,21 @@ public class FriendController {
         
         return UserMapper.get(filters)
                 .stream()
+                .collect(Collectors.toList());
+    }
+    
+    /***
+     * @param userId
+     * @return A list of the friend requests received by the user 
+     */
+    public static List<FriendRequest> getFriendRequests(int userId)
+    {
+        List<FriendRequest> friendRequests = FriendRequestMapper.getAll();
+        if(friendRequests == null)
+            return List.of();
+        
+        return friendRequests.stream()
+                .filter(request -> request.getReceiverId() == userId && "PENDING".equalsIgnoreCase(request.getStatus()))
                 .collect(Collectors.toList());
     }
 }
