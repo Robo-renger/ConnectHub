@@ -27,6 +27,7 @@ public class ContentMapper {
     
 //    Retrieve all content (Posts and Stories)
     public static List<Content> getAll() {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             return DataBaseManager.getDBM().readEntities(new TypeReference<List<Content>>() {}); 
         } catch (IOException e) {

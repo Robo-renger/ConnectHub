@@ -27,6 +27,7 @@ public class BlockedMapper {
     
     // Retrieve all blocked entities
     public static List<Blocked> getAll() {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             return DataBaseManager.getDBM().readEntities(new TypeReference<List<Blocked>>() {});
         } catch (IOException e) {

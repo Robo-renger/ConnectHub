@@ -27,6 +27,7 @@ public class ProfileMapper {
     
 //    Retrieve all Profiles
     public static List<Profile> getAll() {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             return DataBaseManager.getDBM().readEntities(new TypeReference<List<Profile>>() {});
         } catch (IOException e) {

@@ -27,6 +27,7 @@ public class FriendRequestMapper {
     
     // Retrieve all friend requests
     public static List<FriendRequest> getAll() {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             return DataBaseManager.getDBM().readEntities(new TypeReference<List<FriendRequest>>() {});
         } catch (IOException e) {
