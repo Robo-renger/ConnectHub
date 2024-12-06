@@ -7,12 +7,21 @@ import java.awt.Image;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 public class AddPost extends javax.swing.JFrame {
-     User u;
-    public AddPost(User u) {
+
+    User u;
+    Newsfeed newsfeed;
+
+    public AddPost(User u, Newsfeed newsfeed) {
+        if (u == null || newsfeed == null) {
+            throw new IllegalArgumentException("User and Newsfeed cannot be null");
+        }
         initComponents();
-        this.u=u;
+
+        this.u = u;
+        this.newsfeed = newsfeed;
     }
 
     @SuppressWarnings("unchecked")
@@ -104,37 +113,46 @@ public class AddPost extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void postActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postActionPerformed
-      try{
-          JFileChooser x = new JFileChooser();
-          x.showOpenDialog(this);
-        File f = x.getSelectedFile();
-        ImageIcon i=new ImageIcon(f.getAbsolutePath());
-        Image img = i.getImage();
-        // Resize the image
-        Image scaledImg = img.getScaledInstance(photo.getWidth(),photo.getHeight(), Image.SCALE_SMOOTH); 
-        ImageIcon scaledIcon = new ImageIcon(scaledImg); 
-        photo.setIcon(scaledIcon);
-        if(f == null)
-        {}
-        Post p=new Post(u.getID(),content.getText());
-        ContentMapper.create(p);
-      }
-      catch(Exception e){
+        try {
+            JFileChooser x = new JFileChooser();
+            x.showOpenDialog(this);
+            File f = x.getSelectedFile();
+            ImageIcon i = new ImageIcon(f.getAbsolutePath());
+            Image img = i.getImage();
+            // Resize the image
+            Image scaledImg = img.getScaledInstance(photo.getWidth(), photo.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImg);
+            photo.setIcon(scaledIcon);
+            if (f == null) {
+                Post p = new Post(u.getID(), content.getText(), null);
+                ContentMapper.create(p);
+            } else {
+                Post p = new Post(u.getID(), content.getText(), f.getAbsolutePath());
+                ContentMapper.create(p);
+            }
+        } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-      
+
     }//GEN-LAST:event_postActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        
-        
+        if (u == null || newsfeed == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        newsfeed.setVisible(true);
+        newsfeed.setLocationRelativeTo(null); // Center the window
+        setVisible(false);
+
     }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
      */
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea content;

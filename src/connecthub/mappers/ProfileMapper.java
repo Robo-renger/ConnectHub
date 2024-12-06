@@ -12,10 +12,12 @@ public class ProfileMapper {
 
 //    Static database file path
     private static final String DATABASE_FILE = "profiles.json";
-    
+
 //    Set the database file for DataBaseManager during class loading
-    static {DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);}
-    
+    static {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+    }
+
 //    Create a new profile
     public static void create(Profile profile) {
         try {
@@ -24,20 +26,22 @@ public class ProfileMapper {
             System.out.println("Error creating profile: " + e.getMessage());
         }
     }
-    
+
 //    Retrieve all Profiles
     public static List<Profile> getAll() {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
-            return DataBaseManager.getDBM().readEntities(new TypeReference<List<Profile>>() {});
+            return DataBaseManager.getDBM().readEntities(new TypeReference<List<Profile>>() {
+            });
         } catch (IOException e) {
             System.out.println("Error retrieving all profiles: " + e.getMessage());
-            return List.of(); 
-        }    
+            return List.of();
+        }
     }
-    
+
 //    Retrieve a specific user's profile
     public static Optional<Profile> get(int userId) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             List<Profile> profiles = getAll();
             return profiles.stream().filter(profile -> profile.getUserID() == userId).findFirst();
@@ -46,26 +50,29 @@ public class ProfileMapper {
             return Optional.empty();
         }
     }
-    
+
 //    Update a specific user's profile
     public static boolean update(int id, Profile updatedProfile) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             updatedProfile.setID(id);
 
             return DataBaseManager.getDBM().updateEntity(
-                    new TypeReference<List<Profile>>() {},
+                    new TypeReference<List<Profile>>() {
+            },
                     updatedProfile,
                     profile -> profile.getID() == id
             );
-            
+
         } catch (IOException e) {
             System.out.println("Error updating user's profile: " + e.getMessage());
             return false;
         }
     }
-    
+
 //    Delete a specific user's profile
     public static boolean delete(int id) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             return DataBaseManager.getDBM().deleteEntity(new TypeReference<List<Profile>>() {
             }, profile -> profile.getID() == id);

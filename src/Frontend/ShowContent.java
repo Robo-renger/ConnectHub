@@ -4,17 +4,62 @@
  */
 package Frontend;
 
+import connecthub.entities.Content;
+import java.awt.Dimension;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mahinour Mohamed
  */
 public class ShowContent extends javax.swing.JFrame {
 
+    Content x;
+
     /**
      * Creates new form ShowContent
      */
-    public ShowContent() {
+    public ShowContent(Content x) {
+        if (x == null) {
+            JOptionPane.showMessageDialog(this, "No content to display.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        this.x = x;
         initComponents();
+        initializeContent();
+        System.out.println("ana 5alst");
+        System.out.println(this.x.getImagePath());
+        System.out.println(this.x.getContent());
+    }
+
+    private void initializeContent() {
+        // Set the text content
+        content.setText("<html><p style='width: 400px;'>" + x.getContent() + "</p></html>"); // Wrap text
+        content.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        content.setPreferredSize(new Dimension(400, 120)); // Explicit size for content label
+
+        // Set the image
+        if (x.getImagePath() != null && !x.getImagePath().isEmpty()) {
+            try {
+                ImageIcon originalIcon = new ImageIcon(x.getImagePath());
+                Image img = originalIcon.getImage();
+
+                // Resize the image to fit the label
+                Image scaledImg = img.getScaledInstance(173, 154, Image.SCALE_SMOOTH); // Use fixed dimensions
+                photo.setIcon(new ImageIcon(scaledImg));
+            } catch (Exception e) {
+                System.out.println("ana gebtk hena");
+                photo.setText("Image not found.");
+                e.printStackTrace();
+            }
+        } else {
+            photo.setText("No image available.");
+        }
+
+        // Set preferred size for photo
+        photo.setPreferredSize(new Dimension(173, 154));
     }
 
     /**
@@ -26,17 +71,33 @@ public class ShowContent extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        content = new javax.swing.JLabel();
+        photo = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(128, 128, 128)
+                        .addComponent(photo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(content, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(content, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(photo, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -45,8 +106,9 @@ public class ShowContent extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel content;
+    private javax.swing.JLabel photo;
     // End of variables declaration//GEN-END:variables
 }

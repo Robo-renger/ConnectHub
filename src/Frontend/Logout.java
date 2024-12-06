@@ -5,21 +5,25 @@
 package Frontend;
 
 import connecthub.entities.User;
+import connecthub.mappers.UserMapper;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Mahinour Mohamed
  */
 public class Logout extends javax.swing.JFrame {
+    
     User u;
     Login l;
+
     /**
      * Creates new form Logout
      */
-    public Logout(User u,Login l) {
+    public Logout(User u, Login l) {
         initComponents();
-        this.u=u;
-        this.l=l;
+        this.u = u;
+        this.l = l;
     }
 
     /**
@@ -34,13 +38,8 @@ public class Logout extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         logout = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Logout");
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Ebrima", 1, 24)); // NOI18N
         jLabel1.setText("Are you sure to logout");
@@ -82,26 +81,40 @@ public class Logout extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        FrontProfile f=FrontProfile.getInstanceOf();
-       f.setVisible(true);
-       f.setLocation(null);
-       setVisible(false);
-        
-    }//GEN-LAST:event_formWindowClosing
-
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
-        u.setStatus("offline");
-        l.setVisible(true);
-        l.setLocation(null);
-        setVisible(false);
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            // Sign out the user
+            UserMapper.signOut();
+
+            // Close the current profile window
+            FrontProfile f = FrontProfile.getInstanceOf();
+            f.setVisible(false); // Hide the current window
+
+            // Redirect to the FirstPage
+            FirstPage fp = FirstPage.getInstanceOf();
+            fp.setLocationRelativeTo(null); // Center the window
+            fp.setVisible(true);
+            this.setVisible(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "An error occurred during logout: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); // Print the stack trace for debugging
+        }
+
     }//GEN-LAST:event_logoutActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton logout;
