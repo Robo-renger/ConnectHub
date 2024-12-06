@@ -1,0 +1,9 @@
+[ {
+  "id" : 1,
+  "email" : "finaltest@gmail.com",
+  "username" : "final test",
+  "password" : "4263DyM5AgU1r5/pe1+tD0W8u/ZKgTVt/oMuDmzhuqI=",
+  "dateOfBirth" : [ 2024, 12, 16 ],
+  "status" : "online",
+  "type" : "User"
+} ]

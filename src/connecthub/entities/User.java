@@ -22,7 +22,6 @@ public class User implements Identifiable {
     private int id;
     private String email;
     private String username;
-    private String hashedPassword;
     private String password;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -59,7 +58,7 @@ public class User implements Identifiable {
                 + "id=" + id
                 + ", email='" + email + '\''
                 + ", username='" + username + '\''
-                + ", password='" + hashedPassword + '\''
+                + ", password='" + password + '\''
                 + ", dateOfBirth=" + dateOfBirth
                 + ", status='" + status + '\''
                 + ", type='" + type + '\''
@@ -84,14 +83,10 @@ public class User implements Identifiable {
         return username;
     }
 
-    public String getPassword() {
-        return hashedPassword;
-    }
-
     public String getStatus() {
         return status;
     }
-    public String getUnHashedPass(){
+    public String getPassword(){
         return password;
     }
     //SETTERS
@@ -118,7 +113,7 @@ public class User implements Identifiable {
 
     public void setPassword(String password){
         try {
-            this.hashedPassword = PasswordHasher.hashPassword(password);
+            this.password = PasswordHasher.hashPassword(password);
 //            System.out.println(this.password);
         } catch (Exception ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
