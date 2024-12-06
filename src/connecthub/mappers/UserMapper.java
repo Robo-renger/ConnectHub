@@ -146,6 +146,7 @@ public class UserMapper {
     public static void signOut() {
         if (loggedInUser != null) {
             delete(loggedInUser.getID());
+            loggedInUser = null;
         }
     }
 }
