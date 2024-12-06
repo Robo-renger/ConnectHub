@@ -13,12 +13,15 @@ import java.util.function.Predicate;
 
 public class Login extends javax.swing.JFrame {
 
+
     private FrontProfile fp;
 
     public Login() {
         initComponents();
 
+
     }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -130,6 +133,7 @@ public class Login extends javax.swing.JFrame {
             return;
         }
 
+
         try {
             // Attempt login
             Optional<User> optUser = UserMapper.login(loginEmail, loginUserPassword);
@@ -166,6 +170,7 @@ public class Login extends javax.swing.JFrame {
                             javax.swing.JOptionPane.ERROR_MESSAGE
                     );
                 }
+
             } else {
                 // User not found or invalid credentials
                 javax.swing.JOptionPane.showMessageDialog(
