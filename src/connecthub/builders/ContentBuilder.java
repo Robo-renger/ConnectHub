@@ -19,6 +19,7 @@ public class ContentBuilder implements Builder<Content> {
 
     private int authorId;
     private String content;
+    private String imagePath;
     private static ContentBuilder instance;
     private ContentType type;
 
@@ -44,6 +45,11 @@ public class ContentBuilder implements Builder<Content> {
         return this;
     }
 
+    public ContentBuilder setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+        return this;
+    }
+
     public ContentBuilder setContentType(ContentType type) {
         this.type = type;
         return this;
@@ -57,17 +63,17 @@ public class ContentBuilder implements Builder<Content> {
     public Content build() {
         Content newContent;
         if (null == this.type) {
-            newContent = new Post(authorId, content);
+            newContent = new Post(authorId, content, imagePath);
         } else {
             switch (this.type) {
                 case POST:
-                    newContent = new Post(authorId, content);
+                    newContent = new Post(authorId, content, imagePath);
                     break;
                 case STORY:
-                    newContent = new Story(authorId, content);
+                    newContent = new Story(authorId, content, imagePath);
                     break;
                 default:
-                    newContent = new Post(authorId, content);
+                    newContent = new Post(authorId, content, imagePath);
                     break;
             }
         }

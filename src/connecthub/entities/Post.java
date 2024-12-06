@@ -10,8 +10,8 @@ public class Post extends Content {
     public Post() {
     } // Default constructor for Jackson}
 
-    public Post(int authorId, String content) {
-        super(authorId, content);
+    public Post(int authorId, String content, String imagePath) {
+        super(authorId, content, imagePath);
     }
 
     @Override

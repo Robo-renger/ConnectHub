@@ -258,14 +258,14 @@ public class ConnectHub {
     // ########### Content test cases ###########
     private static void testCreatePost() {
         System.out.println("Running Test Case 1: Create Post");
-        Post newPost = new Post(1, "This is a test post.");
+        Post newPost = new Post(1, "This is a test post.", null);
         ContentMapper.create(newPost);
         System.out.println("Post created successfully.");
     }
 
     private static void testCreateStory() {
         System.out.println("Running Test Case 2: Create Story");
-        Story newStory = new Story(2, "This is a test story.");
+        Story newStory = new Story(2, "This is a test story.", null);
         ContentMapper.create(newStory);
         System.out.println("Story created successfully.");
     }
@@ -282,7 +282,7 @@ public class ConnectHub {
 
     private static void testUpdatePost() {
         System.out.println("Running Test Case 4: Update Post");
-        Post updatedPost = new Post(1, "Updated content for post.");
+        Post updatedPost = new Post(1, "Updated content for post.", null);
         ContentMapper.update(1, updatedPost);
         System.out.println("Post updated successfully.");
     }
