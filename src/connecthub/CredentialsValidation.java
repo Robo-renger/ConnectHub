@@ -32,8 +32,8 @@ public class CredentialsValidation implements ValidationStrategy {
         if (user.isPresent()) {
             System.out.println("User found: " + user.get().getUsername());
             User foundUser = user.get();
-            System.out.println(foundUser.toString());
-            System.out.println(foundUser.getPassword());
+//            System.out.println(foundUser.toString());
+//            System.out.println(foundUser.getPassword());
 
             try {
                 // Comparing the entered password to the password in the database
