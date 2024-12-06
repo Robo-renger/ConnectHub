@@ -1,6 +1,7 @@
 package connecthub;
 
 import connecthub.entities.User;
+import connecthub.exceptions.InvalidDataException;
 import connecthub.interfaces.ValidationStrategy;
 import connecthub.mappers.UserMapper;
 import java.security.NoSuchAlgorithmException;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class CredentialsValidation implements ValidationStrategy {
+public class CredentialsValidation {
 
     private String email;
     private String password;
@@ -18,9 +19,7 @@ public class CredentialsValidation implements ValidationStrategy {
         this.email = email;
         this.password = password;
     }
-
-    @Override
-    public boolean validate(String data) {
+    public boolean validate(String data) throws InvalidDataException  {
 
         // Create a filter to find users by emailFilter
         Predicate<User> emailFilter = user -> user.getEmail().equals(email);
@@ -32,10 +31,13 @@ public class CredentialsValidation implements ValidationStrategy {
         if (user.isPresent()) {
             System.out.println("User found: " + user.get().getEmail());
             User foundUser = user.get();
+            System.out.println(UserMapper.get(37));
 
             try {
                 // Comparing the entered password to the password in the database
-                boolean isValidPassword = PasswordHasher.verifyPassword(PasswordHasher.hashPassword(password), foundUser.getPassword());
+                boolean isValidPassword = PasswordHasher.verifyPassword(password, foundUser.getPassword());
+                System.out.println("user found Password: " + password + " " + foundUser.getPassword());
+
                 if (isValidPassword) {
                     System.out.println("Correct: " + password + " " + foundUser.getPassword());
                     return true;
@@ -43,7 +45,7 @@ public class CredentialsValidation implements ValidationStrategy {
                     System.out.println("Incorrect Password: " + password + " " + foundUser.getPassword());
                     return false;
                 }
-            } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            } catch (NoSuchAlgorithmException e) {
                 System.out.println("Error validating password: " + e.getMessage());
                 return false;
             }

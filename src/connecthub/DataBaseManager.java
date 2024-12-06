@@ -62,7 +62,19 @@ public class DataBaseManager {
         writeEntities(entities);
     }
 
-    // Retrieve the latest ID in the database
+    public <T extends Identifiable> void createEntity(T entity) throws IOException {
+
+        List<T> entities = readEntities(new TypeReference<List<T>>() {
+        });
+        int latestId = getLatestID(entities);
+
+        entity.setID(entity.getID());
+        entities.add(entity);
+
+        writeEntities(entities);
+    }
+// Retrieve the latest ID in the database
+
     public <T extends Identifiable> int getLatestID(List<T> entities) {
         return entities.stream()
                 .map(Identifiable::getID)

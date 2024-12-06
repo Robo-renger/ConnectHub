@@ -22,7 +22,6 @@ public class User implements Identifiable {
     private int id;
     private String email;
     private String username;
-    private String hashedPassword;
     private String password;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -43,18 +42,11 @@ public class User implements Identifiable {
         validator.setStrategy(new EmailValidation());
         if (!validator.validate(email)) {
             UserMapper.delete(id);
-            System.out.println("8alat lklam dah ysa7by");
             return;
         }
 
         this.email = email;
         this.setPassword(password);
-//        System.out.println("lol");
-//        try {
-//            this.password = PasswordHasher.hashPassword(password);//1st hash
-//        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-//            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         this.dateOfBirth = dateOfBirth;
         this.status = "offline";
     }
@@ -65,7 +57,7 @@ public class User implements Identifiable {
                 + "id=" + id
                 + ", email='" + email + '\''
                 + ", username='" + username + '\''
-                + ", password='" + hashedPassword + '\''
+                + ", password='" + password + '\''
                 + ", dateOfBirth=" + dateOfBirth
                 + ", status='" + status + '\''
                 + ", type='" + type + '\''
@@ -90,14 +82,10 @@ public class User implements Identifiable {
         return username;
     }
 
-    public String getPassword() {
-        return hashedPassword;
-    }
-
     public String getStatus() {
         return status;
     }
-    public String getUnHashedPass(){
+    public String getPassword(){
         return password;
     }
     //SETTERS
@@ -124,11 +112,12 @@ public class User implements Identifiable {
 
     public void setPassword(String password){
         try {
-            this.hashedPassword = PasswordHasher.hashPassword(password);
+            this.password = PasswordHasher.hashPassword(password);
 //            System.out.println(this.password);
         } catch (Exception ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.password = password;
     }
 
     public String getType() {
