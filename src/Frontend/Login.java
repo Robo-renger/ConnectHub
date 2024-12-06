@@ -119,7 +119,7 @@ public class Login extends javax.swing.JFrame {
         String loginUsername = username.getText().trim();
         String loginUserpassword = new String(jPasswordField1.getPassword());
         
-        if (loginUsername.isEmpty() || loginUserpassword.isEmpty()) {
+        if (loginUsername.isEmpty() || loginUserpassword == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "Username or password cannot be empty!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
         }
