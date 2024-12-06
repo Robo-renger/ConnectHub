@@ -1,6 +1,7 @@
 package connecthub;
 
 import connecthub.entities.User;
+import connecthub.exceptions.InvalidDataException;
 import connecthub.interfaces.ValidationStrategy;
 import connecthub.mappers.UserMapper;
 import java.security.NoSuchAlgorithmException;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class CredentialsValidation implements ValidationStrategy {
+public class CredentialsValidation {
 
     private String email;
     private String password;
@@ -18,9 +19,7 @@ public class CredentialsValidation implements ValidationStrategy {
         this.email = email;
         this.password = password;
     }
-
-    @Override
-    public boolean validate(String data) {
+    public boolean validate(String data) throws InvalidDataException  {
 
         // Create a filter to find users by emailFilter
         Predicate<User> emailFilter = user -> user.getEmail().equals(email);

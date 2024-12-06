@@ -49,12 +49,6 @@ public class User implements Identifiable {
 
         this.email = email;
         this.setPassword(password);
-//        System.out.println("lol");
-//        try {
-//            this.password = PasswordHasher.hashPassword(password);//1st hash
-//        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-//            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         this.dateOfBirth = dateOfBirth;
         this.status = "offline";
     }
