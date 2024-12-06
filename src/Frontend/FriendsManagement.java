@@ -127,7 +127,7 @@ public class FriendsManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void addFriendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFriendActionPerformed
-       AddFriend a=new AddFriend();
+       AddFriend a=new AddFriend(u);
        a.setVisible(true);
        a.setLocation(null);
         setVisible(false);

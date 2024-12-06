@@ -4,7 +4,12 @@
  */
 package Frontend;
 
+import connecthub.entities.Friend;
 import connecthub.entities.User;
+import connecthub.mappers.FriendMapper;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,6 +23,15 @@ public class FriendsList extends javax.swing.JFrame {
     public FriendsList(User u) {
         initComponents();
         this.u=u;
+        FriendsTable();
+    }
+    // Fill the table
+    private void FriendsTable() {
+        List<Friend> friends = FriendMapper.getAll();
+        DefaultTableModel t = (DefaultTableModel) table.getModel();
+        for (Friend friend : friends) {
+            t.addRow(new Object[]{});
+        }
     }
 
     /**
@@ -32,7 +46,7 @@ public class FriendsList extends javax.swing.JFrame {
         block = new javax.swing.JToggleButton();
         remove = new javax.swing.JToggleButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,7 +70,7 @@ public class FriendsList extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -72,7 +86,7 @@ public class FriendsList extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(table);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,7 +120,9 @@ public class FriendsList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void blockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockActionPerformed
-        // TODO add your handling code here:
+      
+        
+        
     }//GEN-LAST:event_blockActionPerformed
 
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
@@ -121,7 +137,7 @@ public class FriendsList extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton block;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
     private javax.swing.JToggleButton remove;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

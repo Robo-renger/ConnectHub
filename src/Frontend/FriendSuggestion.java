@@ -18,6 +18,8 @@ public class FriendSuggestion extends javax.swing.JFrame {
     public FriendSuggestion(User u) {
         initComponents();
         this.u=u;
+        
+      
     }
 
     /**
@@ -35,7 +37,7 @@ public class FriendSuggestion extends javax.swing.JFrame {
         label = new javax.swing.JLabel();
         add = new javax.swing.JToggleButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        list = new javax.swing.JList<>();
 
         jLabel1.setText("jLabel1");
 
@@ -63,7 +65,7 @@ public class FriendSuggestion extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(list);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,10 +116,10 @@ public class FriendSuggestion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton add;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel label;
+    private javax.swing.JList<String> list;
     private javax.swing.JList<String> suggestedList;
     // End of variables declaration//GEN-END:variables
 }
