@@ -6,6 +6,7 @@ import connecthub.mappers.UserMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import connecthub.controllers.ContentController;
 import connecthub.controllers.FriendController;
+import connecthub.entities.Blocked;
 import connecthub.entities.Content;
 import connecthub.entities.ContentType;
 import connecthub.entities.Friend;
@@ -15,6 +16,7 @@ import connecthub.entities.Profile;
 import connecthub.entities.Story;
 import connecthub.interfaces.Builder;
 import connecthub.interfaces.Identifiable;
+import connecthub.mappers.BlockedMapper;
 import connecthub.mappers.ContentMapper;
 import connecthub.mappers.FriendMapper;
 import connecthub.mappers.ProfileMapper;
@@ -32,7 +34,7 @@ import java.util.logging.Logger;
 
 public class ConnectHub {
 
-//    public static void main(String[] args) throws InvalidKeySpecException {
+    public static void main(String[] args) throws InvalidKeySpecException {
         // TODO code application logic here
 
         // ########### User test cases ###########
@@ -110,11 +112,22 @@ public class ConnectHub {
 //         Test Getting all friends of a user
 //        testGetAllFriends();
 //        testSuggestFriends();
+//        BlockedMapper.getAll();
+//        for(Blocked block: BlockedMapper.getAll())
+//        {
+//            System.out.println(block.getID());
+//        }
+//        for(Friend friend: FriendMapper.getAll())
+//        {
+//            System.out.println(friend.getID());
+//        }
+            
+//        FriendMapper.getAll();
 //        testDPEntityCreation();
 //        CredentialsValidation validation = new CredentialsValidation("ibrahim", "111555333");
 //        boolean isValid = validation.validate("");  // 'data' is not needed and can be passed as an empty string or placeholder
 
-//    }
+    }
 
 // ########### User test cases ###########  
     private static void testCreateUser() throws InvalidKeySpecException {
@@ -469,8 +482,8 @@ public class ConnectHub {
         int userId = 1;
 
         // Act
-        List<Friend> friends = FriendController.getAllFriends(userId);
-        for(Friend friend: friends)
+        List<User> friends = FriendController.getAllFriends(userId);
+        for(User friend: friends)
         {
             System.out.println(friend.getID());
         }
@@ -478,13 +491,13 @@ public class ConnectHub {
     
     public static void testSuggestFriends() {
         // Assume user with ID 1 has friends in the database.
-        int userId = 1;
+        int userId = 6;
 
         // Act
-        List<Integer> ids = FriendController.suggestFriends(userId);
-        for(Integer id: ids)
+        List<User> suggestedUsers = FriendController.suggestFriends(userId);
+        for(User suggestedUser: suggestedUsers)
         {
-            System.out.println(id);
+            System.out.println(suggestedUser.getID());
         }
     }
 

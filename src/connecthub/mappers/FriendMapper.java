@@ -27,6 +27,7 @@ public class FriendMapper {
     
 //    Retrieve all Profiles
     public static List<Friend> getAll() {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             return DataBaseManager.getDBM().readEntities(new TypeReference<List<Friend>>() {});
         } catch (IOException e) {

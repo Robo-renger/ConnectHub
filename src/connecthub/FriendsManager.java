@@ -29,12 +29,7 @@ public class FriendsManager {
         friendRequest.setStatus("REJECTED");
         FriendRequestMapper.delete(friendRequest.getID());
     }
-    
-    public void removeFriendship(Friend friend)
-    {
-        FriendMapper.delete(friend.getID());
-    }
-    
+      
     public void blockUser(int userId, int blockedId)
     {
         // Remove friendship if it exists
