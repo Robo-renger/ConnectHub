@@ -83,10 +83,10 @@ public class LoggedInMapper {
 
             // Check for duplicate email
             if (users.stream().anyMatch(existingUser -> existingUser.getEmail().equals(user.getEmail()))) {
-                throw new IllegalArgumentException("Email already exists: " + user.getEmail());
+                return;
             }
 
-            DataBaseManager.getDBM().createEntityWithID(user);
+            DataBaseManager.getDBM().createEntity(user);
         } catch (IOException e) {
             System.out.println("Error creating user: " + e.getMessage());
         }

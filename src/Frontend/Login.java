@@ -1,11 +1,16 @@
 package Frontend;
 
 import connecthub.CredentialsValidation;
+import connecthub.Factory;
+import connecthub.PasswordHasher;
+import connecthub.builders.ProfileBuilder;
+import connecthub.builders.UserBuilder;
 import connecthub.entities.Profile;
 import connecthub.entities.User;
 import connecthub.mappers.ProfileMapper;
 import connecthub.mappers.UserMapper;
 import java.awt.HeadlessException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -13,15 +18,12 @@ import java.util.function.Predicate;
 
 public class Login extends javax.swing.JFrame {
 
-
     private FrontProfile fp;
 
     public Login() {
         initComponents();
 
-
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -133,18 +135,17 @@ public class Login extends javax.swing.JFrame {
             return;
         }
 
-
         try {
             // Attempt login
             Optional<User> optUser = UserMapper.login(loginEmail, loginUserPassword);
-
             if (optUser.isPresent()) {
                 User foundUser = optUser.get();
 
                 // Fetch user's profile
                 Optional<Profile> optProfile = ProfileMapper.get(foundUser.getID());
+                Profile profileUser;
                 if (optProfile.isPresent()) {
-                    Profile profileUser = optProfile.get();
+                    profileUser = optProfile.get();
 
                     // Display success message
                     javax.swing.JOptionPane.showMessageDialog(
@@ -153,23 +154,22 @@ public class Login extends javax.swing.JFrame {
                             "Success",
                             javax.swing.JOptionPane.INFORMATION_MESSAGE
                     );
-
-                    // Proceed to the profile screen
-                    FrontProfile fp = FrontProfile.getInstanceOf();
-                    fp.setU(foundUser);
-                    fp.setP(profileUser);
-                    fp.setVisible(true);
-                    fp.setLocationRelativeTo(null); // Center the profile window
-                    setVisible(false); // Hide the login window
-                    return; // Exit the method after successful login
                 } else {
-                    javax.swing.JOptionPane.showMessageDialog(
-                            this,
-                            "Profile not found for the logged-in user.",
-                            "Error",
-                            javax.swing.JOptionPane.ERROR_MESSAGE
-                    );
+                    ProfileBuilder profileBuilder = ProfileBuilder.getInstance()
+                            .setUserID(foundUser.getID())
+                            .setBio("")
+                            .setProfilePhotoPath("")
+                            .setCoverPhotoPath("");
+                    profileUser = (Profile) Factory.createEntity(profileBuilder.getInstance());
                 }
+                // Proceed to the profile screen
+                FrontProfile fp = FrontProfile.getInstanceOf(foundUser, profileUser);
+//                fp.setUser(foundUser);
+//                fp.setProfile(profileUser);
+                fp.setVisible(true);
+                fp.setLocationRelativeTo(null); // Center the profile window
+                setVisible(false); // Hide the login window
+                return; // Exit the method after successful login
 
             } else {
                 // User not found or invalid credentials

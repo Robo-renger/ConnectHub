@@ -4,10 +4,12 @@
  */
 package connecthub.builders;
 
+import connecthub.PasswordHasher;
 import connecthub.entities.ContentType;
 import connecthub.entities.User;
 import connecthub.interfaces.Builder;
 import connecthub.mappers.UserMapper;
+import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
 import java.util.logging.Level;
@@ -49,7 +51,12 @@ public class UserBuilder implements Builder<User> {
     }
 
     public UserBuilder setPassword(String password) {
-        this.password = password;
+        try {
+            this.password = PasswordHasher.hashPassword(password);
+            return this;
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UserBuilder.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return this;
     }
 

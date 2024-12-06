@@ -42,7 +42,6 @@ public class User implements Identifiable {
         validator.setStrategy(new EmailValidation());
         if (!validator.validate(email)) {
             UserMapper.delete(id);
-            System.out.println("8alat lklam dah ysa7by");
             return;
         }
 
@@ -118,6 +117,7 @@ public class User implements Identifiable {
         } catch (Exception ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.password = password;
     }
 
     public String getType() {
