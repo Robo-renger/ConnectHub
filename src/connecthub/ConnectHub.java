@@ -35,7 +35,7 @@ public class ConnectHub {
 
         // ########### User test cases ###########
         // Test Case 1: Create a new user
-        testCreateUser();
+//        testCreateUser();
         // Test Case 2: Retrieve all users
 //        testGetAllUsers();
         // Test Case 3: Delete a user by ID
@@ -98,8 +98,8 @@ public class ConnectHub {
 //        testGetBlockedUsers(friendsManager);
 //        testDPEntityCreation();
 //        
-//        CredentialsValidation validation = new CredentialsValidation("abdoIslam", "1111");
-//        boolean isValid = validation.validate("");  // 'data' is not needed and can be passed as an empty string or placeholder
+        CredentialsValidation validation = new CredentialsValidation("abdoIslam", "1111");
+        boolean isValid = validation.validate("");  // 'data' is not needed and can be passed as an empty string or placeholder
         
     }
 
