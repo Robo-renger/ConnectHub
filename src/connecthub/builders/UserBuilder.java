@@ -8,7 +8,10 @@ import connecthub.entities.ContentType;
 import connecthub.entities.User;
 import connecthub.interfaces.Builder;
 import connecthub.mappers.UserMapper;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -62,7 +65,12 @@ public class UserBuilder implements Builder<User> {
 
     @Override
     public User build() {
-        User user = new User(email, username, password, dateOfBirth);
+        User user = null;
+        try {
+            user = new User(email, username, password, dateOfBirth);
+        } catch (InvalidKeySpecException ex) {
+            Logger.getLogger(UserBuilder.class.getName()).log(Level.SEVERE, null, ex);
+        }
         UserMapper.create(user);
         return user;
     }

@@ -35,25 +35,25 @@ public class User implements Identifiable {
         // Default constructor for Jackson
     }
 
-    public User(String email, String username, String password, LocalDate dateOfBirth) {
+    public User(String email, String username, String password, LocalDate dateOfBirth) throws InvalidKeySpecException {
         Validator validator = Validator.getInstance();
-        
+
         this.username = username;
-        
+
         validator.setStrategy(new EmailValidation());
-        if(!validator.validate(email))
-        {
+        if (!validator.validate(email)) {
             UserMapper.delete(id);
             return;
         }
-        
+
         this.email = email;
-        
-        try {
-            this.password = PasswordHasher.hashPassword(password);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.setPassword(password);
+//        System.out.println("lol");
+//        try {
+//            this.password = PasswordHasher.hashPassword(password);//1st hash
+//        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+//            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         this.dateOfBirth = dateOfBirth;
         this.status = "offline";
     }
@@ -119,12 +119,11 @@ public class User implements Identifiable {
         this.status = status;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password){
         try {
             this.password = PasswordHasher.hashPassword(password);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvalidKeySpecException ex) {
+//            System.out.println(this.password);
+        } catch (Exception ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
