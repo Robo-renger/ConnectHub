@@ -510,4 +510,12 @@
   "dateOfBirth" : [ 2024, 12, 10 ],
   "status" : "offline",
   "type" : "User"
+},{
+  "id" : 75,
+  "email" : "testsss@gmail.com",
+  "username" : "tests",
+  "password" : "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=",
+  "dateOfBirth" : [ 2024, 12, 10 ],
+  "status" : "offline",
+  "type" : "User"
 }]
