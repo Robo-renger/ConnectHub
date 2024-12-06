@@ -7,6 +7,7 @@ package Frontend;
 import connecthub.Factory;
 import connecthub.builders.UserBuilder;
 import connecthub.entities.User;
+import connecthub.exceptions.InvalidDataException;
 import connecthub.mappers.UserMapper;
 import java.awt.HeadlessException;
 import java.security.spec.InvalidKeySpecException;
@@ -167,12 +168,16 @@ public class SignUp extends javax.swing.JFrame {
                         .setUsername(enteredUsername)
                         .setPassword(enteredPassword)
                         .setDateOfBirth(date);
+
                 User newUser = (User) Factory.createEntity(userBuilder.getInstance());
                 Login l = new Login();
                 l.setVisible(true);
                 l.setLocationRelativeTo(null);
                 setVisible(false);
             }
+
+        } catch (InvalidDataException e) {
+            javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -186,12 +191,6 @@ public class SignUp extends javax.swing.JFrame {
         FirstPage.getInstanceOf().setVisible(true);
         FirstPage.getInstanceOf().setLocationRelativeTo(null);
     }//GEN-LAST:event_formWindowClosing
-
-//        System.out.println("Running Test Case 1: Create User");
-//        User newUser = new User("roborenger72@gmail.com", "Ziad", "12341231", LocalDate.of(2003, 10, 26));
-//        UserMapper.create(newUser);
-//        System.out.println("User created successfully.");
-//    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton create;

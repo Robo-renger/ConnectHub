@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package connecthub.mappers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -12,10 +16,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class UserMapper {
+import com.fasterxml.jackson.core.type.TypeReference;
+import connecthub.CredentialsValidation;
+import connecthub.DataBaseManager;
+import connecthub.entities.User;
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
-    private static final String DATABASE_FILE = "users.json";
-    private static User loggedInUser;
+/**
+ *
+ * @author User
+ */
+public class LoggedInMapper {
+
+    private static final String DATABASE_FILE = "loggedUser.json";
 
     static {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
@@ -67,10 +83,10 @@ public class UserMapper {
 
             // Check for duplicate email
             if (users.stream().anyMatch(existingUser -> existingUser.getEmail().equals(user.getEmail()))) {
-                throw new IllegalArgumentException("Email already exists: " + user.getEmail());
+                return;
             }
 
-            DataBaseManager.getDBM().createEntityWithID(user);
+            DataBaseManager.getDBM().createEntity(user);
         } catch (IOException e) {
             System.out.println("Error creating user: " + e.getMessage());
         }
@@ -111,41 +127,6 @@ public class UserMapper {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return false;
-        }
-    }
-
-    public static Optional<User> login(String loginEmail, String loginUserpassword) {
-        connecthub.CredentialsValidation cv = new CredentialsValidation(loginEmail, loginUserpassword);
-        if (cv.validate("")) {
-            Predicate<User> emailFilter = user -> user.getEmail().equals(loginEmail);
-            Optional<User> user = UserMapper.get(List.of(emailFilter));
-
-            if (user.isPresent()) {
-                loggedInUser = user.get();
-//                UserBuilder.getInstance().setEntity(loggedInUser);
-//                User updatedUser = (User) Factory.createEntity(UserBuilder.getInstance());
-                loggedInUser.setStatus("online");
-                update(loggedInUser.getID(), loggedInUser);
-                LoggedInMapper.create(loggedInUser);
-                return Optional.of(loggedInUser);
-            } else {
-                return Optional.empty();
-            }
-        } else {
-            return Optional.empty();
-        }
-    }
-
-    public static Optional<User> getLoggedInUser() {
-        if (loggedInUser != null) {
-            return Optional.of(loggedInUser); // Return the logged-in user wrapped in Optional
-        }
-        return Optional.empty(); // Return an empty Optional if no user is logged in
-    }
-
-    public static void signOut() {
-        if (loggedInUser != null) {
-            delete(loggedInUser.getID());
         }
     }
 }

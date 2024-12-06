@@ -36,12 +36,20 @@ public class ProfileBuilder implements Builder<Profile> {
     }
 
     public ProfileBuilder setProfilePhotoPath(String profilePhotoPath) {
-        this.profilePhotoPath = profilePhotoPath;
+        if (profilePhotoPath.equals("")) {
+            this.profilePhotoPath = "src/assets/default-profile.png";
+        } else {
+            this.profilePhotoPath = profilePhotoPath;
+        }
         return this;
     }
 
     public ProfileBuilder setCoverPhotoPath(String coverPhotoPath) {
-        this.coverPhotoPath = coverPhotoPath;
+        if (coverPhotoPath.equals("")) {
+            this.coverPhotoPath = "src/assets/default-cover.jpg";
+        } else {
+            this.coverPhotoPath = coverPhotoPath;
+        }
         return this;
     }
 

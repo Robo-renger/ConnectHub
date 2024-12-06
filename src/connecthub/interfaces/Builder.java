@@ -4,7 +4,9 @@
  */
 package connecthub.interfaces;
 
+import connecthub.builders.UserBuilder;
 import connecthub.entities.ContentType;
+import connecthub.entities.User;
 
 /**
  *
@@ -13,6 +15,6 @@ import connecthub.entities.ContentType;
 public interface Builder<T> {
 
     T build(); // Method to construct the final object
-
+    
 
 }

@@ -23,7 +23,6 @@ public class User implements Identifiable {
     private String email;
     private String username;
     private String password;
-
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateOfBirth;
@@ -48,12 +47,6 @@ public class User implements Identifiable {
 
         this.email = email;
         this.setPassword(password);
-//        System.out.println("lol");
-//        try {
-//            this.password = PasswordHasher.hashPassword(password);//1st hash
-//        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-//            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         this.dateOfBirth = dateOfBirth;
         this.status = "offline";
     }
@@ -89,14 +82,12 @@ public class User implements Identifiable {
         return username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public String getStatus() {
         return status;
     }
-
+    public String getPassword(){
+        return password;
+    }
     //SETTERS
     @Override
     public void setID(int id) {
@@ -126,6 +117,7 @@ public class User implements Identifiable {
         } catch (Exception ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.password = password;
     }
 
     public String getType() {

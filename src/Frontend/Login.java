@@ -1,11 +1,16 @@
 package Frontend;
 
 import connecthub.CredentialsValidation;
+import connecthub.Factory;
+import connecthub.PasswordHasher;
+import connecthub.builders.ProfileBuilder;
+import connecthub.builders.UserBuilder;
 import connecthub.entities.Profile;
 import connecthub.entities.User;
 import connecthub.mappers.ProfileMapper;
 import connecthub.mappers.UserMapper;
 import java.awt.HeadlessException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -117,48 +122,72 @@ public class Login extends javax.swing.JFrame {
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         String loginEmail = email.getText().trim();
-        String loginUserpassword = new String(jPasswordField1.getPassword());
+        String loginUserPassword = new String(jPasswordField1.getPassword());
 
-        if (loginUserpassword.equals("") || loginUserpassword.equals("")) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Email or password cannot be empty!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        // Validate email and password fields
+        if (loginEmail.isEmpty() || loginUserPassword.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Email or password cannot be empty!",
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
             return;
         }
 
         try {
-            connecthub.CredentialsValidation cv = new CredentialsValidation(loginEmail, loginUserpassword);
-            if (cv.validate("")) {
-                Predicate<User> emailFilter = user -> user.getEmail().equals(loginEmail);
-                Optional<User> user = UserMapper.get(List.of(emailFilter));
+            // Attempt login
+            Optional<User> optUser = UserMapper.login(loginEmail, loginUserPassword);
+            if (optUser.isPresent()) {
+                User foundUser = optUser.get();
 
-                if (user.isPresent()) {
-                    User foundUser = user.get();
+                // Fetch user's profile
+                Optional<Profile> optProfile = ProfileMapper.get(foundUser.getID());
+                Profile profileUser;
+                if (optProfile.isPresent()) {
+                    profileUser = optProfile.get();
 
-                    Optional<Profile> pm = ProfileMapper.get(foundUser.getID());
-                    if (pm.isPresent()) {
-                        Profile profileUser = pm.get();
-                        javax.swing.JOptionPane.showMessageDialog(this, "Login successful! ", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                        fp = FrontProfile.getInstanceOf();
-                        fp.setU(foundUser);
-                        fp.setP(profileUser);
-                        fp.setVisible(true);
-                        fp.setLocation(null);
-                        setVisible(false);
-
-                    } else {
-                        javax.swing.JOptionPane.showMessageDialog(this, "aloo2", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                    }
-
+                    // Display success message
+                    javax.swing.JOptionPane.showMessageDialog(
+                            this,
+                            "Login successful!",
+                            "Success",
+                            javax.swing.JOptionPane.INFORMATION_MESSAGE
+                    );
                 } else {
-
-                    javax.swing.JOptionPane.showMessageDialog(this, "aloo1", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    ProfileBuilder profileBuilder = ProfileBuilder.getInstance()
+                            .setUserID(foundUser.getID())
+                            .setBio("")
+                            .setProfilePhotoPath("")
+                            .setCoverPhotoPath("");
+                    profileUser = (Profile) Factory.createEntity(profileBuilder.getInstance());
                 }
+                // Proceed to the profile screen
+                FrontProfile fp = FrontProfile.getInstanceOf(foundUser, profileUser);
+//                fp.setUser(foundUser);
+//                fp.setProfile(profileUser);
+                fp.setVisible(true);
+                fp.setLocationRelativeTo(null); // Center the profile window
+                setVisible(false); // Hide the login window
+                return; // Exit the method after successful login
 
             } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Username or password incorrect", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                // User not found or invalid credentials
+                javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "Username or password is incorrect.",
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE
+                );
             }
-
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "An error occurred during login: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            // Handle unexpected errors
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "An error occurred during login: " + e.getMessage(),
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
             e.printStackTrace();
         }
     }//GEN-LAST:event_loginActionPerformed
