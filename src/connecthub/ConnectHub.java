@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 
 public class ConnectHub {
 
-    public static void main(String[] args) throws InvalidKeySpecException {
+//    public static void main(String[] args) throws InvalidKeySpecException {
         // TODO code application logic here
 
         // ########### User test cases ###########
@@ -114,7 +114,7 @@ public class ConnectHub {
 //        CredentialsValidation validation = new CredentialsValidation("ibrahim", "111555333");
 //        boolean isValid = validation.validate("");  // 'data' is not needed and can be passed as an empty string or placeholder
 
-    }
+//    }
 
 // ########### User test cases ###########  
     private static void testCreateUser() throws InvalidKeySpecException {
