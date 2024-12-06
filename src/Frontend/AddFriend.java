@@ -4,22 +4,39 @@
  */
 package Frontend;
 
+import connecthub.FriendsManager;
+import connecthub.controllers.FriendController;
 import connecthub.entities.User;
+import java.util.List;
+import javax.swing.DefaultListModel;
 
 /**
  *
  * @author Mahinour Mohamed
  */
 public class AddFriend extends javax.swing.JFrame {
+
     User u;
     FriendsManagement f;
+    List<User> users;
+
     /**
      * Creates new form AddFriend
      */
-    public AddFriend(User u,FriendsManagement f) {
+    public AddFriend(User u, FriendsManagement f) {
         initComponents();
-        this.u=u;
-        this.f=f;
+        this.u = u;
+        this.f = f;
+    }
+
+    private void fillList() {
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        for (User user : users) {
+            listModel.addElement(user.getUsername());
+
+        }
+        usersList.setModel(listModel);
+
     }
 
     /**
@@ -35,7 +52,7 @@ public class AddFriend extends javax.swing.JFrame {
         name = new javax.swing.JTextField();
         search = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        usersList = new javax.swing.JList<>();
         add = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -66,7 +83,7 @@ public class AddFriend extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(usersList);
 
         add.setBackground(new java.awt.Color(0, 153, 51));
         add.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
@@ -119,11 +136,29 @@ public class AddFriend extends javax.swing.JFrame {
     }//GEN-LAST:event_nameActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-         
+        try{
+        if (!name.getText().isEmpty()) {
+            users = FriendController.searchUsers(name.getText());
+
+        }}
+        catch(Exception e){
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_searchActionPerformed
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-        // TODO add your handling code here:
+          try{
+        if (usersList.getSelectedIndex()!=0) {
+            FriendsManager.sendFriendRequest(u.getID(),users.get(usersList.getSelectedIndex()).getID());
+            fillList();
+
+        }}
+        catch(Exception e){
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
+        
     }//GEN-LAST:event_addActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -135,14 +170,13 @@ public class AddFriend extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton add;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label;
     private javax.swing.JTextField name;
     private javax.swing.JToggleButton search;
+    private javax.swing.JList<String> usersList;
     // End of variables declaration//GEN-END:variables
 }

@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Mahinour Mohamed
  */
 public class ViewPosts extends javax.swing.JFrame {
-
+    
     User u;
     List<Content> allPosts;
 
@@ -30,9 +30,9 @@ public class ViewPosts extends javax.swing.JFrame {
         initComponents();
         this.u = u;
         FillPostList();
-
+        
     }
-
+    
     private void FillPostList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         allPosts = ContentController.getAllPosts(u.getID());
@@ -40,7 +40,7 @@ public class ViewPosts extends javax.swing.JFrame {
             listModel.addElement(content.getContent());
         }
         list.setModel(listModel);
-
+        
     }
 
     /**
@@ -122,14 +122,13 @@ public class ViewPosts extends javax.swing.JFrame {
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
         try {
             int i = list.getSelectedIndex();
-            if(i!=0){
-                        ShowContent s = new ShowContent(allPosts.get(i));
-                    }
-
-
+            if (i != 0) {
+                ShowContent s = new ShowContent(allPosts.get(i));
+            }
+            
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-
+            
         }
     }//GEN-LAST:event_viewActionPerformed
 

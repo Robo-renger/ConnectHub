@@ -18,12 +18,14 @@ import javax.swing.JFileChooser;
  */
 public class AddStory extends javax.swing.JFrame {
      User u;
+     Newsfeed newsfeed;
     /**
      * Creates new form AddStory
      */
-    public AddStory(User u) {
+    public AddStory(User u,Newsfeed newsfeed) {
         initComponents();
         this.u=u;
+        this.newsfeed=newsfeed;
     }
 
     /**
@@ -128,10 +130,9 @@ public class AddStory extends javax.swing.JFrame {
             Image scaledImg = img.getScaledInstance(photo.getWidth(),photo.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon scaledIcon = new ImageIcon(scaledImg);
             photo.setIcon(scaledIcon);
-            if(f == null)
-            {}
-            Story s=new Story(u.getID(),content.getText());
-            ContentMapper.create(s);
+            if(f != null)
+            { Story s=new Story(u.getID(),content.getText(),f.getAbsolutePath());
+            ContentMapper.create(s);}
         }
         catch(Exception e){
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -140,7 +141,10 @@ public class AddStory extends javax.swing.JFrame {
     }//GEN-LAST:event_postActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+        newsfeed.setVisible(true);
+        newsfeed.setLocation(null);
+        setVisible(false);
+        
     }//GEN-LAST:event_formWindowClosing
 
     /**

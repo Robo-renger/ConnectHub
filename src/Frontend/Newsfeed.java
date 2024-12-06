@@ -205,7 +205,7 @@ public class Newsfeed extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void postActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postActionPerformed
-        AddPost p = new AddPost(u);
+        AddPost p = new AddPost(u,this);
         p.setVisible(true);
         p.setLocation(null);
         setVisible(false);
@@ -213,7 +213,7 @@ public class Newsfeed extends javax.swing.JFrame {
     }//GEN-LAST:event_postActionPerformed
 
     private void storyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storyActionPerformed
-        AddStory s = new AddStory(u);
+        AddStory s = new AddStory(u,this);
         s.setVisible(true);
         s.setLocation(null);
         setVisible(false);

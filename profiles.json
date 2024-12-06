@@ -5,4 +5,32 @@
   "profilePhotoPath" : "src/assets/default-profile.png",
   "coverPhotoPath" : "src/assets/default-cover.jpg",
   "type" : "Profile"
+}, {
+  "id" : 2,
+  "userID" : 49,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 3,
+  "userID" : 53,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 4,
+  "userID" : 54,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 5,
+  "userID" : 55,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
 } ]

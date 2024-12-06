@@ -10,13 +10,13 @@ import java.util.List;
 
 public class FriendsManager {
     
-    public void sendFriendRequest(int senderId, int receiverId)
+    public static void sendFriendRequest(int senderId, int receiverId)
     {
         FriendRequest friendRequest = new FriendRequest(senderId, receiverId, "PENDING");
         FriendRequestMapper.create(friendRequest);
     }
     
-    public void acceptFriendRequest(FriendRequest friendRequest)
+    public static void acceptFriendRequest(FriendRequest friendRequest)
     {
         friendRequest.setStatus("ACCEPTED");
         FriendRequestMapper.delete(friendRequest.getID());
@@ -24,13 +24,13 @@ public class FriendsManager {
         FriendMapper.create(friend);
     }
     
-    public void rejectFriendRequest(FriendRequest friendRequest)
+    public static void rejectFriendRequest(FriendRequest friendRequest)
     {
         friendRequest.setStatus("REJECTED");
         FriendRequestMapper.delete(friendRequest.getID());
     }
       
-    public void blockUser(int userId, int blockedId)
+    public static void blockUser(int userId, int blockedId)
     {
         // Remove friendship if it exists
         getFriends().stream()
@@ -55,17 +55,17 @@ public class FriendsManager {
     }
     
     // Getters
-    public List<Friend> getFriends()
+    public static List<Friend> getFriends()
     {
         return FriendMapper.getAll();
     }
     
-    public List<FriendRequest> getFriendRequests()
+    public static List<FriendRequest> getFriendRequests()
     {
         return FriendRequestMapper.getAll();
     }
     
-    public List<Blocked> getBlocks()
+    public static List<Blocked> getBlocks()
     {
         return BlockedMapper.getAll();
     }

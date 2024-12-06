@@ -23,12 +23,12 @@ public class ShowContent extends javax.swing.JFrame {
         this.x=x;
         content.setText(x.getContent());
         content.setPreferredSize(new Dimension(content.getWidth(),content.getHeight()));
-         ImageIcon pro = new ImageIcon(x.getPhotoPath());
+         ImageIcon pro = new ImageIcon(x.getImagePath());
         Image proImg = pro.getImage();
         // Resize the image
         Image scaledImg1 = proImg.getScaledInstance(photo.getWidth(), photo.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon proscaledIcon = new ImageIcon(scaledImg1); // Create new ImageIcon
-        ImageIcon icon = new ImageIcon(x.getPhotoPath());
+        ImageIcon icon = new ImageIcon(x.getImagePath());
         photo.setIcon(icon);
     }
 

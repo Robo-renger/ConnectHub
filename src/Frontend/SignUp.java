@@ -5,7 +5,9 @@
 package Frontend;
 
 import connecthub.Factory;
+import connecthub.builders.ProfileBuilder;
 import connecthub.builders.UserBuilder;
+import connecthub.entities.Profile;
 import connecthub.entities.User;
 import connecthub.exceptions.InvalidDataException;
 import connecthub.mappers.UserMapper;
@@ -168,15 +170,20 @@ public class SignUp extends javax.swing.JFrame {
                         .setUsername(enteredUsername)
                         .setPassword(enteredPassword)
                         .setDateOfBirth(date);
-
                 User newUser = (User) Factory.createEntity(userBuilder.getInstance());
+                ProfileBuilder profileBuilder=ProfileBuilder.getInstance()
+                        .setUserID(newUser.getID())
+                        .setBio("")
+                        .setCoverPhotoPath("")
+                        .setProfilePhotoPath("");
+                Profile newProfile = (Profile) Factory.createEntity(profileBuilder.getInstance());
                 Login l = new Login();
                 l.setVisible(true);
                 l.setLocationRelativeTo(null);
                 setVisible(false);
             }
 
-        } catch (InvalidDataException e) {
+        }  catch (InvalidDataException e) {
             javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -190,6 +197,7 @@ public class SignUp extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         FirstPage.getInstanceOf().setVisible(true);
         FirstPage.getInstanceOf().setLocationRelativeTo(null);
+        setVisible(false);
     }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

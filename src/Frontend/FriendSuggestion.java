@@ -21,32 +21,32 @@ import javax.swing.DefaultListModel;
  * @author Mahinour Mohamed
  */
 public class FriendSuggestion extends javax.swing.JFrame {
+
     User u;
     FriendsManagement f;
-    List<User> users;
+    List<User> friends;
+
     /**
      * Creates new form FriendSuggestion
      */
-    public FriendSuggestion(User u,FriendsManagement f) {
-         initComponents();
-        this.u=u;
-        this.f=f;
-        FillList();
-      
+    public FriendSuggestion(User u, FriendsManagement f) {
+        initComponents();
+        this.u = u;
+        this.f = f;
+        fillList();
+
     }
-    private void FillList(){
+
+    private void fillList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
-         List<Integer> friendsId = FriendController.suggestFriends(u.getID());
-        for (int id : friendsId) {
-            Optional<User>user=UserMapper.get(id);
-            if(user.isPresent()){
-                User s=user.get();
-                users.add(s);
-            listModel.addElement(s.getUsername());
+        friends = FriendController.suggestFriends(u.getID());
+        for (User user : friends) {
+            listModel.addElement(user.getUsername());
+
         }
+
         list.setModel(listModel);
-    }}
-    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -119,34 +119,35 @@ public class FriendSuggestion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-       int j=list.getSelectedIndex();
-        if(j>0){
-           for (User user : users) {
-               if(j==user.getID()){
-               Optional<User> userFound=UserMapper.get(user.getID());
-               if(userFound.isPresent()){
-                   User found=userFound.get();
-                   FriendRequest f=new FriendRequest(u.getID(),found.getID(),"");
-                   FriendRequestMapper.create(f);
-                   
-               }}
-           }
-        
-        
-       }
-        
+       
+        int j = list.getSelectedIndex();
+        try{
+        if (j > 0) {
+            for (User user : friends) {
+
+                FriendRequest f = new FriendRequest(u.getID(), friends.get(j).getID(), "");
+                FriendRequestMapper.create(f);
+                fillList();
+            }
+        }}
+        catch(Exception e){
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
+
+
     }//GEN-LAST:event_addActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-         f.setVisible(true);
-         f.setLocation(null);
-         setVisible(false);
+        f.setVisible(true);
+        f.setLocation(null);
+        setVisible(false);
     }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
      */
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton add;
     private javax.swing.JScrollPane jScrollPane1;

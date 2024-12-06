@@ -35,13 +35,8 @@ public class Logout extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         logout = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Logout");
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Ebrima", 1, 24)); // NOI18N
         jLabel1.setText("Are you sure to logout");
@@ -83,20 +78,14 @@ public class Logout extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        FrontProfile f=FrontProfile.getInstanceOf();
-       f.setVisible(true);
-       f.setLocation(null);
-       setVisible(false);
-        
-    }//GEN-LAST:event_formWindowClosing
-
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
-        u.setStatus("offline");
-        UserMapper.update(u.getID(), u);
-        l.setVisible(true);
-        l.setLocation(null);
-        setVisible(false);
+
+        UserMapper.signOut();
+        FrontProfile f= FrontProfile.getInstanceOf();
+      f.setVisible(true);
+      f.setLocation(null);
+      setVisible(false);
+        
     }//GEN-LAST:event_logoutActionPerformed
 
     /**

@@ -4,7 +4,14 @@
  */
 package Frontend;
 
+import connecthub.FriendsManager;
+import connecthub.controllers.FriendController;
+import connecthub.entities.FriendRequest;
 import connecthub.entities.User;
+import connecthub.mappers.FriendRequestMapper;
+import connecthub.mappers.UserMapper;
+import java.util.List;
+import java.util.Optional;
 import javax.swing.DefaultListModel;
 
 /**
@@ -12,25 +19,35 @@ import javax.swing.DefaultListModel;
  * @author Mahinour Mohamed
  */
 public class FriendsRequest extends javax.swing.JFrame {
+
     User u;
     FriendsManagement f;
+    List<FriendRequest> friendRequestList;
+
     /**
      * Creates new form FriendsRequest
      */
-    public FriendsRequest(User u,FriendsManagement f) {
+    public FriendsRequest(User u, FriendsManagement f) {
         initComponents();
-        this.f=f;
-        this.u=u;
+        this.f = f;
+        this.u = u;
+        fillList();
     }
-    private void FillList() {
+
+    private void fillList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
-         List<Friend>f= FriendRequestMapper.getAll();
-        for (Content content : allPosts) {
-            listModel.addElement(content.getContent());
+        friendRequestList = FriendController.getFriendRequests(u.getID());
+        for (FriendRequest friendRequest : friendRequestList) {
+            Optional<User> user = UserMapper.get(friendRequest.getSenderId());
+            if (user.isPresent()) {
+                User foundUser = user.get();
+                listModel.addElement(foundUser.getUsername());
+            }
         }
         requestList.setModel(listModel);
 
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,21 +134,47 @@ public class FriendsRequest extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void acceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptActionPerformed
+        try {
+            int index = requestList.getSelectedIndex();
 
+            if (index != 0) {
+                FriendsManager.acceptFriendRequest(friendRequestList.get(index));
+                fillList();
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_acceptActionPerformed
 
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
-        // TODO add your handling code here:
+        try {
+            int index = requestList.getSelectedIndex();
+
+            if (index != 0) {
+                if (FriendRequestMapper.delete(friendRequestList.get(index).getID())) {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Remove Successfully", "Message", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+                    fillList();
+                }
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
+
     }//GEN-LAST:event_removeActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+       f.setVisible(true);
+       f.setLocation(null);
+       setVisible(false);
+        
     }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton accept;

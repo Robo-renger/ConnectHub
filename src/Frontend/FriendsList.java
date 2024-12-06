@@ -4,6 +4,7 @@
  */
 package Frontend;
 
+import connecthub.FriendsManager;
 import connecthub.controllers.FriendController;
 import connecthub.entities.Friend;
 import connecthub.entities.User;
@@ -19,34 +20,34 @@ import javax.swing.table.DefaultTableModel;
  * @author Mahinour Mohamed
  */
 public class FriendsList extends javax.swing.JFrame {
+
     User u;
     FriendsManagement f;
+     List<User> friends;
+
     /**
      * Creates new form FriendsList
      */
-    public FriendsList(User u,FriendsManagement f) {
+    public FriendsList(User u, FriendsManagement f) {
         initComponents();
-        this.u=u;
-        this.f=f;
+        this.u = u;
+        this.f = f;
         FriendsTable();
     }
+
     // Fill the table
     private void FriendsTable() {
-       try{
-        List<Friend> friends = FriendController.getAllFriends(u.getID());
-        DefaultTableModel t = (DefaultTableModel) table.getModel();
-        for (Friend friend : friends) {
-            Optional<User>user=UserMapper.get(friend.getUserId());
-            if(user.isPresent()){
-                User s=user.get();
-            t.addRow(new Object[]{s.getUsername(),s.getStatus()});
-            
+        try {
+            friends = FriendController.getAllFriends(u.getID());
+            DefaultTableModel t = (DefaultTableModel) table.getModel();
+            for (User friend : friends) {
+                t.addRow(new Object[]{friend.getUsername(), friend.getStatus()});
             }
-        }}
-       catch(Exception e){
-          javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
-       }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }
 
     /**
@@ -141,32 +142,42 @@ public class FriendsList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void blockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockActionPerformed
-      try{
-          
-      
-      }
-      catch(Exception e){
-          javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        try {
+           int index=table.getSelectedRow();
+           if(index!=0){
+               FriendsManager.blockUser(u.getID(),friends.get(index).getID());
+           }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
-      }        
-        
+        }
+
     }//GEN-LAST:event_blockActionPerformed
 
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
-        // TODO add your handling code here:
+       try {
+           int index=table.getSelectedRow();
+           if(index!=0){
+               FriendController.removeFriend(u.getID(),friends.get(index).getID());
+           }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
+
+        
     }//GEN-LAST:event_removeActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-      f.setVisible(true);
-      f.setLocation(null);
+        f.setVisible(true);
+        f.setLocation(null);
         setVisible(false);
-        
+
     }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton block;
