@@ -22,7 +22,7 @@ public class Validator {
         this.strategy = strategy;
     }
     
-    public boolean validate(String data) {
+    public boolean validate(String data) throws IllegalArgumentException {
         if(strategy == null)
             throw new IllegalStateException("Validation strategy is not set");
         

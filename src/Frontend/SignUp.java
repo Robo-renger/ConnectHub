@@ -156,7 +156,7 @@ public class SignUp extends javax.swing.JFrame {
         String enteredEmail = email.getText();
         String enteredUsername = username.getText();
         String enteredPassword = new String(password.getPassword());
-        System.out.println(enteredUsername + enteredPassword + enteredEmail);
+//        System.out.println(enteredUsername + enteredPassword + enteredEmail);
         try {
             if (enteredEmail.equals("") || enteredUsername.equals("") || enteredPassword.equals("") || jDateChooser1.getDate() == null || jDateChooser1.getDate() == null) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Some fields are Empty!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);

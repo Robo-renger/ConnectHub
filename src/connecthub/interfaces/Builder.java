@@ -15,7 +15,6 @@ import connecthub.entities.User;
 public interface Builder<T> {
 
     T build(); // Method to construct the final object
-    Builder setEntity(T t);
     
 
 }
