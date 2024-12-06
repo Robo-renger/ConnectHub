@@ -21,7 +21,7 @@ public class Newsfeed extends javax.swing.JFrame {
 
     User u;
     List<Content> allStories;
-     List<Content> allPosts ;
+    List<Content> allPosts;
 
     /**
      * Creates new form Newsfeed
@@ -35,33 +35,33 @@ public class Newsfeed extends javax.swing.JFrame {
 
     private void FillPostList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
-         allPosts = ContentController.getAllPosts(u.getID());
+        allPosts = ContentController.getAllPosts(u.getID());
         for (Content content : allPosts) {
             listModel.addElement(content.getContent());
         }
-         List<User> user = FriendController.getAllFriends(u.getID());
+        List<User> user = FriendController.getAllFriends(u.getID());
         for (User user1 : user) {
             List<Content> x = ContentController.getAllPosts(user1.getID());
-              for (Content content : x) {
-            listModel.addElement(content.getContent());
+            for (Content content : x) {
+                listModel.addElement(content.getContent());
+            }
         }
-        }
-              Posts.setModel(listModel);
+        Posts.setModel(listModel);
 
     }
 
     private void FillStoryList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
-         allStories = ContentController.getAllStories(u.getID());
+        allStories = ContentController.getAllStories(u.getID());
         for (Content content : allStories) {
             listModel.addElement(content.getContent());
         }
         List<User> user = FriendController.getAllFriends(u.getID());
         for (User user1 : user) {
             List<Content> x = ContentController.getAllStories(user1.getID());
-              for (Content content : x) {
-            listModel.addElement(content.getContent());
-        }
+            for (Content content : x) {
+                listModel.addElement(content.getContent());
+            }
         }
         Stories.setModel(listModel);
 
@@ -221,44 +221,27 @@ public class Newsfeed extends javax.swing.JFrame {
     }//GEN-LAST:event_storyActionPerformed
 
     private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
-       FillPostList();
-       FillStoryList();
+        FillPostList();
+        FillStoryList();
 
     }//GEN-LAST:event_refreshActionPerformed
 
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
-      try{
-        int i= Posts.getSelectedIndex();
-       int j=Stories.getSelectedIndex();
-       if(j>0){
-           for (Content story : allStories) {
-               if(j==story.getID()){
-               Optional<Content> content=ContentMapper.get(story.getID());
-               if(content.isPresent()){
-                   Content foundContent=content.get();
-               ShowContent s=new ShowContent(foundContent);
-               }}
-           }
-        
-        
-       }
-       else if(i>0){
-           for (Content post : allPosts) {
-               if(j==post.getID()){
-               Optional<Content> content=ContentMapper.get(post.getID());
-               if(content.isPresent()){
-                   Content foundContent=content.get();
-               ShowContent s=new ShowContent(foundContent);
-               }}
-           }
-        
-        
-       }
-      }
-      catch(Exception e){
-         javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        try {
+            int i = Posts.getSelectedIndex();
+            int j = Stories.getSelectedIndex();
+            if (j > 0) {
+                ShowContent s = new ShowContent(allStories.get(j));
 
-      }
+            } else if (i > 0) {
+
+                ShowContent s = new ShowContent(allPosts.get(i));
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_viewActionPerformed
 
     /**

@@ -122,17 +122,13 @@ public class ViewPosts extends javax.swing.JFrame {
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
         try {
             int i = list.getSelectedIndex();
-            for (Content post : allPosts) {
-                if (i == post.getID()) {
-                    Optional<Content> content = ContentMapper.get(post.getID());
-                    if (content.isPresent()) {
-                        Content foundContent = content.get();
-                        ShowContent s = new ShowContent(foundContent);
+            if(i!=0){
+                        ShowContent s = new ShowContent(allPosts.get(i));
                     }
-                }
-            }
+
 
         } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_viewActionPerformed

@@ -5,8 +5,12 @@
 package Frontend;
 
 import connecthub.controllers.FriendController;
+import connecthub.entities.Content;
 import connecthub.entities.Friend;
+import connecthub.entities.FriendRequest;
 import connecthub.entities.User;
+import connecthub.mappers.ContentMapper;
+import connecthub.mappers.FriendRequestMapper;
 import connecthub.mappers.UserMapper;
 import java.util.List;
 import java.util.Optional;
@@ -19,14 +23,15 @@ import javax.swing.DefaultListModel;
 public class FriendSuggestion extends javax.swing.JFrame {
     User u;
     FriendsManagement f;
+    List<User> users;
     /**
      * Creates new form FriendSuggestion
      */
     public FriendSuggestion(User u,FriendsManagement f) {
-        initComponents();
+         initComponents();
         this.u=u;
         this.f=f;
-        
+        FillList();
       
     }
     private void FillList(){
@@ -36,10 +41,11 @@ public class FriendSuggestion extends javax.swing.JFrame {
             Optional<User>user=UserMapper.get(id);
             if(user.isPresent()){
                 User s=user.get();
+                users.add(s);
             listModel.addElement(s.getUsername());
         }
         list.setModel(listModel);
-    }
+    }}
     
 
     /**
@@ -113,7 +119,21 @@ public class FriendSuggestion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-       
+       int j=list.getSelectedIndex();
+        if(j>0){
+           for (User user : users) {
+               if(j==user.getID()){
+               Optional<User> userFound=UserMapper.get(user.getID());
+               if(userFound.isPresent()){
+                   User found=userFound.get();
+                   FriendRequest f=new FriendRequest(u.getID(),found.getID(),"");
+                   FriendRequestMapper.create(f);
+                   
+               }}
+           }
+        
+        
+       }
         
     }//GEN-LAST:event_addActionPerformed
 
