@@ -168,12 +168,14 @@ public class SignUp extends javax.swing.JFrame {
                         .setPassword(enteredPassword)
                         .setDateOfBirth(date);
                 User newUser = (User) Factory.createEntity(userBuilder.getInstance());
-                UserMapper.create(newUser);
                 Login l = new Login();
                 l.setVisible(true);
                 l.setLocationRelativeTo(null);
                 setVisible(false);
             }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         } catch (HeadlessException e) {
             System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);

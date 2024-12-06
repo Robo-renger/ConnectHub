@@ -11,29 +11,27 @@ import java.util.function.Predicate;
 
 public class CredentialsValidation implements ValidationStrategy {
 
-    private String userName;
+    private String email;
     private String password;
 
-    public CredentialsValidation(String userName, String password) {
-        this.userName = userName;
+    public CredentialsValidation(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
     @Override
     public boolean validate(String data) {
 
-        // Create a filter to find users by username
-        Predicate<User> usernameFilter = user -> user.getUsername().equals(userName);
+        // Create a filter to find users by emailFilter
+        Predicate<User> emailFilter = user -> user.getEmail().equals(email);
 
         // Pass the filter to UserMapper.get
-        Optional<User> user = UserMapper.get(List.of(usernameFilter));
+        Optional<User> user = UserMapper.get(List.of(emailFilter));
 
         // Return true if user is found, false otherwise
         if (user.isPresent()) {
-            System.out.println("User found: " + user.get().getUsername());
+            System.out.println("User found: " + user.get().getEmail());
             User foundUser = user.get();
-//            System.out.println(foundUser.toString());
-//            System.out.println(foundUser.getPassword());
 
             try {
                 // Comparing the entered password to the password in the database
@@ -50,7 +48,7 @@ public class CredentialsValidation implements ValidationStrategy {
                 return false;
             }
         } else {
-            System.out.println("No user found with the given username.");
+            System.out.println("No user found with the given emailFilter.");
             return false;
         }
     }

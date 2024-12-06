@@ -7,7 +7,7 @@ import connecthub.interfaces.Identifiable;
 
 public class Factory {
 
-    public static Identifiable createEntity(Builder<? extends Identifiable> builder) {
+    public static Identifiable createEntity(Builder<? extends Identifiable> builder) throws IllegalArgumentException {
         return builder.build();
     }
 }

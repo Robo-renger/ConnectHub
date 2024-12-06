@@ -64,14 +64,18 @@ public class UserBuilder implements Builder<User> {
     }
 
     @Override
-    public User build() {
+    public User build() throws IllegalArgumentException {
         User user = null;
         try {
             user = new User(email, username, password, dateOfBirth);
         } catch (InvalidKeySpecException ex) {
             Logger.getLogger(UserBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }
-        UserMapper.create(user);
+        try {
+            UserMapper.create(user);
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
         return user;
     }
 

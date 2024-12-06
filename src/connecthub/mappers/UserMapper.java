@@ -11,23 +11,20 @@ import java.util.function.Predicate;
 
 public class UserMapper {
 
-    // Static database file path
     private static final String DATABASE_FILE = "users.json";
 
     static {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
-        // Set the database file for DataBaseManager during class loading
     }
 
-    // Retrieve a single user by Filters(username or email,.....)
+    // Retrieve a single user by Filters(username or email, etc.)
     public static Optional<User> get(List<Predicate<User>> filters) {
         try {
             List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
             });
-
             return users.stream()
                     .filter(user -> filters.stream().allMatch(filter -> filter.test(user))) // Apply all filters
-                    .findFirst();  // Return the first matching user
+                    .findFirst();
         } catch (IOException e) {
             System.out.println("Error retrieving user: " + e.getMessage());
             return Optional.empty();
@@ -49,7 +46,6 @@ public class UserMapper {
     // Retrieve all users
     public static List<User> getAll() {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
-//        System.out.println("aloooo");
         try {
             return DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
             });
@@ -59,16 +55,24 @@ public class UserMapper {
         }
     }
 
-    // Create a new user
-    public static void create(User user) {
+    // Create a new user with unique email
+    public static void create(User user) throws IllegalArgumentException {
         try {
+            List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
+            });
+
+            // Check for duplicate email
+            if (users.stream().anyMatch(existingUser -> existingUser.getEmail().equals(user.getEmail()))) {
+                throw new IllegalArgumentException("Email already exists: " + user.getEmail());
+            }
+
             DataBaseManager.getDBM().createEntityWithID(user);
         } catch (IOException e) {
             System.out.println("Error creating user: " + e.getMessage());
         }
     }
 
-    // Delete a user by email
+    // Delete a user by id
     public static boolean delete(int id) {
         try {
             return DataBaseManager.getDBM().deleteEntity(new TypeReference<List<User>>() {
@@ -79,21 +83,30 @@ public class UserMapper {
         }
     }
 
-    // Update an existing user
+    // Update an existing user with unique email
     public static boolean update(int id, User updatedUser) {
         try {
-            updatedUser.setID(id);
+            List<User> users = DataBaseManager.getDBM().readEntities(new TypeReference<List<User>>() {
+            });
 
+            // Check for duplicate email (excluding the user being updated)
+            if (users.stream().anyMatch(existingUser -> existingUser.getEmail().equals(updatedUser.getEmail()) && existingUser.getID() != id)) {
+                throw new IllegalArgumentException("Email already exists: " + updatedUser.getEmail());
+            }
+
+            updatedUser.setID(id);
             return DataBaseManager.getDBM().updateEntity(
-                    new TypeReference<List<User>>() {},
+                    new TypeReference<List<User>>() {
+            },
                     updatedUser,
                     user -> user.getID() == id
             );
-            
         } catch (IOException e) {
             System.out.println("Error updating user: " + e.getMessage());
             return false;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return false;
         }
     }
-
 }

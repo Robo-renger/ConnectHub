@@ -98,8 +98,8 @@ public class ConnectHub {
 //        testGetBlockedUsers(friendsManager);
 //        testDPEntityCreation();
 //        
-        CredentialsValidation validation = new CredentialsValidation("ibrahim", "111555333");
-        boolean isValid = validation.validate("");  // 'data' is not needed and can be passed as an empty string or placeholder
+//        CredentialsValidation validation = new CredentialsValidation("ibrahim", "111555333");
+//        boolean isValid = validation.validate("");  // 'data' is not needed and can be passed as an empty string or placeholder
         
     }
 
