@@ -5,7 +5,6 @@
 package connecthub.builders;
 
 import connecthub.PasswordHasher;
-import connecthub.entities.ContentType;
 import connecthub.entities.User;
 import connecthub.interfaces.Builder;
 import connecthub.mappers.UserMapper;
@@ -54,8 +53,8 @@ public class UserBuilder implements Builder<User> {
         try {
             this.password = PasswordHasher.hashPassword(password);
             return this;
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(UserBuilder.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException e) {
+            Logger.getLogger(UserBuilder.class.getName()).log(Level.SEVERE, null, e);
         }
         return this;
     }

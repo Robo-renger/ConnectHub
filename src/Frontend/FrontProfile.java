@@ -14,7 +14,7 @@ public class FrontProfile extends javax.swing.JFrame {
 
     private static User user;
     private static Profile profile;
-    private static FrontProfile front = null;
+    public static FrontProfile front = null;
     private static Login loginPage;
 
     /**
@@ -289,7 +289,7 @@ public class FrontProfile extends javax.swing.JFrame {
 
             EditProfile edit = new EditProfile(user, profile);
             edit.setVisible(true);
-            edit.setLocation(null);
+            edit.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
         }
@@ -355,7 +355,7 @@ public class FrontProfile extends javax.swing.JFrame {
 
             FriendsManagement f = new FriendsManagement(user);
             f.setVisible(true);
-            f.setLocation(null);
+            f.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
 
@@ -372,7 +372,7 @@ public class FrontProfile extends javax.swing.JFrame {
         }
         ViewPosts view = new ViewPosts(user);
         view.setVisible(true);
-        view.setLocation(null);
+        view.setLocationRelativeTo(null);
         setVisible(false);
     }//GEN-LAST:event_viewPostsActionPerformed
 
@@ -387,7 +387,7 @@ public class FrontProfile extends javax.swing.JFrame {
         try {
             Logout log = new Logout(user, loginPage);
             log.setVisible(true);
-            log.setLocation(null);
+            log.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
 
@@ -406,7 +406,7 @@ public class FrontProfile extends javax.swing.JFrame {
 
             Delete del = new Delete(user, profile, loginPage);
             del.setVisible(true);
-            del.setLocation(null);
+            del.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
 
@@ -424,7 +424,7 @@ public class FrontProfile extends javax.swing.JFrame {
         try {
 
             loginPage.setVisible(true);
-            loginPage.setLocation(null);
+            loginPage.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
 

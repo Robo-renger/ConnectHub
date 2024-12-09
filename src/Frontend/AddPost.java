@@ -113,25 +113,53 @@ public class AddPost extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void postActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postActionPerformed
+
         try {
-            JFileChooser x = new JFileChooser();
-            x.showOpenDialog(this);
-            File f = x.getSelectedFile();
-            ImageIcon i = new ImageIcon(f.getAbsolutePath());
-            Image img = i.getImage();
-            // Resize the image
-            Image scaledImg = img.getScaledInstance(photo.getWidth(), photo.getHeight(), Image.SCALE_SMOOTH);
-            ImageIcon scaledIcon = new ImageIcon(scaledImg);
-            photo.setIcon(scaledIcon);
-            if (f == null) {
-                Post p = new Post(u.getID(), content.getText(), null);
-                ContentMapper.create(p);
-            } else {
-                Post p = new Post(u.getID(), content.getText(), f.getAbsolutePath());
-                ContentMapper.create(p);
+            JFileChooser fileChooser = new JFileChooser();
+            int returnValue = fileChooser.showOpenDialog(this);
+
+            File selectedFile = null;
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                selectedFile = fileChooser.getSelectedFile();
             }
+
+            if ((selectedFile == null || !selectedFile.exists()) && content.getText().trim().isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(
+                        null,
+                        "Both fields are empty! Please provide text content or an image.",
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            if (selectedFile != null && selectedFile.exists()) {
+                ImageIcon originalIcon = new ImageIcon(selectedFile.getAbsolutePath());
+                Image img = originalIcon.getImage();
+
+                Image scaledImg = img.getScaledInstance(photo.getWidth(), photo.getHeight(), Image.SCALE_SMOOTH);
+                ImageIcon scaledIcon = new ImageIcon(scaledImg);
+                photo.setIcon(scaledIcon);
+            }
+
+            Post post = new Post(u.getID(), content.getText().trim(),
+                    selectedFile != null ? selectedFile.getAbsolutePath() : null);
+            ContentMapper.create(post);
+
+            javax.swing.JOptionPane.showMessageDialog(
+                    null,
+                    "Post created successfully!",
+                    "Success",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(
+                    null,
+                    "An error occurred while creating the post. Please try again.",
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_postActionPerformed

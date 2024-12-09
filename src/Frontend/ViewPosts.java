@@ -142,8 +142,11 @@ public class ViewPosts extends javax.swing.JFrame {
         }
         try {
             int i = list.getSelectedIndex();
-            if (i != 0) {
-                ShowContent s = new ShowContent(allPosts.get(i));
+            if (i >= 0) {
+                ShowPost s = new ShowPost(allPosts.get(i), this);
+                s.setVisible(true);
+                s.setLocationRelativeTo(null);
+                setVisible(false);
             }
 
         } catch (Exception e) {

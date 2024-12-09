@@ -41,13 +41,17 @@ public class FriendsList extends javax.swing.JFrame {
         try {
             friends = FriendController.getAllFriends(u.getID());
             DefaultTableModel t = (DefaultTableModel) table.getModel();
+
+            // Clear existing rows before adding new data
+            t.setRowCount(0);
+
+            // Add updated rows to the table
             for (User friend : friends) {
                 t.addRow(new Object[]{friend.getUsername(), friend.getStatus()});
             }
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-
         }
     }
 
@@ -152,8 +156,10 @@ public class FriendsList extends javax.swing.JFrame {
         }
         try {
             int index = table.getSelectedRow();
-            if (index != 0) {
+            if (index >= 0) {
                 FriendsManager.blockUser(u.getID(), friends.get(index).getID());
+                javax.swing.JOptionPane.showMessageDialog(null, "Blocked Successfully!", "success", javax.swing.JOptionPane.ERROR_MESSAGE);
+                FriendsTable();
             }
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -172,8 +178,10 @@ public class FriendsList extends javax.swing.JFrame {
         }
         try {
             int index = table.getSelectedRow();
-            if (index != 0) {
+            if (index >= 0) {
                 FriendController.removeFriend(u.getID(), friends.get(index).getID());
+                javax.swing.JOptionPane.showMessageDialog(null, "Remove Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                FriendsTable();
             }
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -194,7 +202,7 @@ public class FriendsList extends javax.swing.JFrame {
         try {
 
             f.setVisible(true);
-            f.setLocation(null);
+            f.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
 

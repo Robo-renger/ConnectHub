@@ -133,9 +133,10 @@ public class UpdatePass extends javax.swing.JFrame {
             String hashedCurrentPass = PasswordHasher.hashPassword(currentPassword);
             if (currentPassword.isEmpty() || newPassword.isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Some fields are Empty!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            } else if (hashedCurrentPass.equals(u.getPassword())) {
-                u.setPassword(newPassword);
+            } else if (hashedCurrentPass.equals(u.getPassword()) && !(PasswordHasher.hashPassword(newPassword).equals(u.getPassword()))) {
+                u.setPassword(PasswordHasher.hashPassword(newPassword));
                 UserMapper.update(u.getID(), u);
+                javax.swing.JOptionPane.showMessageDialog(null, "Update Password successfully!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             } else {
                 javax.swing.JOptionPane.showMessageDialog(null, "Incorrect Password!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             }

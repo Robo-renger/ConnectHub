@@ -127,21 +127,63 @@ public class AddStory extends javax.swing.JFrame {
     // Add new Story
     private void postActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postActionPerformed
         try {
-            JFileChooser x = new JFileChooser();
-            x.showOpenDialog(this);
-            File f = x.getSelectedFile();
-            ImageIcon i = new ImageIcon(f.getAbsolutePath());
-            Image img = i.getImage();
-            // Resize the image
+            JFileChooser fileChooser = new JFileChooser();
+            int returnValue = fileChooser.showOpenDialog(this);
+
+            if (returnValue != JFileChooser.APPROVE_OPTION) {
+                javax.swing.JOptionPane.showMessageDialog(
+                        null,
+                        "No file selected!",
+                        "Warning",
+                        javax.swing.JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+
+            File selectedFile = fileChooser.getSelectedFile();
+            if (selectedFile == null || !selectedFile.exists()) {
+                javax.swing.JOptionPane.showMessageDialog(
+                        null,
+                        "Invalid file selected!",
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            ImageIcon originalIcon = new ImageIcon(selectedFile.getAbsolutePath());
+            Image img = originalIcon.getImage();
             Image scaledImg = img.getScaledInstance(photo.getWidth(), photo.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon scaledIcon = new ImageIcon(scaledImg);
             photo.setIcon(scaledIcon);
-            if (f != null) {
-                Story s = new Story(u.getID(), content.getText(), f.getAbsolutePath());
-                ContentMapper.create(s);
+
+            if (content.getText().trim().isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(
+                        null,
+                        "Content cannot be empty!",
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE
+                );
+                return;
             }
+
+            Story story = new Story(u.getID(), content.getText().trim(), selectedFile.getAbsolutePath());
+            ContentMapper.create(story);
+
+            javax.swing.JOptionPane.showMessageDialog(
+                    null,
+                    "story created successfully!",
+                    "Success",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(
+                    null,
+                    "An error occurred while creating the post.",
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_postActionPerformed
@@ -157,7 +199,7 @@ public class AddStory extends javax.swing.JFrame {
         try {
 
             newsfeed.setVisible(true);
-            newsfeed.setLocation(null);
+            newsfeed.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
         }

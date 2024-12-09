@@ -10,24 +10,17 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Mahinour Mohamed
- */
-public class ShowContent extends javax.swing.JFrame {
+public class ShowPost extends javax.swing.JFrame {
 
     Content x;
-    Newsfeed newsfeed;
+    ViewPosts viewPost;
 
-    /**
-     * Creates new form ShowContent
-     */
-    public ShowContent(Content x, Newsfeed newsfeed) {
+    public ShowPost(Content x, ViewPosts viewPost) {
         if (x == null) {
             JOptionPane.showMessageDialog(this, "No content to display.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        this.newsfeed = newsfeed;
+        this.viewPost = viewPost;
         this.x = x;
         initComponents();
         initializeContent();
@@ -35,7 +28,6 @@ public class ShowContent extends javax.swing.JFrame {
 //        System.out.println(this.x.getImagePath());
 //        System.out.println(this.x.getContent());
     }
-    
 
     private void initializeContent() {
         // Set the text content
@@ -78,7 +70,7 @@ public class ShowContent extends javax.swing.JFrame {
         photo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("View");
+        setTitle("Show Post");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -97,7 +89,7 @@ public class ShowContent extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(content, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,22 +98,33 @@ public class ShowContent extends javax.swing.JFrame {
                 .addComponent(content, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(photo, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        newsfeed.setVisible(true);
-        newsfeed.setLocationRelativeTo(null);
-        setVisible(false);
+        if (x == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            viewPost.setVisible(true);
+            viewPost.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
      */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel content;
     private javax.swing.JLabel photo;

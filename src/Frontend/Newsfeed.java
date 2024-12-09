@@ -288,23 +288,33 @@ public class Newsfeed extends javax.swing.JFrame {
 
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
         try {
-            int i = Posts.getSelectedIndex();
-            int j = Stories.getSelectedIndex();
-            if (j > 0) {
-                System.out.println("STORYYYYYYYYYY: " + allStories.get(j).getID());
-                ShowContent s = new ShowContent(allStories.get(j));
+            int i = Posts.getSelectedIndex(); // Get the selected index of Posts
+            int j = Stories.getSelectedIndex(); // Get the selected index of Stories
 
-            } else if (i > 0) {
-                System.out.println("pooooooooooooooost: " + allPosts.get(i).getID());
+            // Check if a story is selected
+            if (j >= 0) {
+                // Ensure a valid story is selected
+                ShowContent s = new ShowContent(allStories.get(j), this);
+                s.setVisible(true); // Show the content
+                s.setLocationRelativeTo(null); // Center the window
+                setVisible(false); // Hide the current window
 
-                ShowContent s = new ShowContent(allPosts.get(i));
+            } else if (i >= 0) {
+                // Check if a post is selected
+                ShowContent s = new ShowContent(allPosts.get(i), this);
+                s.setVisible(true); // Show the content
+                s.setLocationRelativeTo(null); // Center the window
+                setVisible(false); // Hide the current window
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-
         }
+
+
     }//GEN-LAST:event_viewActionPerformed
 
     /**

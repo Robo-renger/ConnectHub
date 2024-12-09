@@ -128,7 +128,7 @@ public class FriendsManagement extends javax.swing.JFrame {
 
             FriendsRequest f = new FriendsRequest(u, this);
             f.setVisible(true);
-            f.setLocation(null);
+            f.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
 
@@ -147,7 +147,7 @@ public class FriendsManagement extends javax.swing.JFrame {
 
             FrontProfile f = FrontProfile.getInstanceOf();
             f.setVisible(true);
-            f.setLocation(null);
+            f.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
 
@@ -166,7 +166,7 @@ public class FriendsManagement extends javax.swing.JFrame {
 
             AddFriend a = new AddFriend(u, this);
             a.setVisible(true);
-            a.setLocation(null);
+            a.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
 
@@ -185,7 +185,7 @@ public class FriendsManagement extends javax.swing.JFrame {
 
             FriendsList f = new FriendsList(u, this);
             f.setVisible(true);
-            f.setLocation(null);
+            f.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
 
@@ -205,7 +205,7 @@ public class FriendsManagement extends javax.swing.JFrame {
 
             FriendSuggestion f = new FriendSuggestion(u, this);
             f.setVisible(true);
-            f.setLocation(null);
+            f.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
 

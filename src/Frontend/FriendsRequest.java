@@ -152,7 +152,7 @@ public class FriendsRequest extends javax.swing.JFrame {
         try {
             int index = requestList.getSelectedIndex();
 
-            if (index != 0) {
+            if (index >= 0) {
                 FriendsManager.acceptFriendRequest(friendRequestList.get(index));
                 fillList();
             }
@@ -173,7 +173,7 @@ public class FriendsRequest extends javax.swing.JFrame {
         try {
             int index = requestList.getSelectedIndex();
 
-            if (index != 0) {
+            if (index >= 0) {
                 if (FriendRequestMapper.delete(friendRequestList.get(index).getID())) {
                     javax.swing.JOptionPane.showMessageDialog(null, "Remove Successfully", "Message", javax.swing.JOptionPane.ERROR_MESSAGE);
 
@@ -198,7 +198,7 @@ public class FriendsRequest extends javax.swing.JFrame {
         try {
 
             f.setVisible(true);
-            f.setLocation(null);
+            f.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
 
