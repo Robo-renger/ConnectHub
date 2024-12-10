@@ -5,19 +5,22 @@
 package Frontend;
 
 import connecthub.entities.User;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Mahinour Mohamed
  */
 public class FriendsManagement extends javax.swing.JFrame {
-     User u;
+
+    User u;
+
     /**
      * Creates new form FriendsManegment
      */
     public FriendsManagement(User u) {
         initComponents();
-        this.u=u;
+        this.u = u;
     }
 
     /**
@@ -113,45 +116,105 @@ public class FriendsManagement extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void friendsRequestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsRequestsActionPerformed
-       FriendsRequest f=new FriendsRequest(u);
-        f.setVisible(true);
-        f.setLocation(null);
-        setVisible(false);
+
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            FriendsRequest f = new FriendsRequest(u, this);
+            f.setVisible(true);
+            f.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_friendsRequestsActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-       FrontProfile f= FrontProfile.getInstanceOf();
-        f.setVisible(true);
-        f.setLocation(null);
-        setVisible(false);
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            FrontProfile f = FrontProfile.getInstanceOf();
+            f.setVisible(true);
+            f.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_formWindowClosing
 
     private void addFriendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFriendActionPerformed
-       AddFriend a=new AddFriend();
-       a.setVisible(true);
-       a.setLocation(null);
-        setVisible(false);
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            AddFriend a = new AddFriend(u, this);
+            a.setVisible(true);
+            a.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_addFriendActionPerformed
 
     private void friendsListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsListActionPerformed
-      FriendsList f=new FriendsList(u);
-      f.setVisible(true);
-      f.setLocation(null);
-      setVisible(false);
-      
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            FriendsList f = new FriendsList(u, this);
+            f.setVisible(true);
+            f.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
+
     }//GEN-LAST:event_friendsListActionPerformed
 
     private void friendSuggestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendSuggestionActionPerformed
-        FriendSuggestion f= new FriendSuggestion(u);
-        f.setVisible(true);
-        f.setLocation(null);
-        setVisible(false);
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            FriendSuggestion f = new FriendSuggestion(u, this);
+            f.setVisible(true);
+            f.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_friendSuggestionActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton addFriend;

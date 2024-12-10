@@ -14,9 +14,10 @@ public class Profile implements Identifiable {
     private String profilePhotoPath;
     private String coverPhotoPath;
     private static final String TYPE = "Profile";
-    
+
 //    Default constructor for Jackson
-    public Profile() {} 
+    public Profile() {
+    }
 
     public Profile(int userID, String bio, String profilePhotoPath, String coverPhotoPath) {
         this.userID = userID;
@@ -24,56 +25,58 @@ public class Profile implements Identifiable {
         this.profilePhotoPath = profilePhotoPath;
         this.coverPhotoPath = coverPhotoPath;
     }
-    
+
 //    Getters
     @Override
     public int getID() {
         return id;
     }
-    
-    public int getUserID()
-    {
+
+    public int getUserID() {
         return userID;
     }
-    
-    public String getProfilePhotoPath()
-    {
+
+    public String getProfilePhotoPath() {
         return profilePhotoPath;
     }
-    
-    public String getCoverPhotoPath()
-    {
+
+    public String getCoverPhotoPath() {
+        System.out.println(coverPhotoPath);
         return coverPhotoPath;
     }
-    
-    public String getBio()
-    {
+
+    public String getBio() {
         return bio;
     }
 
     public String getType() {
         return TYPE;
     }
-    
+
 //    Setters
     @Override
     public void setID(int id) {
         this.id = id;
     }
-    
-    public void setProfilePhotoPath(String data)
-    {
-        profilePhotoPath = data;
+
+    public void setProfilePhotoPath(String data) {
+        if (data.equals("")) {
+            profilePhotoPath = "src/assets/default-profile.png";
+        } else {
+            profilePhotoPath = data;
+        }
     }
-    
-    public void setCoverPhotoPath(String data)
-    {
-        coverPhotoPath = data;
+
+    public void setCoverPhotoPath(String data) {
+        if (data.equals("")) {
+            coverPhotoPath = "src/assets/default-profile.png";
+        } else {
+            coverPhotoPath = data;
+        }
     }
-    
-    public void setBio(String data)
-    {
+
+    public void setBio(String data) {
         bio = data;
     }
-  
+
 }

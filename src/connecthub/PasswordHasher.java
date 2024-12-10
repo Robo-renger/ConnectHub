@@ -1,41 +1,41 @@
 package connecthub;
+
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.SecureRandom;
 import java.util.Base64;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 
 public class PasswordHasher {
 
-    private static final int ITERATIONS = 10000;
-    private static final int KEY_LENGTH = 256;
-
-    // Static salt used for all passwords
-    private static final String STATIC_SALT = generateStaticSalt();
-
-    // Generate a static salt once
-    private static String generateStaticSalt() {
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
-        return Base64.getEncoder().encodeToString(salt);
-    }
-
-    public static String getSalt() {
-        return STATIC_SALT;
-    }
+    // Static salt (shared across all passwords)
+    private static final String STATIC_SALT = "StaticSaltValue";
 
     // Hash a password with the static salt
-    public static String hashPassword(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), Base64.getDecoder().decode(STATIC_SALT), ITERATIONS, KEY_LENGTH);
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-        byte[] hashedPassword = factory.generateSecret(spec).getEncoded();
-        return Base64.getEncoder().encodeToString(hashedPassword);
+    public static String hashPassword(String password) throws NoSuchAlgorithmException {
+        // Combine password and static salt
+        String saltedPassword = password + STATIC_SALT;
+        Throwable throwable = new Throwable();
+
+        // Print the stack trace to the standard output
+//        throwable.printStackTrace();
+//        System.out.println("pasword:" + password);
+//        System.out.println("hashed counter");
+        // Hash the salted password
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hashedBytes = md.digest(saltedPassword.getBytes());
+
+        // Encode the hash as a Base64 string
+        return Base64.getEncoder().encodeToString(hashedBytes);
     }
-    // Verify a password by comparing it with a stored hash
-    public static boolean verifyPassword(String password, String hashedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException {
+
+    // Verify a password by hashing it with the static salt and comparing it to the stored hash
+    public static boolean verifyPassword(String password, String hashedPassword) throws NoSuchAlgorithmException {
+        // Combine input password and static salt
+        String saltedPassword = password + STATIC_SALT;
+//        System.out.println("salted pass:" + saltedPassword);
+        // Hash the salted password
         String hashedInputPassword = hashPassword(password);
+//        System.out.println("hashed input: " + hashedInputPassword);
+        // Compare the hashed input password with the stored hashed password
         return hashedInputPassword.equals(hashedPassword);
     }
 }

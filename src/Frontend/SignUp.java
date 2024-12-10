@@ -4,11 +4,19 @@
  */
 package Frontend;
 
+import connecthub.Factory;
+import connecthub.builders.ProfileBuilder;
+import connecthub.builders.UserBuilder;
+import connecthub.entities.Profile;
 import connecthub.entities.User;
+import connecthub.exceptions.InvalidDataException;
 import connecthub.mappers.UserMapper;
 import java.awt.HeadlessException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,11 +27,9 @@ public class SignUp extends javax.swing.JFrame {
     /**
      * Creates new form SignUp
      */
-   
     public SignUp() {
-        
+
         initComponents();
-       
 
     }
 
@@ -153,19 +159,35 @@ public class SignUp extends javax.swing.JFrame {
         String enteredEmail = email.getText();
         String enteredUsername = username.getText();
         String enteredPassword = new String(password.getPassword());
-
+//        System.out.println(enteredUsername + enteredPassword + enteredEmail);
         try {
             if (enteredEmail.equals("") || enteredUsername.equals("") || enteredPassword.equals("") || jDateChooser1.getDate() == null || jDateChooser1.getDate() == null) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Some fields are Empty!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             } else {
                 LocalDate date = jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                User newUser = new User(enteredEmail, enteredUsername, enteredPassword, date);
-                UserMapper.create(newUser);
+                UserBuilder userBuilder = UserBuilder.getInstance()
+                        .setEmail(enteredEmail)
+                        .setUsername(enteredUsername)
+                        .setPassword(enteredPassword)
+                        .setDateOfBirth(date);
+                User newUser = (User) Factory.createEntity(userBuilder.getInstance());
+                ProfileBuilder profileBuilder=ProfileBuilder.getInstance()
+                        .setUserID(newUser.getID())
+                        .setBio("")
+                        .setCoverPhotoPath("")
+                        .setProfilePhotoPath("");
+                Profile newProfile = (Profile) Factory.createEntity(profileBuilder.getInstance());
                 Login l = new Login();
                 l.setVisible(true);
                 l.setLocationRelativeTo(null);
                 setVisible(false);
             }
+
+        }  catch (InvalidDataException e) {
+            javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         } catch (HeadlessException e) {
             System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -175,13 +197,8 @@ public class SignUp extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         FirstPage.getInstanceOf().setVisible(true);
         FirstPage.getInstanceOf().setLocationRelativeTo(null);
+        setVisible(false);
     }//GEN-LAST:event_formWindowClosing
-
-//        System.out.println("Running Test Case 1: Create User");
-//        User newUser = new User("roborenger72@gmail.com", "Ziad", "12341231", LocalDate.of(2003, 10, 26));
-//        UserMapper.create(newUser);
-//        System.out.println("User created successfully.");
-//    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton create;

@@ -4,20 +4,88 @@
  */
 package Frontend;
 
+import connecthub.controllers.ContentController;
+import connecthub.controllers.FriendController;
+import connecthub.entities.Content;
+import connecthub.entities.Profile;
 import connecthub.entities.User;
+import connecthub.mappers.ContentMapper;
+import connecthub.mappers.ProfileMapper;
+import connecthub.mappers.UserMapper;
+import java.util.List;
+import java.util.Optional;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Mahinour Mohamed
  */
 public class Newsfeed extends javax.swing.JFrame {
+
     User u;
+    Profile p;
+    List<Content> allStories;
+    List<Content> allPosts;
+
     /**
      * Creates new form Newsfeed
      */
-    public Newsfeed(User u) {
+    public Newsfeed(User u, Profile p) {
+        if (u == null || p == null) {
+            throw new IllegalArgumentException("User and Profile cannot be null");
+        }
         initComponents();
-        this.u=u;
+        Optional<User> logged = UserMapper.getLoggedInUser();
+        if (!logged.isEmpty()) {
+            this.u = logged.get();
+        }
+        for (Profile profile : ProfileMapper.getAll()) {
+            if (profile.getUserID() == this.u.getID()) {
+                this.p = profile;
+            }
+        }
+        if (this.u == null || this.p == null) {
+            throw new IllegalArgumentException("User and Profile cannot be null");
+        }
+        FillPostList();
+        FillStoryList();
+    }
+
+    private void FillPostList() {
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        allPosts = ContentController.getAllPosts(u.getID());
+        for (Content content : allPosts) {
+            listModel.addElement(content.getContent());
+        }
+        List<User> user = FriendController.getAllFriends(u.getID());
+        for (User user1 : user) {
+            List<Content> x = ContentController.getAllPosts(user1.getID());
+            for (Content content : x) {
+                listModel.addElement(content.getContent());
+                allPosts.add(content);
+            }
+        }
+        Posts.setModel(listModel);
+
+    }
+
+    private void FillStoryList() {
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        allStories = ContentController.getAllStories(u.getID());
+        for (Content content : allStories) {
+            listModel.addElement(content.getContent());
+        }
+        List<User> user = FriendController.getAllFriends(u.getID());
+        for (User user1 : user) {
+            List<Content> x = ContentController.getAllStories(user1.getID());
+            for (Content content : x) {
+                listModel.addElement(content.getContent());
+                allStories.add(content);
+            }
+        }
+        Stories.setModel(listModel);
+
     }
 
     /**
@@ -31,7 +99,6 @@ public class Newsfeed extends javax.swing.JFrame {
 
         refresh = new javax.swing.JToggleButton();
         story = new javax.swing.JToggleButton();
-        friendsSuggestions = new javax.swing.JToggleButton();
         post = new javax.swing.JToggleButton();
         view = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -66,16 +133,6 @@ public class Newsfeed extends javax.swing.JFrame {
         story.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 storyActionPerformed(evt);
-            }
-        });
-
-        friendsSuggestions.setBackground(new java.awt.Color(0, 51, 102));
-        friendsSuggestions.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
-        friendsSuggestions.setForeground(new java.awt.Color(255, 255, 255));
-        friendsSuggestions.setText("Friends Suggestions");
-        friendsSuggestions.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                friendsSuggestionsActionPerformed(evt);
             }
         });
 
@@ -123,12 +180,10 @@ public class Newsfeed extends javax.swing.JFrame {
                         .addGap(49, 49, 49)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(story, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(post))
-                        .addGap(31, 31, 31)
-                        .addComponent(friendsSuggestions)
-                        .addGap(45, 45, 45)
+                        .addComponent(post)
+                        .addGap(56, 56, 56)
+                        .addComponent(story, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)
                         .addComponent(refresh)
                         .addGap(50, 50, 50)
                         .addComponent(view, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -151,69 +206,126 @@ public class Newsfeed extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(friendsSuggestions)
-                            .addComponent(refresh)
-                            .addComponent(view))
-                        .addGap(52, 52, 52))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(post)
-                        .addGap(18, 18, 18)
-                        .addComponent(story)
-                        .addGap(20, 20, 20))))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(refresh)
+                    .addComponent(view)
+                    .addComponent(story)
+                    .addComponent(post))
+                .addGap(52, 52, 52))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-       FrontProfile.getInstanceOf();
-        
+        if (u == null || p == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            FrontProfile f = FrontProfile.getInstanceOf();
+            f.setVisible(true);
+            f.setLocation(null);
+            setVisible(false);
+        } catch (Exception e) {
+        }
+
     }//GEN-LAST:event_formWindowClosing
 
     private void postActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postActionPerformed
-      AddPost p=new AddPost(u);
-      p.setVisible(true);
-      p.setLocation(null);
-      setVisible(false);
-        
+        if (u == null || p == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        System.out.println("POST WE USER");
+        System.out.println(u);
+
+        System.out.println("POST IDD");
+        System.out.println(p.getID()); // Debugging log for profile ID
+
+        AddPost addPostWindow = new AddPost(u, this);
+        addPostWindow.setVisible(true);
+        addPostWindow.setLocationRelativeTo(null); // Center the window
+        setVisible(false);
+
     }//GEN-LAST:event_postActionPerformed
 
     private void storyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storyActionPerformed
-       AddStory s=new AddStory(u);
-       s.setVisible(true);
-       s.setLocation(null);
-       setVisible(false);
-        
+        if (u == null || p == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            AddStory s = new AddStory(u, this);
+            s.setVisible(true);
+            s.setLocationRelativeTo(null); // Center the window
+            setVisible(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "An error occurred while opening AddStory: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+
     }//GEN-LAST:event_storyActionPerformed
 
-    private void friendsSuggestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsSuggestionsActionPerformed
-       FriendSuggestion f=new FriendSuggestion(u);
-        f.setVisible(true);
-        f.setLocation(null);
-        setVisible(false);
-    }//GEN-LAST:event_friendsSuggestionsActionPerformed
-
     private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
-      
-        
+        FillPostList();
+        FillStoryList();
+
     }//GEN-LAST:event_refreshActionPerformed
 
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
-        // TODO add your handling code here:
+        try {
+            int i = Posts.getSelectedIndex(); // Get the selected index of Posts
+            int j = Stories.getSelectedIndex(); // Get the selected index of Stories
+
+            // Check if a story is selected
+            if (j >= 0) {
+                // Ensure a valid story is selected
+                ShowContent s = new ShowContent(allStories.get(j), this);
+                s.setVisible(true); // Show the content
+                s.setLocationRelativeTo(null); // Center the window
+                setVisible(false); // Hide the current window
+
+            } else if (i >= 0) {
+                // Check if a post is selected
+                ShowContent s = new ShowContent(allPosts.get(i), this);
+                s.setVisible(true); // Show the content
+                s.setLocationRelativeTo(null); // Center the window
+                setVisible(false); // Hide the current window
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+
+
     }//GEN-LAST:event_viewActionPerformed
 
     /**
      * @param args the command line arguments
      */
-   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> Posts;
     private javax.swing.JList<String> Stories;
-    private javax.swing.JToggleButton friendsSuggestions;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel label;
@@ -223,4 +335,5 @@ public class Newsfeed extends javax.swing.JFrame {
     private javax.swing.JToggleButton story;
     private javax.swing.JToggleButton view;
     // End of variables declaration//GEN-END:variables
+
 }

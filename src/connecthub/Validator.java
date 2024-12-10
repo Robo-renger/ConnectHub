@@ -1,15 +1,31 @@
 package connecthub;
 
+import connecthub.interfaces.ValidationStrategy;
+
 public class Validator {
-    private static final String EMAIL_REGEX = "^[a-z0-9]+@[a-z]+\\.[a-z]+$";
+
+    private static Validator instance; // Singleton instance
+    private ValidationStrategy strategy; // Validation strategy
+
+    private Validator() {} // Private constructor to prevent instantiation
     
-    public static boolean validate(int i, String data)
+    public static Validator getInstance()
     {
-        switch(i)
-        {
-            case 0:
-                return data.matches(EMAIL_REGEX);
-        }
-        return false;
+        if(instance == null)
+            instance = new Validator();
+                    
+        return instance;
+    }
+    
+    public void setStrategy(ValidationStrategy strategy)
+    {
+        this.strategy = strategy;
+    }
+    
+    public boolean validate(String data) throws IllegalArgumentException {
+        if(strategy == null)
+            throw new IllegalStateException("Validation strategy is not set");
+        
+        return strategy.validate(data);
     }
 }

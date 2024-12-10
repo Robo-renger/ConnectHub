@@ -1,32 +1,39 @@
 package Frontend;
 
+import connecthub.CredentialsValidation;
+import connecthub.Factory;
+import connecthub.PasswordHasher;
+import connecthub.builders.ProfileBuilder;
+import connecthub.builders.UserBuilder;
 import connecthub.entities.Profile;
 import connecthub.entities.User;
 import connecthub.mappers.ProfileMapper;
 import connecthub.mappers.UserMapper;
 import java.awt.HeadlessException;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
 public class Login extends javax.swing.JFrame {
 
-    
+    private FrontProfile fp;
 
     public Login() {
         initComponents();
-       
+
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        password = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        username = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
         login = new javax.swing.JToggleButton();
+        jPasswordField1 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
@@ -36,23 +43,17 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        password.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordActionPerformed(evt);
-            }
-        });
-
         jLabel1.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 102));
-        jLabel1.setText("Username");
+        jLabel1.setText("Email");
 
         jLabel2.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 51, 102));
         jLabel2.setText("Password");
 
-        username.addActionListener(new java.awt.event.ActionListener() {
+        email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameActionPerformed(evt);
+                emailActionPerformed(evt);
             }
         });
 
@@ -66,6 +67,12 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -76,9 +83,9 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(email, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                    .addComponent(jPasswordField1))
                 .addGap(32, 32, 32))
             .addGroup(layout.createSequentialGroup()
                 .addGap(109, 109, 109)
@@ -90,13 +97,13 @@ public class Login extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addGap(30, 30, 30)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
                 .addComponent(login)
                 .addContainerGap(46, Short.MAX_VALUE))
         );
@@ -104,59 +111,97 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
+    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_usernameActionPerformed
+    }//GEN-LAST:event_emailActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         FirstPage.getInstanceOf().setVisible(true);
         FirstPage.getInstanceOf().setLocationRelativeTo(null);
     }//GEN-LAST:event_formWindowClosing
 
-    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordActionPerformed
-
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        String loginUsername = username.getText();
-        String loginUserpassword = password.getText(); // Assuming this gets the password
+        String loginEmail = email.getText().trim();
+        String loginUserPassword = new String(jPasswordField1.getPassword());
 
-        // Define predicates for username and password
-        Predicate<User> usernameFilter = user -> user.getUsername().equals(loginUsername);
-        Predicate<User> passwordFilter = user -> user.getPassword().equals(loginUserpassword);
+        // Validate email and password fields
+        if (loginEmail.isEmpty() || loginUserPassword.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Email or password cannot be empty!",
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
 
-        // Use the `get` method to find a matching user
-        Optional<User> optionalUser = UserMapper.get(Arrays.asList(usernameFilter, passwordFilter));
         try {
+            // Attempt login
+            Optional<User> optUser = UserMapper.login(loginEmail, loginUserPassword);
+            if (optUser.isPresent()) {
+                User foundUser = optUser.get();
 
-            if (optionalUser.isPresent()) {
-                User loggedInUser = optionalUser.get();
-                Optional<Profile> pro = ProfileMapper.get(loggedInUser.getID());
-                Profile loggedInProfile= pro.get();
-                javax.swing.JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + loggedInUser.getUsername(), "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                loggedInUser.setStatus("online");
-                FrontProfile front= FrontProfile.getInstanceOf();
-                front.setU(loggedInUser);
-                front.setP(loggedInProfile);
-                front.setL(this);
-                 front.setVisible(true);
-                 front.setLocation(null);
-                 setVisible(false);
-                
-            
+                // Fetch user's profile
+                Optional<Profile> optProfile = ProfileMapper.get(foundUser.getID());
+                Profile profileUser;
+                if (optProfile.isPresent()) {
+                    profileUser = optProfile.get();
+
+                    // Display success message
+                    javax.swing.JOptionPane.showMessageDialog(
+                            this,
+                            "Login successful!",
+                            "Success",
+                            javax.swing.JOptionPane.INFORMATION_MESSAGE
+                    );
+                } else {
+                    ProfileBuilder profileBuilder = ProfileBuilder.getInstance()
+                            .setUserID(foundUser.getID())
+                            .setBio("")
+                            .setProfilePhotoPath("")
+                            .setCoverPhotoPath("");
+                    profileUser = (Profile) Factory.createEntity(profileBuilder.getInstance());
+                }
+                // Proceed to the profile screen
+                FrontProfile fp = FrontProfile.getInstanceOf(foundUser, profileUser);
+//                fp.setUser(foundUser);
+//                fp.setProfile(profileUser);
+                fp.setVisible(true);
+                fp.setLocationRelativeTo(null); // Center the profile window
+                setVisible(false); // Hide the login window
+                return; // Exit the method after successful login
+
+            } else {
+                // User not found or invalid credentials
+                javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "Username or password is incorrect.",
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE
+                );
             }
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Invalid username or password!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-
+            // Handle unexpected errors
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "An error occurred during login: " + e.getMessage(),
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+            e.printStackTrace();
         }
     }//GEN-LAST:event_loginActionPerformed
 
+    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField email;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JToggleButton login;
-    private javax.swing.JTextField password;
-    private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }
