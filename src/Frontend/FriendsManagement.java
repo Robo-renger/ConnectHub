@@ -4,17 +4,23 @@
  */
 package Frontend;
 
+import connecthub.entities.User;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mahinour Mohamed
  */
 public class FriendsManagement extends javax.swing.JFrame {
 
+    User u;
+
     /**
      * Creates new form FriendsManegment
      */
-    public FriendsManagement() {
+    public FriendsManagement(User u) {
         initComponents();
+        this.u = u;
     }
 
     /**
@@ -28,7 +34,8 @@ public class FriendsManagement extends javax.swing.JFrame {
 
         friendsRequests = new javax.swing.JToggleButton();
         friendsList = new javax.swing.JToggleButton();
-        friendsList1 = new javax.swing.JToggleButton();
+        friendSuggestion = new javax.swing.JToggleButton();
+        addFriend = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Friends Management");
@@ -52,11 +59,31 @@ public class FriendsManagement extends javax.swing.JFrame {
         friendsList.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
         friendsList.setForeground(new java.awt.Color(255, 255, 255));
         friendsList.setText("Friends List");
+        friendsList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                friendsListActionPerformed(evt);
+            }
+        });
 
-        friendsList1.setBackground(new java.awt.Color(0, 51, 102));
-        friendsList1.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
-        friendsList1.setForeground(new java.awt.Color(255, 255, 255));
-        friendsList1.setText("Friends Suggestions");
+        friendSuggestion.setBackground(new java.awt.Color(0, 51, 102));
+        friendSuggestion.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        friendSuggestion.setForeground(new java.awt.Color(255, 255, 255));
+        friendSuggestion.setText("Friends Suggestions");
+        friendSuggestion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                friendSuggestionActionPerformed(evt);
+            }
+        });
+
+        addFriend.setBackground(new java.awt.Color(0, 51, 102));
+        addFriend.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        addFriend.setForeground(new java.awt.Color(255, 255, 255));
+        addFriend.setText("Add Friend");
+        addFriend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addFriendActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,71 +94,132 @@ public class FriendsManagement extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(friendsRequests, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(friendsList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(friendsList1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(friendSuggestion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addFriend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(104, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(59, 59, 59)
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addComponent(addFriend)
+                .addGap(18, 18, 18)
                 .addComponent(friendsRequests)
                 .addGap(18, 18, 18)
                 .addComponent(friendsList)
                 .addGap(18, 18, 18)
-                .addComponent(friendsList1)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addComponent(friendSuggestion)
+                .addGap(32, 32, 32))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void friendsRequestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsRequestsActionPerformed
-        // TODO add your handling code here:
+
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            FriendsRequest f = new FriendsRequest(u, this);
+            f.setVisible(true);
+            f.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_friendsRequestsActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            FrontProfile f = FrontProfile.getInstanceOf();
+            f.setVisible(true);
+            f.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_formWindowClosing
+
+    private void addFriendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFriendActionPerformed
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            AddFriend a = new AddFriend(u, this);
+            a.setVisible(true);
+            a.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_addFriendActionPerformed
+
+    private void friendsListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsListActionPerformed
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            FriendsList f = new FriendsList(u, this);
+            f.setVisible(true);
+            f.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
+
+    }//GEN-LAST:event_friendsListActionPerformed
+
+    private void friendSuggestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendSuggestionActionPerformed
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            FriendSuggestion f = new FriendSuggestion(u, this);
+            f.setVisible(true);
+            f.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_friendSuggestionActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FriendsManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FriendsManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FriendsManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FriendsManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FriendsManagement().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton addFriend;
+    private javax.swing.JToggleButton friendSuggestion;
     private javax.swing.JToggleButton friendsList;
-    private javax.swing.JToggleButton friendsList1;
     private javax.swing.JToggleButton friendsRequests;
     // End of variables declaration//GEN-END:variables
 }

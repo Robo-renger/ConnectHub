@@ -1,15 +1,22 @@
 [ {
-  "id" : 3,
-  "userID" : 9,
-  "bio" : "Hello, world!",
-  "profilePhotoPath" : "new/path/profile.jpg",
-  "coverPhotoPath" : "new/path/cover.jpg",
+  "id" : 1,
+  "userID" : 1,
+  "bio" : "\n\n3",
+  "profilePhotoPath" : "C:\\Users\\ibrahim alkady\\Pictures\\Screenshots\\Screenshot (8).png",
+  "coverPhotoPath" : "C:\\Users\\ibrahim alkady\\Pictures\\Screenshots\\Screenshot (12).png",
   "type" : "Profile"
 }, {
   "id" : 2,
-  "userID" : 11,
-  "bio" : "Updated Bio",
-  "profilePhotoPath" : "new/path/profile.jpg",
-  "coverPhotoPath" : "new/path/cover.jpg",
+  "userID" : 2,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 3,
+  "userID" : 3,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
   "type" : "Profile"
 } ]

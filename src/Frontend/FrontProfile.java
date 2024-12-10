@@ -1,20 +1,110 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Frontend;
+
+import connecthub.entities.Profile;
+import connecthub.entities.User;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Mahinour Mohamed
  */
-public class Profile extends javax.swing.JFrame {
-  
+public class FrontProfile extends javax.swing.JFrame {
+
+    private static User user;
+    private static Profile profile;
+    public static FrontProfile front = null;
+    private static Login loginPage;
+
     /**
      * Creates new form Profile
+     *
+     * @param user
+     * @param profile
+     * @return
      */
-    public Profile() {
+    public static FrontProfile getInstanceOf(User u, Profile p) {
+        if (front == null) {
+            if (u == null || p == null) {
+                throw new IllegalArgumentException("User and Profile cannot be null when initializing FrontProfile.");
+            }
+            front = new FrontProfile(u, p);
+        } else {
+            if (u != null && p != null) {
+                user = u;
+                profile = p;
+                front.initializeProfile(user, profile);
+            }
+        }
+        return front;
+    }
+
+    public static FrontProfile getInstanceOf() {
+        if (front == null) {
+            throw new IllegalStateException("FrontProfile instance has not been initialized. Call getInstanceOf(User, Profile) first.");
+        }
+        return front;
+    }
+
+    private void initializeProfile(User u, Profile p) {
+        if (u == null || p == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Error initializing profile: User or profile data is missing.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        System.out.println("INITIALIZING: .....");
+        System.out.println(u);
+        System.out.println("INIT POST ID");
+        System.out.println(p.getID());
+
+        user = u;
+        profile = p;
+
+        // Set user profile image
+        ImageIcon pro = new ImageIcon(p.getProfilePhotoPath());
+        Image proImg = pro.getImage();
+        Image scaledImg1 = proImg.getScaledInstance(profilePhoto.getWidth(), profilePhoto.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon proScaledIcon = new ImageIcon(scaledImg1);
+
+        // Set user cover photo
+        ImageIcon cover = new ImageIcon(p.getCoverPhotoPath());
+        Image coverImg = cover.getImage();
+        Image scaledImg2 = coverImg.getScaledInstance(coverPhoto.getWidth(), coverPhoto.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon coverScaledIcon = new ImageIcon(scaledImg2);
+
+        profilePhoto.setIcon(proScaledIcon);
+        coverPhoto.setIcon(coverScaledIcon);
+
+        username.setText(u.getUsername());
+        bio.setText(p.getBio());
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        FrontProfile.user = user;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        FrontProfile.profile = profile;
+    }
+
+    public void setLogin(Login loginPage) {
+        FrontProfile.loginPage = loginPage;
+    }
+
+    private FrontProfile(User u, Profile p) {
         initComponents();
+        initializeProfile(u, p);
     }
 
     /**
@@ -26,13 +116,13 @@ public class Profile extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        username = new javax.swing.JLabel();
+        coverPhoto = new javax.swing.JLabel();
         profilePhoto = new javax.swing.JLabel();
         bio = new javax.swing.JLabel();
         editProfile = new javax.swing.JToggleButton();
         update = new javax.swing.JToggleButton();
-        editProfile2 = new javax.swing.JToggleButton();
+        newsfeed = new javax.swing.JToggleButton();
         friends = new javax.swing.JToggleButton();
         viewPosts = new javax.swing.JToggleButton();
         logout = new javax.swing.JToggleButton();
@@ -46,14 +136,11 @@ public class Profile extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("jLabel");
+        coverPhoto.setBackground(new java.awt.Color(0, 51, 102));
+        coverPhoto.setOpaque(true);
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("jnajnajs");
-
-        profilePhoto.setText("jLabel3");
-
-        bio.setText("jLabel3");
+        profilePhoto.setBackground(new java.awt.Color(0, 51, 102));
+        profilePhoto.setOpaque(true);
 
         editProfile.setBackground(new java.awt.Color(0, 51, 102));
         editProfile.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
@@ -75,13 +162,13 @@ public class Profile extends javax.swing.JFrame {
             }
         });
 
-        editProfile2.setBackground(new java.awt.Color(0, 51, 102));
-        editProfile2.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
-        editProfile2.setForeground(new java.awt.Color(255, 255, 255));
-        editProfile2.setText("Newsfeed");
-        editProfile2.addActionListener(new java.awt.event.ActionListener() {
+        newsfeed.setBackground(new java.awt.Color(0, 51, 102));
+        newsfeed.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        newsfeed.setForeground(new java.awt.Color(255, 255, 255));
+        newsfeed.setText("Newsfeed");
+        newsfeed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editProfile2ActionPerformed(evt);
+                newsfeedActionPerformed(evt);
             }
         });
 
@@ -135,13 +222,13 @@ public class Profile extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(profilePhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(54, 54, 54)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(coverPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(bio, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(79, 79, 79)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(editProfile)
-                            .addComponent(editProfile2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(newsfeed, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(update, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -151,7 +238,7 @@ public class Profile extends javax.swing.JFrame {
                         .addGap(48, 48, 48))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(156, 156, 156)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(179, 179, 179)
@@ -166,9 +253,9 @@ public class Profile extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(profilePhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(coverPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(bio, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
@@ -177,7 +264,7 @@ public class Profile extends javax.swing.JFrame {
                     .addComponent(update))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editProfile2)
+                    .addComponent(newsfeed)
                     .addComponent(friends)
                     .addComponent(logout))
                 .addGap(18, 18, 18)
@@ -191,53 +278,174 @@ public class Profile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfileActionPerformed
-        // TODO add your handling code here:
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            EditProfile edit = new EditProfile(user, profile);
+            edit.setVisible(true);
+            edit.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_editProfileActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-        // TODO add your handling code here:
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        System.out.println("EL USER");
+        System.out.println(user);
+        System.out.println(profile.getID());
+
+        UpdatePass up = new UpdatePass(user);
+        up.setVisible(true);
+        up.setLocationRelativeTo(null); // Center the window
+        setVisible(false);
     }//GEN-LAST:event_updateActionPerformed
 
-    private void editProfile2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfile2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editProfile2ActionPerformed
+    private void newsfeedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newsfeedActionPerformed
+
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Debugging statements to check the state of user and profile
+        System.out.println("Navigating to Newsfeed with:");
+        System.out.println("User: " + user);
+        System.out.println("Profile: " + profile);
+
+        try {
+            Newsfeed news = new Newsfeed(user, profile); // Ensure this constructor is safe
+            news.setVisible(true);
+            news.setLocationRelativeTo(null); // Center the window
+            setVisible(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "An error occurred while opening the Newsfeed: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); // Print stack trace for debugging
+        }
+    }//GEN-LAST:event_newsfeedActionPerformed
 
     private void friendsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsActionPerformed
-        // TODO add your handling code here:
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            FriendsManagement f = new FriendsManagement(user);
+            f.setVisible(true);
+            f.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_friendsActionPerformed
 
     private void viewPostsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPostsActionPerformed
-        // TODO add your handling code here:
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        ViewPosts view = new ViewPosts(user);
+        view.setVisible(true);
+        view.setLocationRelativeTo(null);
+        setVisible(false);
     }//GEN-LAST:event_viewPostsActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
-        // TODO add your handling code here:
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            Logout log = new Logout(user, loginPage);
+            log.setVisible(true);
+            log.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_logoutActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-        // TODO add your handling code here:
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            Delete del = new Delete(user, profile, loginPage);
+            del.setVisible(true);
+            del.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_deleteActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+        if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            loginPage.setVisible(true);
+            loginPage.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bio;
+    private javax.swing.JLabel coverPhoto;
     private javax.swing.JToggleButton delete;
     private javax.swing.JToggleButton editProfile;
-    private javax.swing.JToggleButton editProfile2;
     private javax.swing.JToggleButton friends;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JToggleButton logout;
+    private javax.swing.JToggleButton newsfeed;
     private javax.swing.JLabel profilePhoto;
     private javax.swing.JToggleButton update;
+    private javax.swing.JLabel username;
     private javax.swing.JToggleButton viewPosts;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import connecthub.mappers.UserMapper;
 
 @JsonTypeName("User") // Matches the type name in @JsonSubTypes
 public class User implements Identifiable {
@@ -22,7 +23,6 @@ public class User implements Identifiable {
     private String email;
     private String username;
     private String password;
-
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateOfBirth;
@@ -34,12 +34,34 @@ public class User implements Identifiable {
         // Default constructor for Jackson
     }
 
-    public User(String email, String username, String password, LocalDate dateOfBirth) {
+    public User(String email, String username, String password, LocalDate dateOfBirth) throws InvalidKeySpecException {
+        Validator validator = Validator.getInstance();
+
         this.username = username;
+
+        validator.setStrategy(new EmailValidation());
+        if (!validator.validate(email)) {
+            UserMapper.delete(id);
+            return;
+        }
+
         this.email = email;
-        this.password = password;
+        this.setPassword(password);
         this.dateOfBirth = dateOfBirth;
         this.status = "offline";
+    }
+
+    @Override
+    public String toString() {
+        return "User{"
+                + "id=" + id
+                + ", email='" + email + '\''
+                + ", username='" + username + '\''
+                + ", password='" + password + '\''
+                + ", dateOfBirth=" + dateOfBirth
+                + ", status='" + status + '\''
+                + ", type='" + type + '\''
+                + '}';
     }
 
     //GETTERS
@@ -60,14 +82,12 @@ public class User implements Identifiable {
         return username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public String getStatus() {
         return status;
     }
-
+    public String getPassword(){
+        return password;
+    }
     //SETTERS
     @Override
     public void setID(int id) {
@@ -90,14 +110,14 @@ public class User implements Identifiable {
         this.status = status;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password){
         try {
             this.password = PasswordHasher.hashPassword(password);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvalidKeySpecException ex) {
+//            System.out.println(this.password);
+        } catch (Exception ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.password = password;
     }
 
     public String getType() {

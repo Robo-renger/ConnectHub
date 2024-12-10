@@ -4,17 +4,34 @@
  */
 package Frontend;
 
+import connecthub.entities.Profile;
+import connecthub.entities.User;
+import connecthub.mappers.ProfileMapper;
+import java.awt.Image;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mahinour Mohamed
  */
 public class EditProfile extends javax.swing.JFrame {
 
+    private boolean isBioVisible = false;
+    User u;
+    Profile p;
+
     /**
      * Creates new form EditProfile
      */
-    public EditProfile() {
+    public EditProfile(User u, Profile p) {
         initComponents();
+        this.u = u;
+        this.p = p;
+        bioText.setVisible(false);
+
     }
 
     /**
@@ -29,7 +46,8 @@ public class EditProfile extends javax.swing.JFrame {
         coverPhoto = new javax.swing.JToggleButton();
         profilePhoto = new javax.swing.JToggleButton();
         bio = new javax.swing.JToggleButton();
-        cancel = new javax.swing.JToggleButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        bioText = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit profile");
@@ -63,74 +81,140 @@ public class EditProfile extends javax.swing.JFrame {
         bio.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
         bio.setForeground(new java.awt.Color(255, 255, 255));
         bio.setText("Edit Bio");
-
-        cancel.setBackground(new java.awt.Color(204, 0, 0));
-        cancel.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
-        cancel.setForeground(new java.awt.Color(255, 255, 255));
-        cancel.setText("Cancel");
-        cancel.addActionListener(new java.awt.event.ActionListener() {
+        bio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelActionPerformed(evt);
+                bioActionPerformed(evt);
             }
         });
+
+        bioText.setColumns(20);
+        bioText.setRows(5);
+        bioText.setText("\n\n");
+        jScrollPane1.setViewportView(bioText);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(coverPhoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(profilePhoto, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                    .addComponent(bio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(coverPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(profilePhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bio, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(87, 87, 87))
             .addGroup(layout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(61, 61, 61)
+                .addGap(42, 42, 42)
                 .addComponent(coverPhoto)
                 .addGap(26, 26, 26)
                 .addComponent(profilePhoto)
-                .addGap(26, 26, 26)
+                .addGap(27, 27, 27)
                 .addComponent(bio)
-                .addGap(18, 18, 18)
-                .addComponent(cancel)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void coverPhotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coverPhotoActionPerformed
-        // TODO add your handling code here:
+        try {
+            JFileChooser x = new JFileChooser();
+            int result = x.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) { // Ensure file is selected
+                File f = x.getSelectedFile();
+                if (f != null) {
+                    p.setCoverPhotoPath(f.getAbsolutePath());
+                    ProfileMapper.update(p.getID(), p);
+                    javax.swing.JOptionPane.showMessageDialog(null, "Updated Successfully!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_coverPhotoActionPerformed
 
     private void profilePhotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profilePhotoActionPerformed
-        // TODO add your handling code here:
+        try {
+            JFileChooser x = new JFileChooser();
+            int result = x.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) { // Ensure file is selected
+                File f = x.getSelectedFile();
+                if (f != null) {
+                    p.setProfilePhotoPath(f.getAbsolutePath());
+                    ProfileMapper.update(p.getID(), p);
+                    javax.swing.JOptionPane.showMessageDialog(null, "Updated Successfully!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_profilePhotoActionPerformed
 
-    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cancelActionPerformed
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+        if (u == null || p == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            FrontProfile.front = null;
+
+            FrontProfile front = FrontProfile.getInstanceOf(u,p); // Pass the required arguments
+            front.setVisible(true);
+            front.setLocationRelativeTo(null); // Center the window
+            setVisible(false); // Hide the current window
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }//GEN-LAST:event_formWindowClosing
+
+    private void bioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bioActionPerformed
+        try {
+            if (!isBioVisible) {
+                bioText.setVisible(true);
+                bioText.requestFocus();
+                isBioVisible = true;  // Update the flag to indicate the bio text field is visible
+            } else {
+                // Handle bio update when the user has written in the text field
+                String bio = bioText.getText();
+                if (bio.equals("")) {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Some fields are empty!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                } else {
+                    p.setBio(bio);
+                    ProfileMapper.update(p.getID(), p);
+                    javax.swing.JOptionPane.showMessageDialog(null, "Updated Successfully!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    isBioVisible = false;  // Hide the bio text field after updating
+                    bioText.setVisible(false);  // Hide the text field after the update
+                }
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_bioActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton bio;
-    private javax.swing.JToggleButton cancel;
+    private javax.swing.JTextArea bioText;
     private javax.swing.JToggleButton coverPhoto;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton profilePhoto;
     // End of variables declaration//GEN-END:variables
 }
