@@ -1,0 +1,7 @@
+[ {
+  "id" : 1,
+  "userID" : 2,
+  "groupID" : 2,
+  "status" : "joined",
+  "type" : "UserGroup"
+}]

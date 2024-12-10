@@ -1,0 +1,19 @@
+[ {
+  "id" : 1,
+  "name" : "zrbew",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "lnew",
+  "type" : "Group"
+}, {
+  "id" : 2,
+  "name" : "zrbewss",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "lnew",
+  "type" : "Group"
+}, {
+  "id" : 3,
+  "name" : "zrbewss",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "lnew",
+  "type" : "Group"
+} ]

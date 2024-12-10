@@ -3,9 +3,4 @@
   "userId" : 1,
   "friendId" : 2,
   "type" : "Friend"
-}, {
-  "id" : 7,
-  "userId" : 1,
-  "friendId" : 2,
-  "type" : "Friend"
 } ]
