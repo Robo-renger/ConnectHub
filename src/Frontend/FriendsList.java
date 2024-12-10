@@ -158,7 +158,7 @@ public class FriendsList extends javax.swing.JFrame {
             int index = table.getSelectedRow();
             if (index >= 0) {
                 FriendsManager.blockUser(u.getID(), friends.get(index).getID());
-                javax.swing.JOptionPane.showMessageDialog(null, "Blocked Successfully!", "success", javax.swing.JOptionPane.ERROR_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(null, "Blocked Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 FriendsTable();
             }
         } catch (Exception e) {

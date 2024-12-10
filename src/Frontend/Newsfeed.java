@@ -63,6 +63,7 @@ public class Newsfeed extends javax.swing.JFrame {
             List<Content> x = ContentController.getAllPosts(user1.getID());
             for (Content content : x) {
                 listModel.addElement(content.getContent());
+                allPosts.add(content);
             }
         }
         Posts.setModel(listModel);
@@ -80,6 +81,7 @@ public class Newsfeed extends javax.swing.JFrame {
             List<Content> x = ContentController.getAllStories(user1.getID());
             for (Content content : x) {
                 listModel.addElement(content.getContent());
+                allStories.add(content);
             }
         }
         Stories.setModel(listModel);

@@ -30,20 +30,8 @@
   "type" : "FriendRequest"
 }, {
   "id" : 6,
-  "senderId" : 1,
-  "receiverId" : 3,
-  "status" : "PENDING",
-  "type" : "FriendRequest"
-}, {
-  "id" : 7,
-  "senderId" : 1,
-  "receiverId" : 3,
-  "status" : "PENDING",
-  "type" : "FriendRequest"
-}, {
-  "id" : 8,
-  "senderId" : 1,
-  "receiverId" : 3,
+  "senderId" : 3,
+  "receiverId" : 1,
   "status" : "PENDING",
   "type" : "FriendRequest"
 } ]

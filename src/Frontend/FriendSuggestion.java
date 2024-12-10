@@ -142,7 +142,6 @@ public class FriendSuggestion extends javax.swing.JFrame {
             if (j >= -1) {
                 User selectedFriend = friends.get(j);
                 FriendsManager.sendFriendRequest(u.getID(), selectedFriend.getID());
-
                 fillList();
 
                 JOptionPane.showMessageDialog(null, "Friend Request Sent Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
