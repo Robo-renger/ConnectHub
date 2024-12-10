@@ -4,13 +4,8 @@
   "friendId" : 2,
   "type" : "Friend"
 }, {
-  "id" : 2,
-  "userId" : 3,
-  "friendId" : 2,
-  "type" : "Friend"
-}, {
-  "id" : 6,
+  "id" : 7,
   "userId" : 1,
-  "friendId" : 3,
+  "friendId" : 2,
   "type" : "Friend"
 } ]

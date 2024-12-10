@@ -46,7 +46,7 @@ public class FriendSuggestion extends javax.swing.JFrame {
             friends = FriendController.suggestFriends(u.getID());
 
             if (friends == null || friends.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No friends found.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No friends to suggest.", "Info", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
