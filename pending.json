@@ -34,4 +34,22 @@
   "receiverId" : 1,
   "status" : "PENDING",
   "type" : "FriendRequest"
+}, {
+  "id" : 7,
+  "senderId" : 1,
+  "receiverId" : 2,
+  "status" : "PENDING",
+  "type" : "FriendRequest"
+}, {
+  "id" : 8,
+  "senderId" : 1,
+  "receiverId" : 2,
+  "status" : "PENDING",
+  "type" : "FriendRequest"
+}, {
+  "id" : 9,
+  "senderId" : 1,
+  "receiverId" : 2,
+  "status" : "PENDING",
+  "type" : "FriendRequest"
 } ]

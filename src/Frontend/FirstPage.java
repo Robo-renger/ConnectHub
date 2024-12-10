@@ -82,7 +82,7 @@ public class FirstPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void signinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinActionPerformed
-        Login l = new Login();
+        Login l = Login.getInstanceOf();
         l.setVisible(true);
         l.setLocationRelativeTo(null);
         setVisible(false);

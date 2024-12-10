@@ -177,7 +177,7 @@ public class SignUp extends javax.swing.JFrame {
                         .setCoverPhotoPath("")
                         .setProfilePhotoPath("");
                 Profile newProfile = (Profile) Factory.createEntity(profileBuilder.getInstance());
-                Login l = new Login();
+                Login l = Login.getInstanceOf();
                 l.setVisible(true);
                 l.setLocationRelativeTo(null);
                 setVisible(false);

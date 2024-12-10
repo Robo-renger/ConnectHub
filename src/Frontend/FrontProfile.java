@@ -15,7 +15,6 @@ public class FrontProfile extends javax.swing.JFrame {
     private static User user;
     private static Profile profile;
     public static FrontProfile front = null;
-    private static Login loginPage;
 
     /**
      * Creates new form Profile
@@ -98,9 +97,6 @@ public class FrontProfile extends javax.swing.JFrame {
         FrontProfile.profile = profile;
     }
 
-    public void setLogin(Login loginPage) {
-        FrontProfile.loginPage = loginPage;
-    }
 
     private FrontProfile(User u, Profile p) {
         initComponents();
@@ -292,6 +288,8 @@ public class FrontProfile extends javax.swing.JFrame {
             edit.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
+                        javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
         }
     }//GEN-LAST:event_editProfileActionPerformed
 
@@ -358,6 +356,7 @@ public class FrontProfile extends javax.swing.JFrame {
             f.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_friendsActionPerformed
@@ -385,11 +384,12 @@ public class FrontProfile extends javax.swing.JFrame {
             return;
         }
         try {
-            Logout log = new Logout(user, loginPage);
+            Logout log = new Logout(user,Login.getInstanceOf());
             log.setVisible(true);
             log.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_logoutActionPerformed
@@ -404,11 +404,12 @@ public class FrontProfile extends javax.swing.JFrame {
         }
         try {
 
-            Delete del = new Delete(user, profile, loginPage);
+            Delete del = new Delete(user, profile, Login.getInstanceOf());
             del.setVisible(true);
             del.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_deleteActionPerformed
@@ -422,11 +423,13 @@ public class FrontProfile extends javax.swing.JFrame {
             return;
         }
         try {
-
+            Login loginPage=Login.getInstanceOf();
             loginPage.setVisible(true);
             loginPage.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_formWindowClosing

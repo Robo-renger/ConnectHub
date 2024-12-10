@@ -6,6 +6,7 @@ package Frontend;
 
 import connecthub.FriendsManager;
 import connecthub.controllers.FriendController;
+import connecthub.entities.Friend;
 import connecthub.entities.User;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -143,10 +144,16 @@ public class AddFriend extends javax.swing.JFrame {
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         try {
+            List<User> friends = FriendController.getAllFriends(u.getID());
+            for (User friend : friends) {
+                if (users.get(usersList.getSelectedIndex()).getID() == (friend.getID())) {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Already friend!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
             FriendsManager.sendFriendRequest(u.getID(), users.get(usersList.getSelectedIndex()).getID());
             fillList();
             javax.swing.JOptionPane.showMessageDialog(null, "Added Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
