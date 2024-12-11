@@ -58,7 +58,7 @@ public class DataBaseManager {
         });
         int latestId = getLatestID(entities);
         entity.setID(latestId + 1); // Increment ID by one
-        entities.add(entity);
+        entities.add(entity);        
         writeEntities(entities);
     }
 

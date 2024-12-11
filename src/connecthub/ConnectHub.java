@@ -1,11 +1,13 @@
 package connecthub;
 
 import connecthub.entities.User;
+import connecthub.entities.Group;
 import connecthub.builders.*;
 import connecthub.mappers.UserMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import connecthub.controllers.ContentController;
 import connecthub.controllers.FriendController;
+import connecthub.controllers.GroupController;
 import connecthub.entities.Blocked;
 import connecthub.entities.Content;
 import connecthub.entities.ContentType;
@@ -14,12 +16,15 @@ import connecthub.entities.FriendRequest;
 import connecthub.entities.Post;
 import connecthub.entities.Profile;
 import connecthub.entities.Story;
+import connecthub.entities.UserGroup;
 import connecthub.interfaces.Builder;
 import connecthub.interfaces.Identifiable;
 import connecthub.mappers.BlockedMapper;
 import connecthub.mappers.ContentMapper;
 import connecthub.mappers.FriendMapper;
+import connecthub.mappers.GroupMapper;
 import connecthub.mappers.ProfileMapper;
+import connecthub.mappers.UserGroupMapper;
 import java.io.IOException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
@@ -121,12 +126,11 @@ public class ConnectHub {
 //        {
 //            System.out.println(friend.getID());
 //        }
-            
 //        FriendMapper.getAll();
 //        testDPEntityCreation();
 //        CredentialsValidation validation = new CredentialsValidation("ibrahim", "111555333");
 //        boolean isValid = validation.validate("");  // 'data' is not needed and can be passed as an empty string or placeholder
-
+        testUserGroups();
     }
 
 // ########### User test cases ###########  
@@ -483,20 +487,18 @@ public class ConnectHub {
 
         // Act
         List<User> friends = FriendController.getAllFriends(userId);
-        for(User friend: friends)
-        {
+        for (User friend : friends) {
             System.out.println(friend.getID());
         }
     }
-    
+
     public static void testSuggestFriends() {
         // Assume user with ID 1 has friends in the database.
         int userId = 6;
 
         // Act
         List<User> suggestedUsers = FriendController.suggestFriends(userId);
-        for(User suggestedUser: suggestedUsers)
-        {
+        for (User suggestedUser : suggestedUsers) {
             System.out.println(suggestedUser.getID());
         }
     }
@@ -536,4 +538,19 @@ public class ConnectHub {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    public static void testGroups() {
+        Group newGroup = new Group("zrbewss", "lnew");
+        GroupMapper.create(newGroup);
+        System.out.println(newGroup);
+        System.out.println(GroupController.search("zr"));
+    }
+
+    public static void testUserGroups() {
+//        GroupController.join(2, 3);
+//        for(User user : GroupController.getJoinedMembers(2)){
+//            System.out.println(user);
+//        }
+//        GroupController.leave(2, 3);
+    System.out.println(GroupController.suggestGroups(1));
+    }
 }
