@@ -3,17 +3,26 @@ package connecthub;
 import connecthub.entities.Blocked;
 import connecthub.entities.Friend;
 import connecthub.entities.FriendRequest;
+import connecthub.exceptions.InvalidDataException;
 import connecthub.mappers.BlockedMapper;
 import connecthub.mappers.FriendMapper;
 import connecthub.mappers.FriendRequestMapper;
 import java.util.List;
+import java.util.Optional;
 
 public class FriendsManager {
 
     public static void sendFriendRequest(int senderId, int receiverId) {
-        System.out.println("IDS:" + senderId + receiverId);
-        FriendRequest friendRequest = new FriendRequest(senderId, receiverId, "PENDING");
-        FriendRequestMapper.create(friendRequest);
+        Optional<Friend> alreadyFriends = FriendMapper.get(senderId, receiverId);
+        if (alreadyFriends.isPresent())
+            throw new InvalidDataException("Friendship already exists");
+        
+        Optional<FriendRequest> alreadyRequested = FriendRequestMapper.get(senderId, receiverId);
+        if(alreadyRequested.isPresent())
+            throw new InvalidDataException("A request already sent");
+        
+        else
+            FriendRequestMapper.create(new FriendRequest(senderId, receiverId, "PENDING"));
     }
 
     public static void acceptFriendRequest(FriendRequest friendRequest) {

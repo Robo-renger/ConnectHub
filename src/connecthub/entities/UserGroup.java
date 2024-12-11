@@ -10,24 +10,22 @@ public class UserGroup implements Identifiable {
     private int id; // Entity unique ID 
     private int userID; // User's ID related to the Group's ID
     private int groupID; // Group's ID
-    private String status;
+    private String status; // joined, left
+    private String role; // ADMIN, MEMBER
     private static final String TYPE = "UserGroup";
 
 //    Default constructor for Jackson
     public UserGroup() {
     }
-
-    /**
-     * @param groupID
-     * @param userID
-     */
+    
     public UserGroup(int groupID, int userID) {
         this.groupID = groupID;
         this.userID = userID;
+        this.role = "MEMBER";
         this.status = "joined";
     }
+    
 //    Getters
-
     @Override
     public int getID() {
         return id;
@@ -43,6 +41,10 @@ public class UserGroup implements Identifiable {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public String getType() {
@@ -67,12 +69,17 @@ public class UserGroup implements Identifiable {
         this.status = status;
     }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
     @Override
     public String toString() {
         return "UserGroup {"
                 + "Id='" + id + '\''
                 + "userID='" + userID + '\''
                 + ", groupID='" + groupID + '\''
+                + ", role ='" + role + '\''
                 + '}';
     }
 

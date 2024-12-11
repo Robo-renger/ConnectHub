@@ -1,6 +1,6 @@
 package connecthub.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+//import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import connecthub.interfaces.Identifiable;
 
@@ -9,10 +9,7 @@ public class Group implements Identifiable {
 
 //    Attributes
     private int id; // Group unique ID 
-    
-    @JsonIgnore
     private int creatorID;
-    
     private String name;
     private String imagePath;
     private String description;
