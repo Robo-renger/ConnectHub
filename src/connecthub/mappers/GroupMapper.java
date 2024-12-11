@@ -3,7 +3,6 @@ package connecthub.mappers;
 import com.fasterxml.jackson.core.type.TypeReference;
 import connecthub.DataBaseManager;
 import connecthub.entities.Group;
-import connecthub.entities.Profile;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,28 +18,28 @@ public class GroupMapper {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
     }
 
-//    Create a new profile
+//    Create a new group
     public static void create(Group group) {
         try {
             DataBaseManager.getDBM().createEntityWithID(group);
         } catch (IOException e) {
-            System.out.println("Error creating profile: " + e.getMessage());
+            System.out.println("Error creating group: " + e.getMessage());
         }
     }
 
-//    Retrieve all Profiles
+//    Retrieve all groups
     public static List<Group> getAll() {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             return DataBaseManager.getDBM().readEntities(new TypeReference<List<Group>>() {
             });
         } catch (IOException e) {
-            System.out.println("Error retrieving all profiles: " + e.getMessage());
+            System.out.println("Error retrieving all groups: " + e.getMessage());
             return List.of();
         }
     }
 
-//    Retrieve a specific user's profile
+//    Retrieve a specific group
     public static Optional<Group> get(int id) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
@@ -52,7 +51,7 @@ public class GroupMapper {
         }
     }
 
-//    Update a specific user's profile
+//    Update a specific group
     public static boolean update(int id, Group updatedGroup) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
@@ -71,7 +70,7 @@ public class GroupMapper {
         }
     }
 
-//    Delete a specific user's profile
+//    Delete a specific group
     public static boolean delete(int id) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {

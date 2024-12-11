@@ -2,8 +2,6 @@ package connecthub.mappers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import connecthub.DataBaseManager;
-import connecthub.entities.Group;
-import connecthub.entities.Profile;
 import connecthub.entities.UserGroup;
 
 import java.io.IOException;
@@ -21,7 +19,7 @@ public class UserGroupMapper {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
     }
 
-//    Create a new profile
+//    Create a new user group
     public static void create(UserGroup userGroup) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
@@ -31,7 +29,7 @@ public class UserGroupMapper {
         }
     }
 
-//    Retrieve all Profiles
+//    Retrieve all users groups
     public static List<UserGroup> getAll() {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
@@ -42,38 +40,39 @@ public class UserGroupMapper {
             return List.of();
         }
     }
+    
     // Retrieve all UserGroup entities by groupID
-
-    public static List<UserGroup> getAllMembers(int UsergroupID) {
+    public static List<UserGroup> getAllMembers(int userGroupID) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             List<UserGroup> userGroups = getAll();
 
             // Filter the UserGroup entities by groupID
             return userGroups.stream()
-                    .filter(userGroup -> userGroup.getGroupID() == UsergroupID)
+                    .filter(userGroup -> userGroup.getGroupID() == userGroupID)
                     .collect(Collectors.toList());
         } catch (Exception e) {
             System.out.println("Error retrieving user groups by groupID: " + e.getMessage());
             return List.of(); // Return an empty list in case of an error
         }
     }
+    
     public static List<UserGroup> getAll(int userId,String status) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             List<UserGroup> userGroups = getAll();
 
-            // Filter the UserGroup entities by groupID
+            // Filter the UserGroup entities by userID and status
             return userGroups.stream()
                     .filter(userGroup -> userGroup.getUserID() == userId && userGroup.getStatus().equals(status))
                     .collect(Collectors.toList());
         } catch (Exception e) {
-            System.out.println("Error retrieving user groups by groupID: " + e.getMessage());
+            System.out.println("Error retrieving user groups by user's ID and status: " + e.getMessage());
             return List.of(); // Return an empty list in case of an error
         }
     }
 
-//    Retrieve a specific user groups
+//    Retrieve a user group by entity's ID
     public static Optional<UserGroup> get(int id) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
@@ -85,18 +84,19 @@ public class UserGroupMapper {
         }
     }
 
+//        Retrieve a user group by groupID and userID
     public static Optional<UserGroup> get(int groupID, int userID) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             List<UserGroup> userGroups = getAll();
             return userGroups.stream().filter(userGroup -> userGroup.getGroupID() == groupID && userGroup.getUserID() == userID).findFirst();
         } catch (Exception e) {
-            System.out.println("Error retrieving user group: " + e.getMessage());
+            System.out.println("Error retrieving user group by groupID and userID: " + e.getMessage());
             return Optional.empty();
         }
     }
 
-//    Update a specific user's groups
+//    Update a specific user group by entity's ID
     public static boolean update(int id, UserGroup updatedUserGroup) {
         System.out.println("alo");
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
@@ -111,12 +111,12 @@ public class UserGroupMapper {
             );
 
         } catch (IOException e) {
-            System.out.println("Error updating group: " + e.getMessage());
+            System.out.println("Error updating user group: " + e.getMessage());
             return false;
         }
     }
 
-//    Delete a specific user group
+//    Delete a specific user group by entity's ID
     public static boolean delete(int id) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {

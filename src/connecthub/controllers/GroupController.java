@@ -1,31 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package connecthub.controllers;
 
-import connecthub.DataBaseManager;
 import static connecthub.controllers.FriendController.getAllFriends;
-import connecthub.entities.Blocked;
-import connecthub.entities.Friend;
 import connecthub.entities.Group;
 import connecthub.entities.User;
 import connecthub.entities.UserGroup;
-import connecthub.mappers.FriendMapper;
 import connecthub.mappers.GroupMapper;
-import static connecthub.mappers.GroupMapper.getAll;
 import connecthub.mappers.UserGroupMapper;
 import connecthub.mappers.UserMapper;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- *
- * @author User
- */
 public class GroupController {
 
     public static List<Group> search(String searchQuery) {

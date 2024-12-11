@@ -1,16 +1,18 @@
 package connecthub.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import connecthub.interfaces.Identifiable;
-import java.util.List;
-import javax.swing.ImageIcon;
 
 @JsonTypeName("Group")
 public class Group implements Identifiable {
 
 //    Attributes
-    private int id; // Profile unique ID 
-    private int CreatorID;
+    private int id; // Group unique ID 
+    
+    @JsonIgnore
+    private int creatorID;
+    
     private String name;
     private String imagePath;
     private String description;
@@ -37,6 +39,11 @@ public class Group implements Identifiable {
     public int getID() {
         return id;
     }
+    
+    public int getCreatorID()
+    {
+        return creatorID;
+    }
 
     public String getImagePath() {
         return imagePath;
@@ -58,6 +65,11 @@ public class Group implements Identifiable {
     @Override
     public void setID(int id) {
         this.id = id;
+    }
+    
+    public void setCreatorId(int creatorID)
+    {
+        this.creatorID = creatorID;
     }
 
     public void setImagePath(String data) {
