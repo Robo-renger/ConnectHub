@@ -13,6 +13,7 @@ import connecthub.entities.Content;
 import connecthub.entities.ContentType;
 import connecthub.entities.Friend;
 import connecthub.entities.FriendRequest;
+import connecthub.entities.MembershipRequest;
 import connecthub.entities.Post;
 import connecthub.entities.Profile;
 import connecthub.entities.Story;
@@ -130,7 +131,14 @@ public class ConnectHub {
 //        testDPEntityCreation();
 //        CredentialsValidation validation = new CredentialsValidation("ibrahim", "111555333");
 //        boolean isValid = validation.validate("");  // 'data' is not needed and can be passed as an empty string or placeholder
-        testUserGroups();
+//        testUserGroups();
+//        testPromoteToAdmin();
+//        testDemoteFromAdmin();
+//        testSendMembershipRequest();
+//        testAcceptMembershipRequest();
+//        testDeclineMembershipRequest();
+//        testRemoveMember();
+//        testDeleteGroup();
     }
 
 // ########### User test cases ###########  
@@ -552,5 +560,64 @@ public class ConnectHub {
 //        }
 //        GroupController.leave(2, 3);
     System.out.println(GroupController.suggestGroups(1));
+    }
+    
+    // Test Case 1: Test Promote User to Admin
+    public static void testPromoteToAdmin() {
+        // Test data setup (groupID, userID, callerID)
+        int groupID = 1;
+        int userID = 5;
+        int callerID = 2;  // Creator's ID
+        GroupAuthorityManager.promoteToAdmin(groupID, userID, callerID);
+    }
+
+    // Test Case 2: Test Demote User from Admin
+    public static void testDemoteFromAdmin() {
+        // Test data setup (groupID, userID, callerID)
+        int groupID = 1;
+        int userID = 5;
+        int callerID = 2;  // Creator's ID
+        GroupAuthorityManager.demoteFromAdmin(groupID, userID, callerID);
+    }
+
+    // Test Case 3: Test Send Membership Request
+    public static void testSendMembershipRequest() {
+        // Test data setup (groupID, userID)
+        int groupID = 1;
+        int userID = 2;
+        GroupAuthorityManager.sendMembershipRequest(groupID, userID);
+    }
+
+    // Test Case 4: Test Accept Membership Request
+    public static void testAcceptMembershipRequest() {
+        // Test data setup (MembershipRequest request, callerID)
+        MembershipRequest request = new MembershipRequest(1, 8);  // groupID=1, userID=2
+        int callerID = 5;  // Admin or Creator ID
+        GroupAuthorityManager.acceptMembershipRequest(request, callerID);
+    }
+
+    // Test Case 5: Test Decline Membership Request
+    public static void testDeclineMembershipRequest() {
+        // Test data setup (MembershipRequest request, callerID)
+        MembershipRequest request = new MembershipRequest(1, 8);  // groupID=1, userID=2
+        int callerID = 2;  // Admin or Creator ID
+        GroupAuthorityManager.declineMembershipRequest(request, callerID);
+    }
+
+    // Test Case 6: Test Remove Member
+    public static void testRemoveMember() {
+        // Test data setup (groupID, userID, callerID)
+        int groupID = 1;
+        int userID = 5;
+        int callerID = 2;  // Admin or Creator's ID
+        GroupAuthorityManager.removeMember(groupID, userID, callerID);
+    }
+
+    // Test Case 7: Test Delete Group
+    public static void testDeleteGroup() {
+        // Test data setup (groupID, callerID)
+        int groupID = 1;
+        int callerID = 2;  // Creator's ID
+        GroupAuthorityManager.deleteGroup(groupID, callerID);
     }
 }

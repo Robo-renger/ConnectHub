@@ -18,7 +18,7 @@ public class FriendMapper {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
     }
 
-//    Create a new profile
+//    Create a new friendship
     public static void create(Friend friend) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
@@ -28,7 +28,7 @@ public class FriendMapper {
         }
     }
 
-//    Retrieve all Profiles
+//    Retrieve all friendships
     public static List<Friend> getAll() {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
@@ -41,7 +41,7 @@ public class FriendMapper {
         }
     }
 
-//    Retrieve a specific user's profile
+//    Retrieve a specific friendship
     public static Optional<Friend> get(int id) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
@@ -49,6 +49,18 @@ public class FriendMapper {
             return friends.stream().filter(friend -> friend.getID() == id).findFirst();
         } catch (Exception e) {
             System.out.println("Error retrieving user's friend: " + e.getMessage());
+            return Optional.empty();
+        }
+    }
+    
+    // Retrieve a specifiv friendship by userID and friendID
+    public static Optional<Friend> get(int userID, int friendID) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+        try {
+            List<Friend> friends = getAll();
+            return friends.stream().filter(friend -> friend.getUserId()== userID && friend.getFriendId()== friendID).findFirst();
+        } catch (Exception e) {
+            System.out.println("Error retrieving friendship by userID and friendID: " + e.getMessage());
             return Optional.empty();
         }
     }

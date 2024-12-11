@@ -27,15 +27,15 @@ public class GroupController {
         }
     }
 
-    public static boolean join(int groupID, int userID) {
-        UserGroup newUserGroup = new UserGroup(groupID, userID);
-        Optional<UserGroup> alreadyExist = UserGroupMapper.get(groupID, userID);
-        if (alreadyExist.isPresent()) {
-            return false;
-        }
-        UserGroupMapper.create(newUserGroup);
-        return true;
-    }
+//    public static boolean join(int groupID, int userID) {
+//        UserGroup newUserGroup = new UserGroup(groupID, userID);
+//        Optional<UserGroup> alreadyExist = UserGroupMapper.get(groupID, userID);
+//        if (alreadyExist.isPresent()) {
+//            return false;
+//        }
+//        UserGroupMapper.create(newUserGroup);
+//        return true;
+//    }
 
     public static void leave(int groupID, int userID) {
         Optional<UserGroup> userGroup = UserGroupMapper.get(groupID, userID);
