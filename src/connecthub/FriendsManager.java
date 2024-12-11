@@ -13,9 +13,14 @@ import java.util.Optional;
 public class FriendsManager {
 
     public static void sendFriendRequest(int senderId, int receiverId) {
-        Optional<Friend> alreadyExist = FriendMapper.get(senderId, receiverId);
-        if (alreadyExist.isPresent())
+        Optional<Friend> alreadyFriends = FriendMapper.get(senderId, receiverId);
+        if (alreadyFriends.isPresent())
             throw new InvalidDataException("Friendship already exists");
+        
+        Optional<FriendRequest> alreadyRequested = FriendRequestMapper.get(senderId, receiverId);
+        if(alreadyRequested.isPresent())
+            throw new InvalidDataException("A request already sent");
+        
         else
             FriendRequestMapper.create(new FriendRequest(senderId, receiverId, "PENDING"));
     }

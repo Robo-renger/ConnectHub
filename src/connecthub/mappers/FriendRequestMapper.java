@@ -51,6 +51,18 @@ public class FriendRequestMapper {
             return Optional.empty();
         }
     }
+    
+    // Retrieve a spcific request by senderID and receiverID
+    public static Optional<FriendRequest> get(int senderID, int receiverID) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+        try {
+            List<FriendRequest> requests = getAll();
+            return requests.stream().filter(request -> request.getSenderId()== senderID && request.getReceiverId() == receiverID).findFirst();
+        } catch (Exception e) {
+            System.out.println("Error retrieving request by senderID and receiverID: " + e.getMessage());
+            return Optional.empty();
+        }
+    }
 
     // Update a specific friend request
     public static boolean update(int id, FriendRequest updatedFriendRequest) {

@@ -53,7 +53,7 @@ public class FriendMapper {
         }
     }
     
-    // Retrieve a specifiv friendship by userID and friendID
+    // Retrieve a specific friendship by userID and friendID
     public static Optional<Friend> get(int userID, int friendID) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
