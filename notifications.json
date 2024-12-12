@@ -1,0 +1,8 @@
+[ {
+  "id" : 1,
+  "recepientID" : 4,
+  "notificationType" : "Chat",
+  "message" : "You have a new message!",
+  "read" : false,
+  "type" : "Notification"
+}]

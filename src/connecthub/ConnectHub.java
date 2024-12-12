@@ -13,6 +13,7 @@ import connecthub.entities.ContentType;
 import connecthub.entities.Friend;
 import connecthub.entities.FriendRequest;
 import connecthub.entities.Message;
+import connecthub.entities.Notification;
 import connecthub.entities.Post;
 import connecthub.entities.Profile;
 import connecthub.entities.Story;
@@ -22,8 +23,12 @@ import connecthub.mappers.BlockedMapper;
 import connecthub.mappers.ChatMapper;
 import connecthub.mappers.ContentMapper;
 import connecthub.mappers.FriendMapper;
+import connecthub.mappers.GroupMapper;
+import connecthub.mappers.MembershipRequestMapper;
+import connecthub.mappers.PostGroupMapper;
 import connecthub.mappers.MessageMapper;
 import connecthub.mappers.ProfileMapper;
+import connecthub.server.LongPollingServer;
 import java.io.IOException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
@@ -130,6 +135,36 @@ public class ConnectHub {
 //        testDPEntityCreation();
 //        CredentialsValidation validation = new CredentialsValidation("ibrahim", "111555333");
 //        boolean isValid = validation.validate("");  // 'data' is not needed and can be passed as an empty string or placeholder
+//        testUserGroups();
+
+        // Client listening to the server
+        
+//        LongPollingServer server = new LongPollingServer();
+//        Notifier notifier = new Notifier(server);
+//        NotificationProducer producer = new NotificationProducer();
+//        producer.addObserver(notifier);
+//
+//        NotificationService service = new NotificationService(producer);
+//
+//        // Simulate a client
+//        NotificationClient client = new NotificationClient(server);
+//        new Thread(client::listenForNotifications).start();
+
+        // Simulate sending a notification
+//        Notification notification = new Notification(4, "Chat", "You have a new message!");
+//        service.sendNotification(notification);
+
+//        testPromoteToAdmin();
+//        testDemoteFromAdmin();
+//        testSendMembershipRequest();
+        testAcceptMembershipRequest();
+//        testDeclineMembershipRequest();
+//        testRemoveMember();
+//        testDeleteGroup();
+//        testAddPost();
+//        testEditPost();
+//        testRemovePost();
+
 //            testMessaging();
 //        } catch (InterruptedException ex) {
 //            Logger.getLogger(ConnectHub.class.getName()).log(Level.SEVERE, null, ex);
