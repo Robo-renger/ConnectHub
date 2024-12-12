@@ -170,7 +170,7 @@ public class CreateGroup extends javax.swing.JFrame {
             }
 
             Group group = new Group(name.getText(), description.getText().trim(),
-                    selectedFile != null ? selectedFile.getAbsolutePath() : "");
+                    selectedFile != null ? selectedFile.getAbsolutePath() : "", user.getID());
             GroupMapper.create(group);
 
             javax.swing.JOptionPane.showMessageDialog(
