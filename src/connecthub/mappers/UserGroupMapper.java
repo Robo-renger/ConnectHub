@@ -56,6 +56,22 @@ public class UserGroupMapper {
             return List.of(); // Return an empty list in case of an error
         }
     }
+
+    // Retrieve all UserGroup entities by userID
+    public static List<UserGroup> getAllJoinedGroups(int userID) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+        try {
+            List<UserGroup> userGroups = getAll();
+
+            // Filter the UserGroup entities by UserID
+            return userGroups.stream()
+                    .filter(userGroup -> userGroup.getUserID() == userID)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("Error retrieving user groups by userID: " + e.getMessage());
+            return List.of(); // Return an empty list in case of an error
+        }
+    }
     
     public static List<UserGroup> getAll(int userId,String status) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
