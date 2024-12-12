@@ -18,7 +18,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = connecthub.entities.FriendRequest.class, name = "FriendRequest"),// FriendRequest entity
     @JsonSubTypes.Type(value = connecthub.entities.Group.class, name = "Group"), // Group entity
     @JsonSubTypes.Type(value = connecthub.entities.UserGroup.class, name = "UserGroup"), // UserGroup entity
-    @JsonSubTypes.Type(value = connecthub.entities.MembershipRequest.class, name = "MembershipRequest") // MembershipRequest entity
+    @JsonSubTypes.Type(value = connecthub.entities.MembershipRequest.class, name = "MembershipRequest"), // MembershipRequest entity
+    @JsonSubTypes.Type(value = connecthub.entities.PostGroup.class, name = "PostGroup") // PostGroup entity
 })
 
 public interface Identifiable {
