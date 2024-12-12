@@ -28,7 +28,6 @@ import connecthub.mappers.MembershipRequestMapper;
 import connecthub.mappers.PostGroupMapper;
 import connecthub.mappers.MessageMapper;
 import connecthub.mappers.ProfileMapper;
-import connecthub.server.LongPollingServer;
 import java.io.IOException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
