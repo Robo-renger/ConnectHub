@@ -7,6 +7,7 @@ import connecthub.entities.UserGroup;
 import connecthub.mappers.GroupMapper;
 import connecthub.mappers.UserGroupMapper;
 import connecthub.mappers.UserMapper;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -26,16 +27,6 @@ public class GroupController {
             return List.of(); // Return an empty list in case of an error
         }
     }
-
-//    public static boolean join(int groupID, int userID) {
-//        UserGroup newUserGroup = new UserGroup(groupID, userID);
-//        Optional<UserGroup> alreadyExist = UserGroupMapper.get(groupID, userID);
-//        if (alreadyExist.isPresent()) {
-//            return false;
-//        }
-//        UserGroupMapper.create(newUserGroup);
-//        return true;
-//    }
 
     public static void leave(int groupID, int userID) {
         Optional<UserGroup> userGroup = UserGroupMapper.get(groupID, userID);
@@ -108,6 +99,18 @@ public class GroupController {
                 .collect(Collectors.toList());
 
         return suggestedGroups;
+    }
+
+    public List<Group> joinedGroups(int userId) {
+        List<Group> joinedGroups = new ArrayList<>();
+        List<UserGroup> userGroups = UserGroupMapper.getAll(userId, "joined");
+        for (UserGroup userGroup : userGroups) {
+            Optional<Group> optJoinedGroup = GroupMapper.get(userGroup.getGroupID());
+            if (optJoinedGroup.isPresent()) {
+                joinedGroups.add(optJoinedGroup.get());
+            }
+        }
+        return joinedGroups;
     }
 
 }
