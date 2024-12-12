@@ -1,0 +1,19 @@
+[ {
+  "id" : 1,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 12, 18, 39, 20, 423296900 ],
+  "status" : "sent",
+  "content" : "test",
+  "type" : "Message"
+}, {
+  "id" : 2,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 12, 18, 39, 22, 525901500 ],
+  "status" : "sent",
+  "content" : "test2",
+  "type" : "Message"
+} ]
