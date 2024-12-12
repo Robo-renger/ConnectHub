@@ -4,6 +4,7 @@
  */
 package Frontend;
 
+import connecthub.controllers.GroupController;
 import connecthub.entities.Group;
 import connecthub.entities.User;
 import java.util.List;
@@ -36,15 +37,12 @@ public class GroupsList extends javax.swing.JFrame {
             return;
         }
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        groups = FriendController.getFriendRequests(u.getID());
-        for (FriendRequest friendRequest : friendRequestList) {
-            Optional<User> user = UserMapper.get(friendRequest.getSenderId());
-            if (user.isPresent()) {
-                User foundUser = user.get();
-                listModel.addElement(foundUser.getUsername());
+        groups = GroupController.joinedGroups(user.getID());
+        for (Group group : groups) {
+                listModel.addElement(group.getName());
             }
-        }
-        requestList.setModel(listModel);
+        
+        list.setModel(listModel);
 
     }
     /**
@@ -58,7 +56,7 @@ public class GroupsList extends javax.swing.JFrame {
 
         label = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        list = new javax.swing.JList<>();
         leave = new javax.swing.JToggleButton();
         view = new javax.swing.JToggleButton();
 
@@ -74,7 +72,7 @@ public class GroupsList extends javax.swing.JFrame {
         label.setForeground(new java.awt.Color(0, 51, 102));
         label.setText("            My Groups");
 
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(list);
 
         leave.setBackground(new java.awt.Color(0, 51, 102));
         leave.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
@@ -133,11 +131,46 @@ public class GroupsList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void leaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveActionPerformed
-       
+        if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int index = list.getSelectedIndex();
+            if (index >= 0) {
+                GroupController.leave(groups.get(index).getID(),user.getID());
+                javax.swing.JOptionPane.showMessageDialog(null, "Leave Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                fillList();
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_leaveActionPerformed
 
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
-        // TODO add your handling code here:
+       if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int index = list.getSelectedIndex();
+            if (index >= 0) {
+                GroupProfile group=new GroupProfile(groups.get(index));
+                group.setVisible(true);
+                group.setLocationRelativeTo(null);
+                setVisible(false);
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_viewActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -164,10 +197,10 @@ public class GroupsList extends javax.swing.JFrame {
      */
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label;
     private javax.swing.JToggleButton leave;
+    private javax.swing.JList<String> list;
     private javax.swing.JToggleButton view;
     // End of variables declaration//GEN-END:variables
 }

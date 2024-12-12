@@ -170,19 +170,19 @@ public class CreateGroup extends javax.swing.JFrame {
             }
 
             Group group = new Group(name.getText(), description.getText().trim(),
-                    selectedFile != null ? selectedFile.getAbsolutePath() : null);
+                    selectedFile != null ? selectedFile.getAbsolutePath() : "");
             GroupMapper.create(group);
 
             javax.swing.JOptionPane.showMessageDialog(
                     null,
-                    "Post created successfully!",
+                    "Create created successfully!",
                     "Success",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE
             );
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(
                     null,
-                    "An error occurred while creating the post. Please try again.",
+                    "An error occurred while creating the group. Please try again.",
                     "Error",
                     javax.swing.JOptionPane.ERROR_MESSAGE
             );

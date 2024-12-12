@@ -4,6 +4,8 @@
  */
 package Frontend;
 
+import connecthub.entities.Group;
+
 /**
  *
  * @author Mahinour Mohamed
@@ -13,8 +15,10 @@ public class GroupProfile extends javax.swing.JFrame {
     /**
      * Creates new form GroupProfile
      */
-    public GroupProfile() {
+    Group group;
+    public GroupProfile(Group group) {
         initComponents();
+        this.group=group;
     }
 
     /**

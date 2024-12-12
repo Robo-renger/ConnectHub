@@ -101,7 +101,7 @@ public class GroupController {
         return suggestedGroups;
     }
 
-    public List<Group> joinedGroups(int userId) {
+    public static List<Group> joinedGroups(int userId) {
         List<Group> joinedGroups = new ArrayList<>();
         List<UserGroup> userGroups = UserGroupMapper.getAll(userId, "joined");
         for (UserGroup userGroup : userGroups) {
