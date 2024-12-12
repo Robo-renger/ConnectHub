@@ -35,7 +35,6 @@ public class FriendsManagement extends javax.swing.JFrame {
         friendsRequests = new javax.swing.JToggleButton();
         friendsList = new javax.swing.JToggleButton();
         friendSuggestion = new javax.swing.JToggleButton();
-        addFriend = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Friends Management");
@@ -75,16 +74,6 @@ public class FriendsManagement extends javax.swing.JFrame {
             }
         });
 
-        addFriend.setBackground(new java.awt.Color(0, 51, 102));
-        addFriend.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
-        addFriend.setForeground(new java.awt.Color(255, 255, 255));
-        addFriend.setText("Add Friend");
-        addFriend.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addFriendActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -94,22 +83,19 @@ public class FriendsManagement extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(friendsRequests, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(friendsList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(friendSuggestion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addFriend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(friendSuggestion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(104, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(43, Short.MAX_VALUE)
-                .addComponent(addFriend)
-                .addGap(18, 18, 18)
+                .addGap(48, 48, 48)
                 .addComponent(friendsRequests)
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addComponent(friendsList)
-                .addGap(18, 18, 18)
+                .addGap(29, 29, 29)
                 .addComponent(friendSuggestion)
-                .addGap(32, 32, 32))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         pack();
@@ -153,25 +139,6 @@ public class FriendsManagement extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_formWindowClosing
-
-    private void addFriendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFriendActionPerformed
-        if (u == null) {
-            JOptionPane.showMessageDialog(this,
-                    "User or Newsfeed data is missing. Please log in again.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        try {
-
-            AddFriend a = new AddFriend(u, this);
-            a.setVisible(true);
-            a.setLocationRelativeTo(null);
-            setVisible(false);
-        } catch (Exception e) {
-
-        }
-    }//GEN-LAST:event_addFriendActionPerformed
 
     private void friendsListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsListActionPerformed
         if (u == null) {
@@ -217,7 +184,6 @@ public class FriendsManagement extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton addFriend;
     private javax.swing.JToggleButton friendSuggestion;
     private javax.swing.JToggleButton friendsList;
     private javax.swing.JToggleButton friendsRequests;

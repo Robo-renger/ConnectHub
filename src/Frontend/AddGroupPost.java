@@ -9,19 +9,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-public class AddPost extends javax.swing.JFrame {
+public class AddGroupPost extends javax.swing.JFrame {
 
     User u;
     Newsfeed newsfeed;
-
-    public AddPost(User u, Newsfeed newsfeed) {
+    
+    public AddGroupPost(User u, Newsfeed newsfeed) {
         if (u == null || newsfeed == null) {
             throw new IllegalArgumentException("User and Newsfeed cannot be null");
         }
-        initComponents();
-
         this.u = u;
         this.newsfeed = newsfeed;
+        initComponents();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -165,16 +165,6 @@ public class AddPost extends javax.swing.JFrame {
     }//GEN-LAST:event_postActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (u == null || newsfeed == null) {
-            JOptionPane.showMessageDialog(this,
-                    "User or Newsfeed data is missing. Please log in again.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        newsfeed.setVisible(true);
-        newsfeed.setLocationRelativeTo(null); // Center the window
-        setVisible(false);
 
     }//GEN-LAST:event_formWindowClosing
 

@@ -12,13 +12,13 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-public class AddFriend extends javax.swing.JFrame {
+public class Search extends javax.swing.JFrame {
 
     User u;
     FriendsManagement f;
     List<User> users;
 
-    public AddFriend(User u, FriendsManagement f) {
+    public Search(User u, FriendsManagement f) {
         initComponents();
         this.u = u;
         this.f = f;
@@ -44,6 +44,7 @@ public class AddFriend extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         usersList = new javax.swing.JList<>();
         add = new javax.swing.JToggleButton();
+        join = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add Friend");
@@ -75,7 +76,7 @@ public class AddFriend extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(usersList);
 
-        add.setBackground(new java.awt.Color(0, 153, 51));
+        add.setBackground(new java.awt.Color(0, 51, 102));
         add.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
         add.setForeground(new java.awt.Color(255, 255, 255));
         add.setText("Add Friend");
@@ -85,22 +86,36 @@ public class AddFriend extends javax.swing.JFrame {
             }
         });
 
+        join.setBackground(new java.awt.Color(0, 51, 102));
+        join.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        join.setForeground(new java.awt.Color(255, 255, 255));
+        join.setText("Join");
+        join.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                joinActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(28, 28, 28)
-                            .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(16, 16, 16)
+                            .addComponent(join, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -114,7 +129,9 @@ public class AddFriend extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(add)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(add)
+                    .addComponent(join))
                 .addGap(12, 12, 12))
         );
 
@@ -180,6 +197,10 @@ public class AddFriend extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void joinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinActionPerformed
+
+    }//GEN-LAST:event_joinActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -187,6 +208,7 @@ public class AddFriend extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton add;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToggleButton join;
     private javax.swing.JLabel label;
     private javax.swing.JTextField name;
     private javax.swing.JToggleButton search;

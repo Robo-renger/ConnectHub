@@ -10,17 +10,15 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-public class ShowPost extends javax.swing.JFrame {
+public class ShowGroupPost extends javax.swing.JFrame {
 
     Content x;
-    ViewPosts viewPost;
 
-    public ShowPost(Content x, ViewPosts viewPost) {
+    public ShowGroupPost(Content x, ViewPosts viewPost) {
         if (x == null) {
             JOptionPane.showMessageDialog(this, "No content to display.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        this.viewPost = viewPost;
         this.x = x;
         initComponents();
         initializeContent();
@@ -114,9 +112,7 @@ public class ShowPost extends javax.swing.JFrame {
         }
         try {
 
-            viewPost.setVisible(true);
-            viewPost.setLocationRelativeTo(null);
-            setVisible(false);
+           
         } catch (Exception e) {
 
         }
