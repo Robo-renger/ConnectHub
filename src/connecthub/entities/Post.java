@@ -31,7 +31,9 @@ public class Post extends Content {
     public int getLikesCount(int postId) {
         return this.likesCount;
     }
-
+    public int getCommentsCount(int postId){
+        return this.commentsCount;
+    }
     public int comment(int userId, int postId, String commentContent) {
         Comment newComment = new Comment(userId, postId, commentContent);
         CommentMapper.create(newComment);
