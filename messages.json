@@ -1,0 +1,82 @@
+[ {
+  "id" : 2,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 12, 18, 39, 22, 525901500 ],
+  "status" : "seen",
+  "content" : "test2",
+  "type" : "Message"
+}, {
+  "id" : 3,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 12, 20, 22, 20, 529633900 ],
+  "status" : "seen",
+  "content" : "asd",
+  "type" : "Message"
+}, {
+  "id" : 4,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 12, 20, 23, 55, 490190700 ],
+  "status" : "seen",
+  "content" : "asgdf",
+  "type" : "Message"
+}, {
+  "id" : 5,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 12, 20, 24, 35, 775571100 ],
+  "status" : "seen",
+  "content" : "aasdsa",
+  "type" : "Message"
+}, {
+  "id" : 6,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 12, 20, 29, 38, 280954800 ],
+  "status" : "seen",
+  "content" : "asda",
+  "type" : "Message"
+}, {
+  "id" : 7,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 12, 20, 40, 7, 143443600 ],
+  "status" : "seen",
+  "content" : "asd",
+  "type" : "Message"
+}, {
+  "id" : 8,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 12, 20, 47, 36, 29057500 ],
+  "status" : "seen",
+  "content" : "fdf",
+  "type" : "Message"
+}, {
+  "id" : 9,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 12, 20, 47, 51, 724264700 ],
+  "status" : "seen",
+  "content" : "asdas",
+  "type" : "Message"
+}, {
+  "id" : 10,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 12, 20, 48, 26, 438704900 ],
+  "status" : "sent",
+  "content" : "jhg",
+  "type" : "Message"
+} ]
