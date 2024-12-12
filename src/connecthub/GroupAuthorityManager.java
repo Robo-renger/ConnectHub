@@ -13,6 +13,7 @@ import connecthub.mappers.UserGroupMapper;
 import java.util.List;
 import java.util.Optional;
 
+// Facade Structural Design Pattern
 public class GroupAuthorityManager {
 
     // Promotes a member to an admin if not an admin
