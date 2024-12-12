@@ -5,8 +5,11 @@
 package Frontend;
 
 import connecthub.FriendsManager;
+import connecthub.GroupAuthorityManager;
 import connecthub.controllers.FriendController;
+import connecthub.controllers.GroupController;
 import connecthub.entities.Friend;
+import connecthub.entities.Group;
 import connecthub.entities.User;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -17,7 +20,7 @@ public class Search extends javax.swing.JFrame {
     User u;
     FriendsManagement f;
     List<User> users;
-
+     List<Group> groups;
     public Search(User u, FriendsManagement f) {
         initComponents();
         this.u = u;
@@ -28,9 +31,13 @@ public class Search extends javax.swing.JFrame {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         for (User user : users) {
             listModel.addElement(user.getUsername());
-
         }
-        usersList.setModel(listModel);
+         for (Group group : groups) {
+            listModel.addElement(group.getName());
+        }
+        list.setModel(listModel);
+        add.setVisible(false);
+        join.setVisible(false);
 
     }
 
@@ -42,7 +49,7 @@ public class Search extends javax.swing.JFrame {
         name = new javax.swing.JTextField();
         search = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        usersList = new javax.swing.JList<>();
+        list = new javax.swing.JList<>();
         add = new javax.swing.JToggleButton();
         join = new javax.swing.JToggleButton();
 
@@ -74,7 +81,7 @@ public class Search extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane1.setViewportView(usersList);
+        jScrollPane1.setViewportView(list);
 
         add.setBackground(new java.awt.Color(0, 51, 102));
         add.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
@@ -146,6 +153,7 @@ public class Search extends javax.swing.JFrame {
         try {
             if (!name.getText().isEmpty()) {
                 users = FriendController.searchUsers(name.getText());
+                groups=GroupController.search(name.getText());
                 for (User user : users) {
                     System.out.println("USER");
                     System.out.println(user);
@@ -161,14 +169,18 @@ public class Search extends javax.swing.JFrame {
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         try {
+            for (User user : users) {
+                if(list.getSelectedValue().equals(user))
+                    add.setVisible(true);
+            }
             List<User> friends = FriendController.getAllFriends(u.getID());
             for (User friend : friends) {
-                if (users.get(usersList.getSelectedIndex()).getID() == (friend.getID())) {
+                if (users.get(list.getSelectedIndex()).getID() == (friend.getID())) {
                     javax.swing.JOptionPane.showMessageDialog(null, "Already friend!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
-            FriendsManager.sendFriendRequest(u.getID(), users.get(usersList.getSelectedIndex()).getID());
+            FriendsManager.sendFriendRequest(u.getID(), users.get(list.getSelectedIndex()).getID());
             fillList();
             javax.swing.JOptionPane.showMessageDialog(null, "Added Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
@@ -198,6 +210,26 @@ public class Search extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void joinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinActionPerformed
+         try {
+            for (Group group : groups) {
+                if(list.getSelectedValue().equals(group))
+                    join.setVisible(true);
+            }
+            List<Group> groups = GroupController.getAllGroups(u.getID());
+            for (Group group : groups) {
+                if (groups.get(list.getSelectedIndex()).getID() == (group.getID())) {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Already member!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+            GroupAuthorityManager.sendMembershipRequest(groups.get(list.getSelectedIndex()).getID(),u.getID());
+            fillList();
+            javax.swing.JOptionPane.showMessageDialog(null, "Joined Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
 
     }//GEN-LAST:event_joinActionPerformed
 
@@ -210,8 +242,8 @@ public class Search extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton join;
     private javax.swing.JLabel label;
+    private javax.swing.JList<String> list;
     private javax.swing.JTextField name;
     private javax.swing.JToggleButton search;
-    private javax.swing.JList<String> usersList;
     // End of variables declaration//GEN-END:variables
 }
