@@ -15,6 +15,7 @@ import connecthub.entities.Friend;
 import connecthub.entities.FriendRequest;
 import connecthub.entities.MembershipRequest;
 import connecthub.entities.Post;
+import connecthub.entities.PostGroup;
 import connecthub.entities.Profile;
 import connecthub.entities.Story;
 import connecthub.entities.UserGroup;
@@ -24,6 +25,7 @@ import connecthub.mappers.BlockedMapper;
 import connecthub.mappers.ContentMapper;
 import connecthub.mappers.FriendMapper;
 import connecthub.mappers.GroupMapper;
+import connecthub.mappers.PostGroupMapper;
 import connecthub.mappers.ProfileMapper;
 import connecthub.mappers.UserGroupMapper;
 import java.io.IOException;
@@ -139,6 +141,9 @@ public class ConnectHub {
 //        testDeclineMembershipRequest();
 //        testRemoveMember();
 //        testDeleteGroup();
+//        testAddPost();
+//        testEditPost();
+//        testRemovePost();
     }
 
 // ########### User test cases ###########  
@@ -620,4 +625,30 @@ public class ConnectHub {
         int callerID = 2;  // Creator's ID
         GroupAuthorityManager.deleteGroup(groupID, callerID);
     }
+    
+    public static void testAddPost()
+    {
+        int authorID = 6;
+        int groupID = 2;
+        int callerID = 6;
+        PostGroup postGroup = new PostGroup(authorID, groupID, "This is a post", "");
+        GroupAuthorityManager.addPost(postGroup, callerID);
+    }
+    
+    public static void testEditPost()
+    {
+        int callerID = 6;
+        PostGroup postGroup = PostGroupMapper.get(2).get();
+        postGroup.setContent("This is an updated post");
+        GroupAuthorityManager.editPost(postGroup, callerID);
+    }
+    
+    public static void testRemovePost()
+    {
+        int callerID = 4;
+        PostGroup postGroup = PostGroupMapper.get(1).get();
+        GroupAuthorityManager.deletePost(postGroup, callerID);
+    }
+    
+    
 }
