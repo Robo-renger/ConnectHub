@@ -157,7 +157,7 @@ public class ConnectHub {
 //        testPromoteToAdmin();
 //        testDemoteFromAdmin();
 //        testSendMembershipRequest();
-        testAcceptMembershipRequest();
+//        testAcceptMembershipRequest();
 //        testDeclineMembershipRequest();
 //        testRemoveMember();
 //        testDeleteGroup();
