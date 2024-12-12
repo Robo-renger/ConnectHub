@@ -4,6 +4,12 @@
  */
 package Frontend;
 
+import connecthub.entities.Group;
+import connecthub.entities.User;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mahinour Mohamed
@@ -13,10 +19,34 @@ public class GroupsList extends javax.swing.JFrame {
     /**
      * Creates new form GroupsList
      */
-    public GroupsList() {
+    User user;
+    GroupsManagement group;
+    List<Group>groups;
+    public GroupsList(User user,GroupsManagement group) {
         initComponents();
+        this.user=user;
+        this.group=group;
     }
+     private void fillList() {
+        if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        groups = FriendController.getFriendRequests(u.getID());
+        for (FriendRequest friendRequest : friendRequestList) {
+            Optional<User> user = UserMapper.get(friendRequest.getSenderId());
+            if (user.isPresent()) {
+                User foundUser = user.get();
+                listModel.addElement(foundUser.getUsername());
+            }
+        }
+        requestList.setModel(listModel);
 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -111,7 +141,22 @@ public class GroupsList extends javax.swing.JFrame {
     }//GEN-LAST:event_viewActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+        
+        if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            group.setVisible(true);
+            group.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_formWindowClosing
 
     /**

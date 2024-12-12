@@ -490,7 +490,24 @@ public class FrontProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_NotificationsActionPerformed
 
     private void groupsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_groupsActionPerformed
-        // TODO add your handling code here:
+         if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            GroupsManagement group = new GroupsManagement(user);
+            group.setVisible(true);
+            group.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
+        
     }//GEN-LAST:event_groupsActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
