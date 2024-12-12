@@ -2,6 +2,7 @@ package connecthub.entities;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import connecthub.mappers.CommentMapper;
+import connecthub.mappers.ContentMapper;
 
 @JsonTypeName("Post") // Matches the type name in @JsonSubTypes
 public class Post extends Content {
@@ -23,21 +24,25 @@ public class Post extends Content {
         return false;
     }
 
-    public int like(int postId) {
+    public int like() {
         this.likesCount++;
+        ContentMapper.update(this.getID(), this);
         return this.likesCount;
     }
 
-    public int getLikesCount(int postId) {
+    public int getLikesCount() {
         return this.likesCount;
     }
-    public int getCommentsCount(int postId){
+
+    public int getCommentsCount() {
         return this.commentsCount;
     }
-    public int comment(int userId, int postId, String commentContent) {
-        Comment newComment = new Comment(userId, postId, commentContent);
+
+    public int comment(int userId, String commentContent) {
+        Comment newComment = new Comment(userId, this.getID(), commentContent);
         CommentMapper.create(newComment);
         this.commentsCount++;
+        ContentMapper.update(this.getID(), this);
         return this.commentsCount;
     }
 
