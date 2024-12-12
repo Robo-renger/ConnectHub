@@ -2,11 +2,13 @@ package connecthub;
 
 import connecthub.entities.Group;
 import connecthub.entities.MembershipRequest;
+import connecthub.entities.PostGroup;
 import connecthub.entities.UserGroup;
 import connecthub.exceptions.InvalidDataException;
 import connecthub.exceptions.UnauthorizedActionException;
 import connecthub.mappers.GroupMapper;
 import connecthub.mappers.MembershipRequestMapper;
+import connecthub.mappers.PostGroupMapper;
 import connecthub.mappers.UserGroupMapper;
 import java.util.List;
 import java.util.Optional;
@@ -162,6 +164,51 @@ public class GroupAuthorityManager {
         
         System.out.println("Group " + groupID + " has been successfully deleted by creator " + callerID);
 
+    }
+    
+    public static void addPost(PostGroup postGroup, int callerID)
+    {
+        Optional<UserGroup> optionalUserGroup = UserGroupMapper.get(postGroup.getGroupID(), postGroup.getAuthorId());
+        if(optionalUserGroup.isPresent() || callerID == postGroup.getAuthorId())
+            PostGroupMapper.create(postGroup);
+        else
+            throw new InvalidDataException("The user and the group are not related");
+    }
+    
+    public static void editPost(PostGroup updatedPostGroup, int callerID)
+    {
+        // Validate that its the user's post
+        if(updatedPostGroup.getAuthorId() != callerID)
+        {
+            // Validate the caller's role
+            String callerRole = validateRole(updatedPostGroup.getGroupID(), callerID);
+            if (!callerRole.equalsIgnoreCase("Creator") && !callerRole.equalsIgnoreCase("Admin"))
+                throw new UnauthorizedActionException("Only creators or admins or the author can edit the post");
+        }
+        
+        Optional<UserGroup> optionalUserGroup = UserGroupMapper.get(updatedPostGroup.getGroupID(), updatedPostGroup.getAuthorId());
+        if(optionalUserGroup.isPresent() || callerID == updatedPostGroup.getAuthorId())
+            PostGroupMapper.update(updatedPostGroup.getID(), updatedPostGroup);
+        else
+            throw new InvalidDataException("The user and the group are not related");
+    }
+    
+    public static void deletePost(PostGroup postGroup, int callerID)
+    {
+        // Validate that its the user's post
+        if(postGroup.getAuthorId() != callerID)
+        {
+            // Validate the caller's role
+            String callerRole = validateRole(postGroup.getGroupID(), callerID);
+            if (!callerRole.equalsIgnoreCase("Creator") && !callerRole.equalsIgnoreCase("Admin"))
+                throw new UnauthorizedActionException("Only creators or admins or the author can delete the post");
+        }
+        
+        Optional<UserGroup> optionalUserGroup = UserGroupMapper.get(postGroup.getGroupID(), postGroup.getAuthorId());
+        if(optionalUserGroup.isPresent() || callerID == postGroup.getAuthorId())
+            PostGroupMapper.delete(postGroup.getID());
+        else
+            throw new InvalidDataException("The user and the group are not related");
     }
 
     private static String validateRole(int groupID, int id) {
