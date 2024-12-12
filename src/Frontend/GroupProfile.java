@@ -293,19 +293,94 @@ public class GroupProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_leaveActionPerformed
 
     private void addAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAdminActionPerformed
-        // TODO add your handling code here:
+        if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int index = membersList.getSelectedIndex();
+            if(GroupAuthorityManager.validateRole(group.getID(),members.get(index).getID()).equals("Admin"))
+            {javax.swing.JOptionPane.showMessageDialog(null, "Already admin!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+            }
+            if (index >= 0) {
+                GroupAuthorityManager.promoteToAdmin(group.getID(),members.get(index).getID(),user.getID());
+                javax.swing.JOptionPane.showMessageDialog(null, "Promote to admin Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                fillList();
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_addAdminActionPerformed
 
     private void demoteAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_demoteAdminActionPerformed
-        // TODO add your handling code here:
+       if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int index = membersList.getSelectedIndex();
+            if(!GroupAuthorityManager.validateRole(group.getID(),members.get(index).getID()).equals("Admin"))
+            {javax.swing.JOptionPane.showMessageDialog(null, "Not admin!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+            }
+            if (index >= 0) {
+                GroupAuthorityManager.demoteFromAdmin(group.getID(),members.get(index).getID(),user.getID());
+                javax.swing.JOptionPane.showMessageDialog(null, "Demote from admin Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                fillList();
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_demoteAdminActionPerformed
 
     private void removeMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMemberActionPerformed
-        // TODO add your handling code here:
+         if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int index = membersList.getSelectedIndex();
+            if (index >= 0) {
+                GroupAuthorityManager.removeMember(group.getID(),members.get(index).getID(),user.getID());
+                javax.swing.JOptionPane.showMessageDialog(null, "Remove member Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                fillList();
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_removeMemberActionPerformed
 
     private void postsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postsActionPerformed
-        // TODO add your handling code here:
+         if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            GroupPosts groupPosts=new GroupPosts(group);
+            groupPosts.setVisible(true);
+            groupPosts.setLocationRelativeTo(null);
+            setVisible(false);
+           
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_postsActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
