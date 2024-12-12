@@ -14,6 +14,7 @@ import connecthub.entities.ContentType;
 import connecthub.entities.Friend;
 import connecthub.entities.FriendRequest;
 import connecthub.entities.MembershipRequest;
+import connecthub.entities.Notification;
 import connecthub.entities.Post;
 import connecthub.entities.PostGroup;
 import connecthub.entities.Profile;
@@ -25,9 +26,11 @@ import connecthub.mappers.BlockedMapper;
 import connecthub.mappers.ContentMapper;
 import connecthub.mappers.FriendMapper;
 import connecthub.mappers.GroupMapper;
+import connecthub.mappers.MembershipRequestMapper;
 import connecthub.mappers.PostGroupMapper;
 import connecthub.mappers.ProfileMapper;
 import connecthub.mappers.UserGroupMapper;
+import connecthub.server.LongPollingServer;
 import java.io.IOException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDate;
@@ -134,16 +137,35 @@ public class ConnectHub {
 //        CredentialsValidation validation = new CredentialsValidation("ibrahim", "111555333");
 //        boolean isValid = validation.validate("");  // 'data' is not needed and can be passed as an empty string or placeholder
 //        testUserGroups();
+
+        // Client listening to the server
+        
+//        LongPollingServer server = new LongPollingServer();
+//        Notifier notifier = new Notifier(server);
+//        NotificationProducer producer = new NotificationProducer();
+//        producer.addObserver(notifier);
+//
+//        NotificationService service = new NotificationService(producer);
+//
+//        // Simulate a client
+//        NotificationClient client = new NotificationClient(server);
+//        new Thread(client::listenForNotifications).start();
+
+        // Simulate sending a notification
+//        Notification notification = new Notification(4, "Chat", "You have a new message!");
+//        service.sendNotification(notification);
+
 //        testPromoteToAdmin();
 //        testDemoteFromAdmin();
 //        testSendMembershipRequest();
-//        testAcceptMembershipRequest();
+        testAcceptMembershipRequest();
 //        testDeclineMembershipRequest();
 //        testRemoveMember();
 //        testDeleteGroup();
 //        testAddPost();
 //        testEditPost();
 //        testRemovePost();
+
     }
 
 // ########### User test cases ###########  
@@ -596,8 +618,8 @@ public class ConnectHub {
     // Test Case 4: Test Accept Membership Request
     public static void testAcceptMembershipRequest() {
         // Test data setup (MembershipRequest request, callerID)
-        MembershipRequest request = new MembershipRequest(1, 8);  // groupID=1, userID=2
-        int callerID = 5;  // Admin or Creator ID
+        MembershipRequest request = MembershipRequestMapper.get(3).get();//= new MembershipRequest(1, 8);  // groupID=1, userID=2
+        int callerID = 6;  // Admin or Creator ID
         GroupAuthorityManager.acceptMembershipRequest(request, callerID);
     }
 
@@ -612,17 +634,17 @@ public class ConnectHub {
     // Test Case 6: Test Remove Member
     public static void testRemoveMember() {
         // Test data setup (groupID, userID, callerID)
-        int groupID = 1;
-        int userID = 5;
-        int callerID = 2;  // Admin or Creator's ID
+        int groupID = 2;
+        int userID = 8;
+        int callerID = 6;  // Admin or Creator's ID
         GroupAuthorityManager.removeMember(groupID, userID, callerID);
     }
 
     // Test Case 7: Test Delete Group
     public static void testDeleteGroup() {
         // Test data setup (groupID, callerID)
-        int groupID = 1;
-        int callerID = 2;  // Creator's ID
+        int groupID = 2;
+        int callerID = 6;  // Creator's ID
         GroupAuthorityManager.deleteGroup(groupID, callerID);
     }
     

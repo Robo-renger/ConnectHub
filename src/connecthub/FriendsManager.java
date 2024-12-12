@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class FriendsManager {
-
+    
+    private static final NotificationManager notificationManager = new NotificationManager();
+    
     public static void sendFriendRequest(int senderId, int receiverId) {
         Optional<Friend> alreadyFriends = FriendMapper.get(senderId, receiverId);
         if (alreadyFriends.isPresent())
@@ -21,8 +23,8 @@ public class FriendsManager {
         if(alreadyRequested.isPresent())
             throw new InvalidDataException("A request already sent");
         
-        else
-            FriendRequestMapper.create(new FriendRequest(senderId, receiverId, "PENDING"));
+        FriendRequestMapper.create(new FriendRequest(senderId, receiverId, "PENDING"));
+        notificationManager.sendNotification(receiverId, "FriendRequest", "You have a new friend request from User " + senderId);
     }
 
     public static void acceptFriendRequest(FriendRequest friendRequest) {
@@ -30,11 +32,13 @@ public class FriendsManager {
         FriendRequestMapper.delete(friendRequest.getID());
         Friend friend = new Friend(friendRequest.getSenderId(), friendRequest.getReceiverId());
         FriendMapper.create(friend);
+        notificationManager.sendNotification(friendRequest.getSenderId(), "Friend request accepted", "Your friend request has been accepted by User " + friendRequest.getReceiverId());
     }
-
+    
     public static void rejectFriendRequest(FriendRequest friendRequest) {
         friendRequest.setStatus("REJECTED");
         FriendRequestMapper.delete(friendRequest.getID());
+        notificationManager.sendNotification(friendRequest.getSenderId(), "Friend request rejected", "Your friend request has been rejected by User " + friendRequest.getReceiverId());
     }
 
     public static void blockUser(int userId, int blockedId) {

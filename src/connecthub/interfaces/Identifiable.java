@@ -19,7 +19,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = connecthub.entities.Group.class, name = "Group"), // Group entity
     @JsonSubTypes.Type(value = connecthub.entities.UserGroup.class, name = "UserGroup"), // UserGroup entity
     @JsonSubTypes.Type(value = connecthub.entities.MembershipRequest.class, name = "MembershipRequest"), // MembershipRequest entity
-    @JsonSubTypes.Type(value = connecthub.entities.PostGroup.class, name = "PostGroup") // PostGroup entity
+    @JsonSubTypes.Type(value = connecthub.entities.PostGroup.class, name = "PostGroup"), // PostGroup entity
+    @JsonSubTypes.Type(value = connecthub.entities.Notification.class, name = "Notification") // Notification entity
 })
 
 public interface Identifiable {
