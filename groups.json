@@ -19,4 +19,25 @@
   "imagePath" : "src/assets/default-group.png",
   "description" : "alooo",
   "type" : "Group"
+}, {
+  "id" : 5,
+  "creatorID" : 2,
+  "name" : "alkady",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "alll",
+  "type" : "Group"
+}, {
+  "id" : 6,
+  "creatorID" : 1,
+  "name" : "ana msh m3ahoom ",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "ana msh m3ahom bardo",
+  "type" : "Group"
+}, {
+  "id" : 7,
+  "creatorID" : 2,
+  "name" : "lolll",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "looll",
+  "type" : "Group"
 } ]
