@@ -181,6 +181,7 @@ public class SignUp extends javax.swing.JFrame {
                 l.setVisible(true);
                 l.setLocationRelativeTo(null);
                 setVisible(false);
+                System.out.println("lolllll");
             }
 
         }  catch (InvalidDataException e) {
