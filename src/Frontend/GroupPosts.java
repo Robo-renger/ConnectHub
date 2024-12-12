@@ -33,6 +33,8 @@ public class GroupPosts extends javax.swing.JFrame {
         editPost = new javax.swing.JToggleButton();
         deletePost = new javax.swing.JToggleButton();
         view = new javax.swing.JToggleButton();
+        comments = new javax.swing.JToggleButton();
+        like = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Group Posts");
@@ -88,6 +90,26 @@ public class GroupPosts extends javax.swing.JFrame {
             }
         });
 
+        comments.setBackground(new java.awt.Color(0, 51, 102));
+        comments.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        comments.setForeground(new java.awt.Color(255, 255, 255));
+        comments.setText("Comments");
+        comments.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                commentsActionPerformed(evt);
+            }
+        });
+
+        like.setBackground(new java.awt.Color(0, 51, 102));
+        like.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        like.setForeground(new java.awt.Color(255, 255, 255));
+        like.setText("Like");
+        like.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                likeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,11 +126,13 @@ public class GroupPosts extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(deletePost, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(createPost, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(createPost, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(comments, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 74, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(editPost, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                                    .addComponent(view, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                    .addComponent(view, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(like, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
@@ -126,7 +150,11 @@ public class GroupPosts extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deletePost)
                     .addComponent(view))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comments)
+                    .addComponent(like))
+                .addContainerGap())
         );
 
         pack();
@@ -152,6 +180,14 @@ public class GroupPosts extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
 
+    private void commentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commentsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_commentsActionPerformed
+
+    private void likeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_likeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_likeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -159,11 +195,13 @@ public class GroupPosts extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> Posts;
+    private javax.swing.JToggleButton comments;
     private javax.swing.JToggleButton createPost;
     private javax.swing.JToggleButton deletePost;
     private javax.swing.JToggleButton editPost;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label1;
+    private javax.swing.JToggleButton like;
     private javax.swing.JToggleButton view;
     // End of variables declaration//GEN-END:variables
 }
