@@ -54,6 +54,18 @@ public class ChatMapper {
         }
     }
 
+    public static Optional<Chat> get(int userOneId, int userTwoId) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+        try {
+            List<Chat> chats = getAll();
+            return chats.stream().filter(chat -> chat.getUserOneId() == userOneId && chat.getUserTwoId() == userTwoId
+                    || chat.getUserOneId() == userTwoId && chat.getUserTwoId() == userOneId).findFirst();
+        } catch (Exception e) {
+            System.out.println("Error retrievingchat: " + e.getMessage());
+            return Optional.empty();
+        }
+    }
+
     public static boolean update(int id, Chat updatedChat) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {

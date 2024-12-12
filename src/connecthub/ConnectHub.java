@@ -39,55 +39,55 @@ import java.util.logging.Logger;
 public class ConnectHub {
 
     public static void main(String[] args) throws InvalidKeySpecException {
-        try {
-            // TODO code application logic here
+//        try {
+        // TODO code application logic here
 
-            // ########### User test cases ###########
-            // Test Case 1: Create a new user
-            //        testCreateUser();
-            // Test Case 2: Retrieve all users
-            //        testGetAllUsers();
-            // Test Case 3: Delete a user by ID
-            //        testDeleteUserById();
-            // Test Case 4: Update an existing user
-            //        testUpdateUser();
-            // Test Case 5: Retrieve a user with filters
-            //        testRetrieveUserWithFilters();
-            // Test Case 6: Retrieve a user by ID
-            //        testRetrieveUserById();
-            //        System.out.println(Validator.validate(0, "user123@gmail.com"));
-            //        System.out.println(Validator.validate(0, "User123@GMAIL.com"));
-            // ########### Profile test cases ###########
-            // Test Case 1: Create a new profile
-            //        testCreateProfile();
-            // Test Case 2: Retrieve all profiles
-            //        testGetAllProfiles();
-            // Test Case 3: Retrieve a profile by user ID
-            //        testGetProfileByUserId();
-            // Test Case 4: Update an existing profile
-            //        testUpdateProfile();
-            // Test Case 5: Delete a profile
-            //        testDeleteProfile();
-            // Test Case 6: Handle non-existing user ID
-            //        testNonExistingUserId();
-            // Test Case 7: Handle empty database
-            //        testEmptyDatabase();
-            // ########### Content test cases ###########
-            // Test Case 1: Create a new post
-            //          testCreatePost();
-            // Test Case 2: Create a new story
-            //        testCreateStory();
-            // Test Case 3: Retrieve all content
-            //        testGetAllContent();
-            // Test Case 4: Update an existing post
-            //        testUpdatePost();
-            // Test Case 5: Delete a post by ID
-            //        testDeletePost();
-            // Test Case 6: Retrieve a post by ID
-            //        testRetrievePostById();
-            // Test Case 7: Retrieve a story by ID
-            //        testRetrieveStoryById();
-            // ContentController test cases
+        // ########### User test cases ###########
+        // Test Case 1: Create a new user
+        //        testCreateUser();
+        // Test Case 2: Retrieve all users
+        //        testGetAllUsers();
+        // Test Case 3: Delete a user by ID
+        //        testDeleteUserById();
+        // Test Case 4: Update an existing user
+        //        testUpdateUser();
+        // Test Case 5: Retrieve a user with filters
+        //        testRetrieveUserWithFilters();
+        // Test Case 6: Retrieve a user by ID
+        //        testRetrieveUserById();
+        //        System.out.println(Validator.validate(0, "user123@gmail.com"));
+        //        System.out.println(Validator.validate(0, "User123@GMAIL.com"));
+        // ########### Profile test cases ###########
+        // Test Case 1: Create a new profile
+        //        testCreateProfile();
+        // Test Case 2: Retrieve all profiles
+        //        testGetAllProfiles();
+        // Test Case 3: Retrieve a profile by user ID
+        //        testGetProfileByUserId();
+        // Test Case 4: Update an existing profile
+        //        testUpdateProfile();
+        // Test Case 5: Delete a profile
+        //        testDeleteProfile();
+        // Test Case 6: Handle non-existing user ID
+        //        testNonExistingUserId();
+        // Test Case 7: Handle empty database
+        //        testEmptyDatabase();
+        // ########### Content test cases ###########
+        // Test Case 1: Create a new post
+        //          testCreatePost();
+        // Test Case 2: Create a new story
+        //        testCreateStory();
+        // Test Case 3: Retrieve all content
+        //        testGetAllContent();
+        // Test Case 4: Update an existing post
+        //        testUpdatePost();
+        // Test Case 5: Delete a post by ID
+        //        testDeletePost();
+        // Test Case 6: Retrieve a post by ID
+        //        testRetrievePostById();
+        // Test Case 7: Retrieve a story by ID
+        //        testRetrieveStoryById();
+        // ContentController test cases
 //        testGetAllContentsWithContents();
 //        testGetAllContentsWithoutContents();
 //        testGetAllPosts();
@@ -130,10 +130,10 @@ public class ConnectHub {
 //        testDPEntityCreation();
 //        CredentialsValidation validation = new CredentialsValidation("ibrahim", "111555333");
 //        boolean isValid = validation.validate("");  // 'data' is not needed and can be passed as an empty string or placeholder
-            testMessaging();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ConnectHub.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//            testMessaging();
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(ConnectHub.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
 // ########### User test cases ###########  
@@ -541,36 +541,32 @@ public class ConnectHub {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    private static void testMessaging() throws InterruptedException {
-        ChatWatcher chatWatcher = new ChatWatcher();
-
-        chatWatcher.startWatching();
-
-        // Simulate adding new messages
-        new Thread(() -> {
-            try {
-                Thread.sleep(2000);
-//                Chat newChat = new Chat(1, 2);
-//                int chatId = ChatMapper.create(newChat);
-                Message newMessage = new Message(1, 2, 1, "test");
-                MessageMapper.create(newMessage);
-                Thread.sleep(2000);
-                Message newMessage2 = new Message(1, 2, 1, "test2");
-                MessageMapper.create(newMessage2);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }).start();
-
-        // Allow some time to fetch new messages
-        Thread.sleep(7000);
-
-        // Stop watching
-        chatWatcher.stopWatching();
-
-        // Fetch the final batch of new messages
-        List<Message> finalMessages = chatWatcher.getNewMessages();
-        System.out.println("Final fetched messages: " + finalMessages);
-    }
-
+//    private static void testMessaging() throws InterruptedException {
+//        ChatWatcher chatWatcher = new ChatWatcher();
+//
+//        chatWatcher.startWatching();
+//
+//        new Thread(() -> {
+//            try {
+//                Thread.sleep(2000);
+//                Message newMessage = new Message(1, 2, 1, "test");
+//                MessageMapper.create(newMessage);
+//                Thread.sleep(2000);
+//                Message newMessage2 = new Message(1, 2, 1, "test2");
+//                MessageMapper.create(newMessage2);
+//            } catch (InterruptedException e) {
+//                Thread.currentThread().interrupt();
+//            }
+//        }).start();
+//
+//        // Allow some time to fetch new messages
+//        Thread.sleep(7000);
+//
+//        // Stop watching
+//        chatWatcher.stopWatching();
+//
+//        // Fetch the final batch of new messages
+//        List<Message> finalMessages = chatWatcher.getNewMessages();
+//        System.out.println("Final fetched messages: " + finalMessages);
+//    }
 }

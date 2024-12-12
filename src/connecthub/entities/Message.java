@@ -11,6 +11,7 @@ import connecthub.interfaces.Identifiable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 @JsonTypeName("Message") // Matches the type name in @JsonSubTypes
 public class Message implements Identifiable {
@@ -113,5 +114,22 @@ public class Message implements Identifiable {
                 + ", status=" + status + '\''
                 + ", date=" + date
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Message message = (Message) o;
+        return id == message.id; // Assuming 'id' uniquely identifies a Message
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id); // Use 'id' as the basis for hashCode
     }
 }
