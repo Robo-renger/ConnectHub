@@ -9,6 +9,7 @@ import connecthub.entities.Message;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class MessageMapper {
 
@@ -33,13 +34,28 @@ public class MessageMapper {
 //    Retrieve all Messages
     public static List<Message> getAll() {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
-        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             return DataBaseManager.getDBM().readEntities(new TypeReference<List<Message>>() {
             });
         } catch (IOException e) {
             System.out.println("Error retrieving all message: " + e.getMessage());
             return List.of();
+        }
+    }
+
+    public static List<Message> getAll(int userOneId, int userTwoId) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+        try {
+            List<Message> messages = getAll();
+
+            // Filter the UserGroup entities by userID and status
+            return messages.stream()
+                    .filter(message -> message.getSenderId() == userOneId && message.getRecieverId() == userTwoId
+                    || message.getSenderId() == userTwoId && message.getRecieverId() == userOneId)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("Error retrieving user groups by user's ID and status: " + e.getMessage());
+            return List.of(); // Return an empty list in case of an error
         }
     }
 

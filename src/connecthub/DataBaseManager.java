@@ -30,7 +30,7 @@ public class DataBaseManager {
     }
 
     public void setDataBaseFile(String MapperDBFile) {
-        System.out.println("db set to " + MapperDBFile);
+//        System.out.println("db set to " + MapperDBFile);
         this.dbFile = MapperDBFile;
     }
 
