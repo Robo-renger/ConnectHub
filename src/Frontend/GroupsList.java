@@ -169,7 +169,7 @@ public class GroupsList extends javax.swing.JFrame {
         try {
             int index = list.getSelectedIndex();
             if (index >= 0) {
-                GroupProfile group=new GroupProfile(groups.get(index));
+                GroupProfile group=new GroupProfile(groups.get(index),user,this);
                 group.setVisible(true);
                 group.setLocationRelativeTo(null);
                 setVisible(false);

@@ -212,7 +212,7 @@ public class GroupAuthorityManager {
             throw new InvalidDataException("The user and the group are not related");
     }
 
-    private static String validateRole(int groupID, int id) {
+    public static String validateRole(int groupID, int id) {
         Optional<Group> optionalGroup = GroupMapper.get(groupID);
         if (optionalGroup.isPresent()) {
             Group group = optionalGroup.get();

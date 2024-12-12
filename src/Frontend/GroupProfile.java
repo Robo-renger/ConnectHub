@@ -4,7 +4,17 @@
  */
 package Frontend;
 
+import connecthub.GroupAuthorityManager;
+import connecthub.controllers.GroupController;
 import connecthub.entities.Group;
+import connecthub.entities.User;
+import connecthub.mappers.UserMapper;
+import java.awt.Image;
+import java.util.List;
+import java.util.Optional;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,11 +26,64 @@ public class GroupProfile extends javax.swing.JFrame {
      * Creates new form GroupProfile
      */
     Group group;
-    public GroupProfile(Group group) {
+    User user;
+    GroupsList groupList;
+    List<User> members;
+    public GroupProfile(Group group,User user,GroupsList groupList) {
         initComponents();
-        this.group=group;
-    }
+       
+        if (group == null||user==null) {
+            JOptionPane.showMessageDialog(this,
+                    "Error initializing profile: User or profile data is missing.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
+         this.group=group;
+         this.user=user;
+         this.groupList=groupList;
+
+        // Set user cover photo
+        ImageIcon cover = new ImageIcon(group.getImagePath());
+        Image coverImg = cover.getImage();
+        Image scaledImg2 = coverImg.getScaledInstance(coverPhoto.getWidth(), coverPhoto.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon coverScaledIcon = new ImageIcon(scaledImg2);
+
+        coverPhoto.setIcon(coverScaledIcon);
+
+        name.setText(group.getName());
+        description.setText(group.getDescription());
+        if(GroupAuthorityManager.validateRole(group.getID(),user.getID()).equals("Member"))
+        { addAdmin.setVisible(false);
+          demoteAdmin.setVisible(false);
+          deleteGroup.setVisible(false);
+          removeMember.setVisible(false);
+          membershipRequests.setVisible(false);
+        }
+        else if(GroupAuthorityManager.validateRole(group.getID(),user.getID()).equals("Admin"))
+        { addAdmin.setVisible(false);
+          demoteAdmin.setVisible(false);
+          deleteGroup.setVisible(false);
+        }
+        fillList();
+    }
+     private void fillList() {
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        members=GroupController.getJoinedMembers(group.getID());
+        for (User user : members) {
+            listModel.addElement(user.getUsername());
+        }
+        Optional<User> user=UserMapper.get(group.getCreatorID());
+        if(user.isPresent())
+        {  User foundUser = user.get();
+          members.add(foundUser);
+        listModel.addElement(foundUser.getUsername());
+        }
+        membersList.setModel(listModel);
+        
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,7 +94,6 @@ public class GroupProfile extends javax.swing.JFrame {
     private void initComponents() {
 
         coverPhoto = new javax.swing.JLabel();
-        coverPhoto1 = new javax.swing.JLabel();
         name = new javax.swing.JLabel();
         description = new javax.swing.JLabel();
         leave = new javax.swing.JToggleButton();
@@ -43,9 +105,7 @@ public class GroupProfile extends javax.swing.JFrame {
         removeMember = new javax.swing.JToggleButton();
         posts = new javax.swing.JToggleButton();
         deleteGroup = new javax.swing.JToggleButton();
-
-        coverPhoto.setBackground(new java.awt.Color(0, 51, 102));
-        coverPhoto.setOpaque(true);
+        membershipRequests = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Group Profile");
@@ -55,8 +115,8 @@ public class GroupProfile extends javax.swing.JFrame {
             }
         });
 
-        coverPhoto1.setBackground(new java.awt.Color(0, 51, 102));
-        coverPhoto1.setOpaque(true);
+        coverPhoto.setBackground(new java.awt.Color(0, 51, 102));
+        coverPhoto.setOpaque(true);
 
         leave.setBackground(new java.awt.Color(0, 51, 102));
         leave.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
@@ -124,6 +184,16 @@ public class GroupProfile extends javax.swing.JFrame {
             }
         });
 
+        membershipRequests.setBackground(new java.awt.Color(0, 51, 102));
+        membershipRequests.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        membershipRequests.setForeground(new java.awt.Color(255, 255, 255));
+        membershipRequests.setText("Membership requests");
+        membershipRequests.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                membershipRequestsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,24 +201,13 @@ public class GroupProfile extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                            .addComponent(demoteAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(46, 46, 46)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(posts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(removeMember, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
-                        .addGap(38, 38, 38)
-                        .addComponent(leave, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(27, 27, 27)
                                 .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(80, 80, 80)
-                                .addComponent(coverPhoto1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(coverPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(107, 107, 107)
                                 .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -157,12 +216,21 @@ public class GroupProfile extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(19, 19, 19)))))
+                                .addGap(19, 19, 19))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(deleteGroup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(addAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                            .addComponent(demoteAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(posts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(removeMember, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                            .addComponent(membershipRequests, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(38, 38, 38)
+                        .addComponent(leave, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)))
                 .addGap(20, 20, 20))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(139, 139, 139)
-                .addComponent(deleteGroup, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,7 +243,7 @@ public class GroupProfile extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(coverPhoto1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(coverPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
@@ -190,15 +258,38 @@ public class GroupProfile extends javax.swing.JFrame {
                     .addComponent(demoteAdmin)
                     .addComponent(leave))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(deleteGroup)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteGroup)
+                    .addComponent(membershipRequests))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void leaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveActionPerformed
+     if (user == null||group==null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+      try {
+            if(user.getID()==group.getCreatorID())
+                javax.swing.JOptionPane.showMessageDialog(null, "Creator cannot leave the group", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            else{
+            GroupController.leave(group.getID(),user.getID());
+          javax.swing.JOptionPane.showMessageDialog(null, "Left successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+               groupList.setVisible(true);
+               groupList.setLocationRelativeTo(null);
+               setVisible(false);
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
+        }
+     
     }//GEN-LAST:event_leaveActionPerformed
 
     private void addAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAdminActionPerformed
@@ -225,6 +316,10 @@ public class GroupProfile extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_deleteGroupActionPerformed
 
+    private void membershipRequestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_membershipRequestsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_membershipRequestsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -233,7 +328,6 @@ public class GroupProfile extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton addAdmin;
     private javax.swing.JLabel coverPhoto;
-    private javax.swing.JLabel coverPhoto1;
     private javax.swing.JToggleButton deleteGroup;
     private javax.swing.JToggleButton demoteAdmin;
     private javax.swing.JLabel description;
@@ -241,6 +335,7 @@ public class GroupProfile extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton leave;
     private javax.swing.JList<String> membersList;
+    private javax.swing.JToggleButton membershipRequests;
     private javax.swing.JLabel name;
     private javax.swing.JToggleButton posts;
     private javax.swing.JToggleButton removeMember;

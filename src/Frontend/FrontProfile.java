@@ -54,10 +54,6 @@ public class FrontProfile extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
-        System.out.println("INITIALIZING: .....");
-        System.out.println(u);
-        System.out.println("INIT POST ID");
-        System.out.println(p.getID());
 
         user = u;
         profile = p;
