@@ -39,6 +39,22 @@ public class GroupMapper {
         }
     }
 
+// Retrieve all Groups entities by CreatorID
+    public static List<Group> getAllCreatedGroups(int creatorID) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+        try {
+            List<Group> groups = getAll();
+
+            // Filter the UserGroup entities by UserID
+            return groups.stream()
+                    .filter(userGroup -> userGroup.getCreatorID() == creatorID)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("Error retrieving groups by creatorID: " + e.getMessage());
+            return List.of(); // Return an empty list in case of an error
+        }
+    }
+
 //    Retrieve a specific group
     public static Optional<Group> get(int id) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
