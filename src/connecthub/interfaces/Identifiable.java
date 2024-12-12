@@ -17,7 +17,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = connecthub.entities.Blocked.class, name = "Blocked"), // Blocked entity
     @JsonSubTypes.Type(value = connecthub.entities.FriendRequest.class, name = "FriendRequest"), // Blocked entity
     @JsonSubTypes.Type(value = connecthub.entities.Chat.class, name = "Chat"), // Blocked entity
-    @JsonSubTypes.Type(value = connecthub.entities.Message.class, name = "Message") // Blocked entity
+    @JsonSubTypes.Type(value = connecthub.entities.Message.class, name = "Message"), // Blocked entity
+    @JsonSubTypes.Type(value = connecthub.entities.Comment.class, name = "Comment") // Blocked entity
 })
 
 public interface Identifiable {
