@@ -11,6 +11,8 @@ import connecthub.controllers.GroupController;
 import connecthub.entities.Friend;
 import connecthub.entities.Group;
 import connecthub.entities.User;
+import connecthub.entities.UserGroup;
+import connecthub.mappers.UserGroupMapper;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -21,6 +23,8 @@ public class Search extends javax.swing.JFrame {
     FriendsManagement f;
     List<User> users;
      List<Group> groups;
+     
+     
     public Search(User u, FriendsManagement f) {
         initComponents();
         this.u = u;
@@ -215,9 +219,9 @@ public class Search extends javax.swing.JFrame {
                 if(list.getSelectedValue().equals(group))
                     join.setVisible(true);
             }
-            List<Group> groups = GroupController.getAllGroups(u.getID());
-            for (Group group : groups) {
-                if (groups.get(list.getSelectedIndex()).getID() == (group.getID())) {
+            List<UserGroup> userGroups = UserGroupMapper.getAllJoinedGroups(u.getID());
+            for (UserGroup userGroup : userGroups) {
+                if (groups.get(list.getSelectedIndex()).getID() == (userGroup.getGroupID())) {
                     javax.swing.JOptionPane.showMessageDialog(null, "Already member!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
                     return;
                 }
