@@ -7,6 +7,7 @@ package Frontend;
 import connecthub.controllers.GroupController;
 import connecthub.entities.Group;
 import connecthub.entities.User;
+import connecthub.mappers.GroupMapper;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -23,6 +24,7 @@ public class GroupsList extends javax.swing.JFrame {
     User user;
     GroupsManagement group;
     List<Group>groups;
+    List<Group> creatorGroups;
     public GroupsList(User user,GroupsManagement group) {
         initComponents();
         this.user=user;
@@ -38,9 +40,14 @@ public class GroupsList extends javax.swing.JFrame {
         }
         DefaultListModel<String> listModel = new DefaultListModel<>();
         groups = GroupController.joinedGroups(user.getID());
+        creatorGroups = GroupMapper.getAllCreatedGroups(user.getID());
         for (Group group : groups) {
                 listModel.addElement(group.getName());
             }
+         for (Group creatorGroup : creatorGroups) {
+              listModel.addElement(creatorGroup.getName());
+              groups.add(creatorGroup);
+         }
         
         list.setModel(listModel);
 
