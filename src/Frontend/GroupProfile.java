@@ -31,6 +31,81 @@ public class GroupProfile extends javax.swing.JFrame {
     Search search;
     List<User> members;
 
+    public GroupProfile(Group group, User user, Search search) {
+        initComponents();
+
+        if (group == null || user == null) {
+
+            if (group == null || user == null) {
+                JOptionPane.showMessageDialog(this,
+                        "Error initializing profile: User or profile data is missing.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            this.group = group;
+            this.user = user;
+            this.search = search;
+            groupList = null;
+            this.group = group;
+            this.user = user;
+            this.search = search;
+            groupList = null;
+            // Set user cover photo
+            ImageIcon cover = new ImageIcon(group.getImagePath());
+            Image coverImg = cover.getImage();
+            Image scaledImg2 = coverImg.getScaledInstance(coverPhoto.getWidth(), coverPhoto.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon coverScaledIcon = new ImageIcon(scaledImg2);
+
+            coverPhoto.setIcon(coverScaledIcon);
+
+            name.setText(group.getName());
+            description.setText(group.getDescription());
+            if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Member")) {
+                addAdmin.setVisible(false);
+                demoteAdmin.setVisible(false);
+                deleteGroup.setVisible(false);
+                removeMember.setVisible(false);
+                membershipRequests.setVisible(false);
+            } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Admin")) {
+                addAdmin.setVisible(false);
+                demoteAdmin.setVisible(false);
+                deleteGroup.setVisible(false);
+            } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Creator")) {
+            } else {
+                addAdmin.setVisible(false);
+                demoteAdmin.setVisible(false);
+                deleteGroup.setVisible(false);
+                removeMember.setVisible(false);
+                membershipRequests.setVisible(false);
+                leave.setVisible(false);
+                posts.setVisible(false);
+                if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Member")) {
+                    addAdmin.setVisible(false);
+                    demoteAdmin.setVisible(false);
+                    deleteGroup.setVisible(false);
+                    removeMember.setVisible(false);
+                    membershipRequests.setVisible(false);
+                } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Admin")) {
+                    addAdmin.setVisible(false);
+                    demoteAdmin.setVisible(false);
+                    deleteGroup.setVisible(false);
+                } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Creator")) {
+                } else {
+                    addAdmin.setVisible(false);
+                    demoteAdmin.setVisible(false);
+                    deleteGroup.setVisible(false);
+                    removeMember.setVisible(false);
+                    membershipRequests.setVisible(false);
+                    leave.setVisible(false);
+                    posts.setVisible(false);
+                }
+                fillList();
+            }
+        }
+    }
+
     public GroupProfile(Group group, User user, GroupsList groupList) {
         initComponents();
 
