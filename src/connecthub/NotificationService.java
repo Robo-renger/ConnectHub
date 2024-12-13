@@ -14,7 +14,7 @@ public class NotificationService extends Thread {
         try {
             while (true) {
                 notificationManager.checkAndNotify();
-                TimeUnit.SECONDS.sleep(2); // Check every 5 seconds
+                TimeUnit.SECONDS.sleep(1); // Check every 5 seconds
             }
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());

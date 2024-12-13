@@ -32,7 +32,7 @@ public class GroupProfile extends javax.swing.JFrame {
     Search search;
     List<User> members;
     Newsfeed newsFeed;
-    
+
     public GroupProfile(Group group, User user, Newsfeed newsFeed) {
         initComponents();
 
@@ -70,7 +70,7 @@ public class GroupProfile extends javax.swing.JFrame {
             demoteAdmin.setVisible(false);
             deleteGroup.setVisible(false);
         } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Creator")) {
-        } else {
+        } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("NotJoined")) {
             addAdmin.setVisible(false);
             demoteAdmin.setVisible(false);
             deleteGroup.setVisible(false);
@@ -81,7 +81,7 @@ public class GroupProfile extends javax.swing.JFrame {
         }
         fillList();
     }
-    
+
     public GroupProfile(Group group, User user, GroupsList groupList) {
         initComponents();
 
@@ -150,7 +150,6 @@ public class GroupProfile extends javax.swing.JFrame {
 //        leave.setVisible(true);
 //        posts.setVisible(true);
 //    }
-
     public GroupProfile(Group group, User user, Search search) {
         initComponents();
 
@@ -203,6 +202,7 @@ public class GroupProfile extends javax.swing.JFrame {
     private void fillList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         members = GroupController.getJoinedMembers(group.getID());
+
         for (User user : members) {
             listModel.addElement(user.getUsername());
         }
@@ -406,9 +406,12 @@ public class GroupProfile extends javax.swing.JFrame {
             } else {
                 GroupController.leave(group.getID(), user.getID());
                 javax.swing.JOptionPane.showMessageDialog(null, "Left successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                groupList.setVisible(true);
-                groupList.setLocationRelativeTo(null);
-                setVisible(false);
+                if (groupList != null) {
+
+                    groupList.setVisible(true);
+                    groupList.setLocationRelativeTo(null);
+                    setVisible(false);
+                }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -526,17 +529,16 @@ public class GroupProfile extends javax.swing.JFrame {
                 groupList.setVisible(true);
                 groupList.setLocationRelativeTo(null);
                 setVisible(false);
-            } else if(groupList == null && newsFeed == null){
+            } else if (groupList == null && newsFeed == null) {
                 search.setVisible(true);
                 search.setLocationRelativeTo(null);
                 setVisible(false);
-            } else if(search == null && groupList == null)
-            {
+            } else if (search == null && groupList == null) {
                 newsFeed.setVisible(true);
                 newsFeed.setLocationRelativeTo(null);
                 setVisible(false);
             }
-            
+
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
