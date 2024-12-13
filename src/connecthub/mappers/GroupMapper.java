@@ -23,6 +23,7 @@ public class GroupMapper {
     public static void create(Group group) {
         try {
             DataBaseManager.getDBM().createEntityWithID(group);
+            group.creatorGroup();
         } catch (IOException e) {
             System.out.println("Error creating group: " + e.getMessage());
         }

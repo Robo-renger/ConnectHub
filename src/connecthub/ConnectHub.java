@@ -12,9 +12,12 @@ import connecthub.entities.Content;
 import connecthub.entities.ContentType;
 import connecthub.entities.Friend;
 import connecthub.entities.FriendRequest;
+import connecthub.entities.Group;
+import connecthub.entities.MembershipRequest;
 import connecthub.entities.Message;
 import connecthub.entities.Notification;
 import connecthub.entities.Post;
+import connecthub.entities.PostGroup;
 import connecthub.entities.Profile;
 import connecthub.entities.Story;
 import connecthub.interfaces.Builder;
@@ -153,6 +156,7 @@ public class ConnectHub {
 //        Notification notification = new Notification(4, "Chat", "You have a new message!");
 //        service.sendNotification(notification);
 
+//        testCreateGroup();
 //        testPromoteToAdmin();
 //        testDemoteFromAdmin();
 //        testSendMembershipRequest();
@@ -603,4 +607,93 @@ public class ConnectHub {
 //        List<Message> finalMessages = chatWatcher.getNewMessages();
 //        System.out.println("Final fetched messages: " + finalMessages);
 //    }
+    
+    // Test Case 1: Test Promote User to Admin
+    public static void testPromoteToAdmin() {
+        // Test data setup (groupID, userID, callerID)
+        int groupID = 1;
+        int userID = 5;
+        int callerID = 2;  // Creator's ID
+        GroupAuthorityManager.promoteToAdmin(groupID, userID, callerID);
+    }
+
+    // Test Case 2: Test Demote User from Admin
+    public static void testDemoteFromAdmin() {
+        // Test data setup (groupID, userID, callerID)
+        int groupID = 1;
+        int userID = 5;
+        int callerID = 2;  // Creator's ID
+        GroupAuthorityManager.demoteFromAdmin(groupID, userID, callerID);
+    }
+
+    // Test Case 3: Test Send Membership Request
+    public static void testSendMembershipRequest() {
+        // Test data setup (groupID, userID)
+        int groupID = 1;
+        int userID = 2;
+        GroupAuthorityManager.sendMembershipRequest(groupID, userID);
+    }
+
+    // Test Case 4: Test Accept Membership Request
+    public static void testAcceptMembershipRequest() {
+        // Test data setup (MembershipRequest request, callerID)
+        MembershipRequest request = new MembershipRequest(1, 8);  // groupID=1, userID=2
+        int callerID = 5;  // Admin or Creator ID
+        GroupAuthorityManager.acceptMembershipRequest(request, callerID);
+    }
+
+    // Test Case 5: Test Decline Membership Request
+    public static void testDeclineMembershipRequest() {
+        // Test data setup (MembershipRequest request, callerID)
+        MembershipRequest request = new MembershipRequest(1, 8);  // groupID=1, userID=2
+        int callerID = 2;  // Admin or Creator ID
+        GroupAuthorityManager.declineMembershipRequest(request, callerID);
+    }
+
+    // Test Case 6: Test Remove Member
+    public static void testRemoveMember() {
+        // Test data setup (groupID, userID, callerID)
+        int groupID = 1;
+        int userID = 5;
+        int callerID = 2;  // Admin or Creator's ID
+        GroupAuthorityManager.removeMember(groupID, userID, callerID);
+    }
+
+    // Test Case 7: Test Delete Group
+    public static void testDeleteGroup() {
+        // Test data setup (groupID, callerID)
+        int groupID = 1;
+        int callerID = 2;  // Creator's ID
+        GroupAuthorityManager.deleteGroup(groupID, callerID);
+    }
+    
+    public static void testAddPost()
+    {
+        int authorID = 6;
+        int groupID = 2;
+        int callerID = 6;
+        PostGroup postGroup = new PostGroup(authorID, groupID, "This is a post", "");
+        GroupAuthorityManager.addPost(postGroup, callerID);
+    }
+    
+    public static void testEditPost()
+    {
+        int callerID = 6;
+        PostGroup postGroup = PostGroupMapper.get(2).get();
+        postGroup.setContent("This is an updated post");
+        GroupAuthorityManager.editPost(postGroup, callerID);
+    }
+    
+    public static void testRemovePost()
+    {
+        int callerID = 4;
+        PostGroup postGroup = PostGroupMapper.get(1).get();
+        GroupAuthorityManager.deletePost(postGroup, callerID);
+    }
+    
+    public static void testCreateGroup()
+    {
+        Group group = new Group(5, "zerbewelnew", "zerbewzzz");
+        GroupMapper.create(group);
+    }
 }
