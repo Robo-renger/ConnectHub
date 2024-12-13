@@ -32,7 +32,11 @@ public class GroupProfile extends javax.swing.JFrame {
     List<User> members;
 
     public GroupProfile(Group group, User user, GroupsList groupList) {
+
+    public GroupProfile(Group group, User user, GroupsList groupList) {
         initComponents();
+
+        if (group == null || user == null) {
 
         if (group == null || user == null) {
             JOptionPane.showMessageDialog(this,
@@ -42,6 +46,10 @@ public class GroupProfile extends javax.swing.JFrame {
             return;
         }
 
+        this.group = group;
+        this.user = user;
+        this.groupList = groupList;
+        search = null;
         this.group = group;
         this.user = user;
         this.groupList = groupList;
@@ -75,12 +83,33 @@ public class GroupProfile extends javax.swing.JFrame {
             membershipRequests.setVisible(false);
             leave.setVisible(false);
             posts.setVisible(false);
+        if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Member")) {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+            removeMember.setVisible(false);
+            membershipRequests.setVisible(false);
+        } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Admin")) {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+        } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Creator")) {
+        } else {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+            removeMember.setVisible(false);
+            membershipRequests.setVisible(false);
+            leave.setVisible(false);
+            posts.setVisible(false);
         }
         fillList();
     }
 
     public GroupProfile(Group group, User user, Search search) {
         initComponents();
+
+        if (group == null || user == null) {
 
         if (group == null || user == null) {
             JOptionPane.showMessageDialog(this,
@@ -90,6 +119,10 @@ public class GroupProfile extends javax.swing.JFrame {
             return;
         }
 
+        this.group = group;
+        this.user = user;
+        this.search = search;
+        groupList = null;
         this.group = group;
         this.user = user;
         this.search = search;
@@ -123,12 +156,32 @@ public class GroupProfile extends javax.swing.JFrame {
             membershipRequests.setVisible(false);
             leave.setVisible(false);
             posts.setVisible(false);
+        if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Member")) {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+            removeMember.setVisible(false);
+            membershipRequests.setVisible(false);
+        } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Admin")) {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+        } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Creator")) {
+        } else {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+            removeMember.setVisible(false);
+            membershipRequests.setVisible(false);
+            leave.setVisible(false);
+            posts.setVisible(false);
         }
         fillList();
     }
 
     public void fillList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
+        members = GroupController.getJoinedMembers(group.getID());
         members = GroupController.getJoinedMembers(group.getID());
         for (User user : members) {
             listModel.addElement(user.getUsername());
@@ -142,6 +195,7 @@ public class GroupProfile extends javax.swing.JFrame {
         membersList.setModel(listModel);
 
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -328,6 +382,7 @@ public class GroupProfile extends javax.swing.JFrame {
 
     private void leaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveActionPerformed
         if (user == null || group == null) {
+        if (user == null || group == null) {
             JOptionPane.showMessageDialog(this,
                     "User or Newsfeed data is missing. Please log in again.",
                     "Error",
@@ -336,7 +391,15 @@ public class GroupProfile extends javax.swing.JFrame {
         }
         try {
             if (user.getID() == group.getCreatorID()) {
+        try {
+            if (user.getID() == group.getCreatorID()) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Creator cannot leave the group", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            } else {
+                GroupController.leave(group.getID(), user.getID());
+                javax.swing.JOptionPane.showMessageDialog(null, "Left successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                groupList.setVisible(true);
+                groupList.setLocationRelativeTo(null);
+                setVisible(false);
             } else {
                 GroupController.leave(group.getID(), user.getID());
                 javax.swing.JOptionPane.showMessageDialog(null, "Left successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -348,6 +411,7 @@ public class GroupProfile extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
+
 
     }//GEN-LAST:event_leaveActionPerformed
 
@@ -363,9 +427,12 @@ public class GroupProfile extends javax.swing.JFrame {
             int index = membersList.getSelectedIndex();
             if (GroupAuthorityManager.validateRole(group.getID(), members.get(index).getID()).equals("Admin")) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Already admin!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            if (GroupAuthorityManager.validateRole(group.getID(), members.get(index).getID()).equals("Admin")) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Already admin!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
             }
             if (index >= 0) {
+                GroupAuthorityManager.promoteToAdmin(group.getID(), members.get(index).getID(), user.getID());
                 GroupAuthorityManager.promoteToAdmin(group.getID(), members.get(index).getID(), user.getID());
                 javax.swing.JOptionPane.showMessageDialog(null, "Promote to admin Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 fillList();
@@ -378,6 +445,7 @@ public class GroupProfile extends javax.swing.JFrame {
 
     private void demoteAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_demoteAdminActionPerformed
         if (user == null) {
+        if (user == null) {
             JOptionPane.showMessageDialog(this,
                     "User or Newsfeed data is missing. Please log in again.",
                     "Error",
@@ -388,9 +456,12 @@ public class GroupProfile extends javax.swing.JFrame {
             int index = membersList.getSelectedIndex();
             if (!GroupAuthorityManager.validateRole(group.getID(), members.get(index).getID()).equals("Admin")) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Not admin!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            if (!GroupAuthorityManager.validateRole(group.getID(), members.get(index).getID()).equals("Admin")) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Not admin!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
             }
             if (index >= 0) {
+                GroupAuthorityManager.demoteFromAdmin(group.getID(), members.get(index).getID(), user.getID());
                 GroupAuthorityManager.demoteFromAdmin(group.getID(), members.get(index).getID(), user.getID());
                 javax.swing.JOptionPane.showMessageDialog(null, "Demote from admin Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 fillList();
@@ -402,6 +473,7 @@ public class GroupProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_demoteAdminActionPerformed
 
     private void removeMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMemberActionPerformed
+        if (user == null) {
         if (user == null) {
             JOptionPane.showMessageDialog(this,
                     "User or Newsfeed data is missing. Please log in again.",
@@ -415,7 +487,12 @@ public class GroupProfile extends javax.swing.JFrame {
                 javax.swing.JOptionPane.showMessageDialog(null, "Creator cannot be removed!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            if (members.get(index).getID() == group.getCreatorID()) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Creator cannot be removed!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             if (index >= 0) {
+                GroupAuthorityManager.removeMember(group.getID(), members.get(index).getID(), user.getID());
                 GroupAuthorityManager.removeMember(group.getID(), members.get(index).getID(), user.getID());
                 javax.swing.JOptionPane.showMessageDialog(null, "Remove member Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 fillList();
@@ -428,6 +505,7 @@ public class GroupProfile extends javax.swing.JFrame {
 
     private void postsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postsActionPerformed
         if (user == null) {
+        if (user == null) {
             JOptionPane.showMessageDialog(this,
                     "User or Newsfeed data is missing. Please log in again.",
                     "Error",
@@ -436,9 +514,11 @@ public class GroupProfile extends javax.swing.JFrame {
         }
         try {
             GroupPosts groupPosts = new GroupPosts(group, user, this);
+            GroupPosts groupPosts = new GroupPosts(group, user, this);
             groupPosts.setVisible(true);
             groupPosts.setLocationRelativeTo(null);
             setVisible(false);
+
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -447,6 +527,7 @@ public class GroupProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_postsActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if (user == null) {
         if (user == null) {
             JOptionPane.showMessageDialog(this,
                     "User or Newsfeed data is missing. Please log in again.",
@@ -463,7 +544,16 @@ public class GroupProfile extends javax.swing.JFrame {
                 search.setVisible(true);
                 search.setLocationRelativeTo(null);
                 setVisible(false);
+            if (search == null) {
+                groupList.setVisible(true);
+                groupList.setLocationRelativeTo(null);
+                setVisible(false);
+            } else {
+                search.setVisible(true);
+                search.setLocationRelativeTo(null);
+                setVisible(false);
             }
+
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -472,6 +562,7 @@ public class GroupProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void deleteGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteGroupActionPerformed
+        if (user == null) {
         if (user == null) {
             JOptionPane.showMessageDialog(this,
                     "User or Newsfeed data is missing. Please log in again.",
@@ -483,8 +574,12 @@ public class GroupProfile extends javax.swing.JFrame {
             GroupAuthorityManager.deleteGroup(group.getID(), user.getID());
             javax.swing.JOptionPane.showMessageDialog(null, "Delete group Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             groupList.setVisible(true);
+            GroupAuthorityManager.deleteGroup(group.getID(), user.getID());
+            javax.swing.JOptionPane.showMessageDialog(null, "Delete group Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            groupList.setVisible(true);
             groupList.setLocationRelativeTo(null);
             setVisible(false);
+
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -494,6 +589,7 @@ public class GroupProfile extends javax.swing.JFrame {
 
     private void membershipRequestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_membershipRequestsActionPerformed
         if (user == null) {
+        if (user == null) {
             JOptionPane.showMessageDialog(this,
                     "User or Newsfeed data is missing. Please log in again.",
                     "Error",
@@ -502,9 +598,11 @@ public class GroupProfile extends javax.swing.JFrame {
         }
         try {
             MembershipRequests membershipRequests = new MembershipRequests(group, this, user);
+            MembershipRequests membershipRequests = new MembershipRequests(group, this, user);
             membershipRequests.setVisible(true);
             membershipRequests.setLocationRelativeTo(null);
             setVisible(false);
+
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
