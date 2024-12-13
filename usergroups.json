@@ -12,4 +12,11 @@
   "status" : "joined",
   "role" : "CREATOR",
   "type" : "UserGroup"
+}, {
+  "id" : 3,
+  "userID" : 1,
+  "groupID" : 6,
+  "status" : "joined",
+  "role" : "CREATOR",
+  "type" : "UserGroup"
 } ]

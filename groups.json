@@ -26,4 +26,11 @@
   "imagePath" : "src/assets/default-group.png",
   "description" : "",
   "type" : "Group"
+}, {
+  "id" : 6,
+  "creatorID" : 1,
+  "name" : "asdas",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "",
+  "type" : "Group"
 } ]
