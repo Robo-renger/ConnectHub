@@ -138,9 +138,7 @@ public class ConnectHub {
 //        CredentialsValidation validation = new CredentialsValidation("ibrahim", "111555333");
 //        boolean isValid = validation.validate("");  // 'data' is not needed and can be passed as an empty string or placeholder
 //        testUserGroups();
-
         // Client listening to the server
-        
 //        LongPollingServer server = new LongPollingServer();
 //        Notifier notifier = new Notifier(server);
 //        NotificationProducer producer = new NotificationProducer();
@@ -151,11 +149,9 @@ public class ConnectHub {
 //        // Simulate a client
 //        NotificationClient client = new NotificationClient(server);
 //        new Thread(client::listenForNotifications).start();
-
         // Simulate sending a notification
 //        Notification notification = new Notification(4, "Chat", "You have a new message!");
 //        service.sendNotification(notification);
-
 //        testCreateGroup();
 //        testPromoteToAdmin();
 //        testDemoteFromAdmin();
@@ -167,7 +163,6 @@ public class ConnectHub {
 //        testAddPost();
 //        testEditPost();
 //        testRemovePost();
-
 //            testMessaging();
 //        } catch (InterruptedException ex) {
 //            Logger.getLogger(ConnectHub.class.getName()).log(Level.SEVERE, null, ex);
@@ -578,7 +573,6 @@ public class ConnectHub {
 //    private void assertTrue(boolean anyMatch) {
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 //    }
-
 //    private static void testMessaging() throws InterruptedException {
 //        ChatWatcher chatWatcher = new ChatWatcher();
 //
@@ -606,8 +600,8 @@ public class ConnectHub {
 //        // Fetch the final batch of new messages
 //        List<Message> finalMessages = chatWatcher.getNewMessages();
 //        System.out.println("Final fetched messages: " + finalMessages);
-//    }
-    
+    }
+
     // Test Case 1: Test Promote User to Admin
     public static void testPromoteToAdmin() {
         // Test data setup (groupID, userID, callerID)
@@ -666,33 +660,29 @@ public class ConnectHub {
         int callerID = 2;  // Creator's ID
         GroupAuthorityManager.deleteGroup(groupID, callerID);
     }
-    
-    public static void testAddPost()
-    {
+
+    public static void testAddPost() {
         int authorID = 6;
         int groupID = 2;
         int callerID = 6;
         PostGroup postGroup = new PostGroup(authorID, groupID, "This is a post", "");
         GroupAuthorityManager.addPost(postGroup, callerID);
     }
-    
-    public static void testEditPost()
-    {
+
+    public static void testEditPost() {
         int callerID = 6;
         PostGroup postGroup = PostGroupMapper.get(2).get();
         postGroup.setContent("This is an updated post");
         GroupAuthorityManager.editPost(postGroup, callerID);
     }
-    
-    public static void testRemovePost()
-    {
+
+    public static void testRemovePost() {
         int callerID = 4;
         PostGroup postGroup = PostGroupMapper.get(1).get();
         GroupAuthorityManager.deletePost(postGroup, callerID);
     }
-    
-    public static void testCreateGroup()
-    {
+
+    public static void testCreateGroup() {
         Group group = new Group(5, "zerbewelnew", "zerbewzzz");
         GroupMapper.create(group);
     }

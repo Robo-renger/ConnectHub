@@ -41,7 +41,7 @@ public class GroupAuthorityManager {
         UserGroup userGroup = UserGroupMapper.get(groupID, userID).get();
         userGroup.setRole("ADMIN");
         UserGroupMapper.update(userGroup.getID(), userGroup);
-        
+
         notificationManager.sendNotification(userID, "Promotion to admin", "You have been promoted to Admin in group " + groupID);
         System.out.println("User " + userID + " has been promoted to Admin in group " + groupID);
     }
@@ -128,11 +128,10 @@ public class GroupAuthorityManager {
 
         // Remove the request from the database
         boolean isDeleted = MembershipRequestMapper.delete(request.getID());
-        if (isDeleted)
-        {
+        if (isDeleted) {
             notificationManager.sendNotification(request.getUserID(), "Membership Request Declined", "Your membership request to group " + request.getGroupID() + " has been declined");
             System.out.println("Membership request for user " + request.getUserID() + " to group " + request.getGroupID() + " has been declined");
-        } else 
+        } else {
             System.out.println("Failed to decline membership request for user " + request.getUserID() + " to group " + request.getGroupID());
         }
     }
@@ -177,9 +176,10 @@ public class GroupAuthorityManager {
         }
 
         List<User> groubMembers = GroupController.getJoinedMembers(groupID);
-        for(User member: groubMembers)
+        for (User member : groubMembers) {
             notificationManager.sendNotification(member.getID(), "Group Deleted", "Group " + groupID + " has been deleted by the creator");
-        
+        }
+
         // Remove users from the group
         List<UserGroup> userGroups = UserGroupMapper.getAllMembers(groupID);
         for (UserGroup userGroup : userGroups) {
@@ -195,18 +195,16 @@ public class GroupAuthorityManager {
 
     public static void addPost(PostGroup postGroup, int callerID) {
         Optional<UserGroup> optionalUserGroup = UserGroupMapper.get(postGroup.getGroupID(), postGroup.getAuthorId());
-        if(optionalUserGroup.isPresent() || callerID == GroupMapper.get(postGroup.getGroupID()).get().getCreatorID())
-        {
+        if (optionalUserGroup.isPresent() || callerID == GroupMapper.get(postGroup.getGroupID()).get().getCreatorID()) {
             PostGroupMapper.create(postGroup);
             List<User> groubMembers = GroupController.getJoinedMembers(postGroup.getGroupID());
-            for(User member: groubMembers)
-            {
-                if(member.getID() != postGroup.getAuthorId())
+            for (User member : groubMembers) {
+                if (member.getID() != postGroup.getAuthorId()) {
                     notificationManager.sendNotification(member.getID(), "PostGroup", "A new post has been added to group " + postGroup.getGroupID());
+                }
             }
             notificationManager.sendNotification(GroupMapper.get(postGroup.getGroupID()).get().getCreatorID(), "New Post Added", "A new post has been added to group " + postGroup.getGroupID());
-        }
-        else
+        } else {
             throw new InvalidDataException("The user and the group are not related");
         }
     }
@@ -222,7 +220,7 @@ public class GroupAuthorityManager {
         }
 
         Optional<UserGroup> optionalUserGroup = UserGroupMapper.get(updatedPostGroup.getGroupID(), updatedPostGroup.getAuthorId());
-        if(optionalUserGroup.isPresent() || callerID == GroupMapper.get(updatedPostGroup.getGroupID()).get().getCreatorID())
+        if (optionalUserGroup.isPresent() || callerID == GroupMapper.get(updatedPostGroup.getGroupID()).get().getCreatorID()) {
             PostGroupMapper.update(updatedPostGroup.getID(), updatedPostGroup);
         } else {
             throw new InvalidDataException("The user and the group are not related");
@@ -240,7 +238,7 @@ public class GroupAuthorityManager {
         }
 
         Optional<UserGroup> optionalUserGroup = UserGroupMapper.get(postGroup.getGroupID(), postGroup.getAuthorId());
-        if(optionalUserGroup.isPresent() || callerID == GroupMapper.get(postGroup.getGroupID()).get().getCreatorID())
+        if (optionalUserGroup.isPresent() || callerID == GroupMapper.get(postGroup.getGroupID()).get().getCreatorID()) {
             PostGroupMapper.delete(postGroup.getID());
         } else {
             throw new InvalidDataException("The user and the group are not related");

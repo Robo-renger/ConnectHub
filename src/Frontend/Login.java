@@ -19,12 +19,15 @@ import java.util.function.Predicate;
 public class Login extends javax.swing.JFrame {
 
     private FrontProfile fp;
-    private static Login loginPage=null;
-    public static Login getInstanceOf(){
-       if(loginPage==null)
-           loginPage=new Login();
-       return loginPage;
+    private static Login loginPage = null;
+
+    public static Login getInstanceOf() {
+        if (loginPage == null) {
+            loginPage = new Login();
+        }
+        return loginPage;
     }
+
     private Login() {
         initComponents();
 
