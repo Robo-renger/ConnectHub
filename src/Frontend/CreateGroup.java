@@ -26,8 +26,6 @@ public class CreateGroup extends javax.swing.JFrame {
     GroupsManagement group;
 
     public CreateGroup(User user, GroupsManagement group) {
-
-    public CreateGroup(User user, GroupsManagement group) {
         initComponents();
         this.user = user;
         this.group = group;
@@ -140,67 +138,62 @@ public class CreateGroup extends javax.swing.JFrame {
 
     private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
         if (user == null) {
-        if (user == null) {
-            JOptionPane.showMessageDialog(this,
-                    "User or Newsfeed data is missing. Please log in again.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        try {
-        }
-        try {
-            JFileChooser fileChooser = new JFileChooser();
-            int returnValue = fileChooser.showOpenDialog(this);
-
-            File selectedFile = null;
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-                selectedFile = fileChooser.getSelectedFile();
-            }
-
-            if ((selectedFile == null || !selectedFile.exists()) && name.getText().trim().isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(
-                        null,
-                        "Both fields are empty! Please provide text content or an image.",
+            if (user == null) {
+                JOptionPane.showMessageDialog(this,
+                        "User or Newsfeed data is missing. Please log in again.",
                         "Error",
-                        javax.swing.JOptionPane.ERROR_MESSAGE
-                );
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            if (selectedFile != null && selectedFile.exists()) {
-                ImageIcon originalIcon = new ImageIcon(selectedFile.getAbsolutePath());
-                Image img = originalIcon.getImage();
+            try {
+                JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(this);
 
-                Image scaledImg = img.getScaledInstance(photo.getWidth(), photo.getHeight(), Image.SCALE_SMOOTH);
-                ImageIcon scaledIcon = new ImageIcon(scaledImg);
-                photo.setIcon(scaledIcon);
+                File selectedFile = null;
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    selectedFile = fileChooser.getSelectedFile();
+                }
+
+                if ((selectedFile == null || !selectedFile.exists()) && name.getText().trim().isEmpty()) {
+                    javax.swing.JOptionPane.showMessageDialog(
+                            null,
+                            "Both fields are empty! Please provide text content or an image.",
+                            "Error",
+                            javax.swing.JOptionPane.ERROR_MESSAGE
+                    );
+                    return;
+                }
+
+                if (selectedFile != null && selectedFile.exists()) {
+                    ImageIcon originalIcon = new ImageIcon(selectedFile.getAbsolutePath());
+                    Image img = originalIcon.getImage();
+
+                    Image scaledImg = img.getScaledInstance(photo.getWidth(), photo.getHeight(), Image.SCALE_SMOOTH);
+                    ImageIcon scaledIcon = new ImageIcon(scaledImg);
+                    photo.setIcon(scaledIcon);
+                }
+
+                Group group = new Group(user.getID(), name.getText(), description.getText().trim(),
+                        selectedFile != null ? selectedFile.getAbsolutePath() : "");
+                GroupMapper.create(group);
+
+                javax.swing.JOptionPane.showMessageDialog(
+                        null,
+                        "Create created successfully!",
+                        "Success",
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE
+                );
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(
+                        null,
+                        "An error occurred while creating the group. Please try again.",
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE
+                );
+                e.printStackTrace();
             }
-
-            Group group = new Group(user.getID(), name.getText(), description.getText().trim(),
-                    selectedFile != null ? selectedFile.getAbsolutePath() : "");
-            Group group = new Group(user.getID(), name.getText(), description.getText().trim(),
-                    selectedFile != null ? selectedFile.getAbsolutePath() : "");
-            GroupMapper.create(group);
-
-            javax.swing.JOptionPane.showMessageDialog(
-                    null,
-                    "Create created successfully!",
-                    "Success",
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE
-            );
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(
-                    null,
-                    "An error occurred while creating the group. Please try again.",
-                    "Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE
-            );
-            e.printStackTrace();
         }
-
-
-
     }//GEN-LAST:event_createActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
