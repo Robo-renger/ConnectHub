@@ -19,4 +19,11 @@
   "message" : "You have a new message!",
   "read" : true,
   "type" : "Notification"
+}, {
+  "id" : 2,
+  "recepientID" : 1,
+  "notificationType" : "Group Deleted",
+  "message" : "Group 6 has been deleted by the creator",
+  "read" : false,
+  "type" : "Notification"
 } ]

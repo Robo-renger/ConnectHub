@@ -16,4 +16,10 @@
   "postId" : 1,
   "content" : "\n\n\n\ndfgfd\n\n",
   "type" : "Comment"
+}, {
+  "id" : 4,
+  "userId" : 1,
+  "postId" : 3,
+  "content" : "\n\n\n\n\n\ntest comment",
+  "type" : "Comment"
 } ]

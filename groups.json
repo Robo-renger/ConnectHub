@@ -29,8 +29,8 @@
 }, {
   "id" : 6,
   "creatorID" : 1,
-  "name" : "asdas",
-  "imagePath" : "src/assets/default-group.png",
-  "description" : "",
+  "name" : "test Group",
+  "imagePath" : "C:\\Users\\User\\Pictures\\Screenshots\\Screenshot 2023-03-01 173745.png",
+  "description" : "leave group test",
   "type" : "Group"
 } ]

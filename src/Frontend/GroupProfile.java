@@ -153,12 +153,12 @@ public class GroupProfile extends javax.swing.JFrame {
         for (User user : members) {
             listModel.addElement(user.getUsername());
         }
-        Optional<User> user = UserMapper.get(group.getCreatorID());
-        if (user.isPresent()) {
-            User foundUser = user.get();
-            members.add(foundUser);
-            listModel.addElement(foundUser.getUsername());
-        }
+//        Optional<User> user = UserMapper.get(group.getCreatorID());
+//        if (user.isPresent()) {
+//            User foundUser = user.get();
+//            members.add(foundUser);
+//            listModel.addElement(foundUser.getUsername());
+//        }
         membersList.setModel(listModel);
 
     }
