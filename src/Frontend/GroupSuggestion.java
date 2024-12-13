@@ -13,7 +13,6 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-
 public class GroupSuggestion extends javax.swing.JFrame {
 
     User user;
@@ -24,6 +23,7 @@ public class GroupSuggestion extends javax.swing.JFrame {
         initComponents();
         this.user = user;
         this.group = group;
+        this.groups = GroupController.suggestGroups(this.user.getID());
         fillList();
     }
 
@@ -37,9 +37,10 @@ public class GroupSuggestion extends javax.swing.JFrame {
             }
 
             list.setModel(listModel);
+            System.out.println(listModel);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error retrieving friend suggestions.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error retrieving group suggestions.", "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -123,18 +124,17 @@ public class GroupSuggestion extends javax.swing.JFrame {
         try {
             if (j >= -1) {
                 Group selectedGroup = groups.get(j);
-                GroupAuthorityManager.sendMembershipRequest(selectedGroup.getID(),user.getID());
+                GroupAuthorityManager.sendMembershipRequest(selectedGroup.getID(), user.getID());
                 fillList();
 
-                JOptionPane.showMessageDialog(null, "Friend Request Sent Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Group join request Sent Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Please select a friend to add.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please select a group to join.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
             // Handle any errors that occur
-            JOptionPane.showMessageDialog(null, "Error occurred while sending the friend request.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error occurred while sending the join request.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
 
 
     }//GEN-LAST:event_joinActionPerformed

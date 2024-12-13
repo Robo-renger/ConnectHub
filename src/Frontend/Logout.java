@@ -95,6 +95,7 @@ public class Logout extends javax.swing.JFrame {
 
             // Close the current profile window
             FrontProfile f = FrontProfile.getInstanceOf();
+            f.handleButtonsTrue();
             f.setVisible(false); // Hide the current window
 
             // Redirect to the FirstPage

@@ -106,6 +106,7 @@ public class Delete extends javax.swing.JFrame {
                 }
             }
             FrontProfile f = FrontProfile.getInstanceOf();
+            f.handleButtonsTrue();
             f.setVisible(true);
             f.setLocationRelativeTo(null);
             setVisible(false);

@@ -136,6 +136,7 @@ public class FriendsManagement extends javax.swing.JFrame {
 
             FrontProfile f = FrontProfile.getInstanceOf();
             f.setVisible(true);
+            f.handleButtonsTrue();
             f.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {

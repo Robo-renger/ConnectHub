@@ -1,15 +1,20 @@
 [ {
-  "id" : 2,
-  "recepientID" : 1,
-  "notificationType" : "Friend request accepted",
-  "message" : "Your friend request has been accepted by User 2",
-  "read" : false,
-  "type" : "Notification"
-}, {
   "id" : 1,
-  "recepientID" : 4,
-  "notificationType" : "Chat",
-  "message" : "You have a new message!",
-  "read" : true,
-  "type" : "Notification"
+  "authorId" : 2,
+  "groupID" : 9,
+  "content" : "\n\n\n\n\n\nasdasd",
+  "imagePath" : "C:\\Users\\User\\Pictures\\Screenshots\\Screenshot 2023-03-01 173745.png",
+  "timestamp" : [ 2024, 12, 13, 4, 27, 29, 320830300 ],
+  "expired" : false,
+  "type" : "PostGroup",
+  "likesCount" : 1,
+  "commentsCount" : 0
+}, {
+  "id" : 2,
+  "authorId" : 2,
+  "content" : "dfgdfg",
+  "imagePath" : null,
+  "timestamp" : [ 2024, 12, 13, 18, 35, 38, 790555300 ],
+  "expired" : false,
+  "type" : "Post"
 } ]

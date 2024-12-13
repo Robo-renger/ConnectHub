@@ -83,21 +83,26 @@ public class GroupController {
         List<User> userFriends = getAllFriends(userId);
         System.out.println("FRIENDS");
         System.out.println(userFriends);
-        // Fetch groups for all friends
-        List<Group> friendGroups = userFriends.stream()
-                .flatMap(friend -> UserGroupMapper.getAll(friend.getID(), "joined").stream()
-                .map(userGroup -> GroupMapper.get(userGroup.getGroupID()).orElse(null)))
-                .filter(group -> group != null) // Remove null values
-                .collect(Collectors.toList());
-        System.out.println("FRIENDS GROUPS");
-        System.out.println(UserGroupMapper.getAll(2, "joined"));
 
-        // Remove groups the user has left or already joined
-        List<Group> suggestedGroups = friendGroups.stream()
+        // Fetch groups for all friends
+        Set<Integer> friendGroupIDs = userFriends.stream()
+                .flatMap(friend -> UserGroupMapper.getAll(friend.getID(), "joined").stream()
+                .map(UserGroup::getGroupID))
+                .collect(Collectors.toSet());
+        System.out.println("FRIENDS GROUPS");
+        System.out.println(friendGroupIDs);
+        List<Group> friendsGroups = new ArrayList<>();
+        for (int friendGroupId : friendGroupIDs) {
+            Optional<Group> optGroup = GroupMapper.get(friendGroupId);
+            if(optGroup.isPresent())
+                friendsGroups.add(optGroup.get());
+        }
+        // Remove groups the user has left, already joined, or belong to friends
+        List<Group> suggestedGroups = friendsGroups.stream()
                 .filter(group -> !leftGroupIDs.contains(group.getID())) // Exclude groups the user has left
                 .filter(group -> !joinedGroupIDs.contains(group.getID())) // Exclude groups the user is already part of
                 .collect(Collectors.toList());
-
+        System.out.println(suggestedGroups);
         return suggestedGroups;
     }
 

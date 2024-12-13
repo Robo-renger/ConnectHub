@@ -6,13 +6,6 @@
   "coverPhotoPath" : "C:\\Users\\ibrahim alkady\\Pictures\\Screenshots\\Screenshot (12).png",
   "type" : "Profile"
 }, {
-  "id" : 2,
-  "userID" : 2,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
   "id" : 3,
   "userID" : 3,
   "bio" : "",
@@ -27,137 +20,11 @@
   "coverPhotoPath" : "src/assets/default-cover.jpg",
   "type" : "Profile"
 }, {
-  "id" : 5,
-  "creatorID" : 1,
-  "name" : "helloooo",
-  "imagePath" : "src/assets/default-group.png",
-  "description" : "",
-  "type" : "Group"
-}, {
-  "id" : 6,
-  "userID" : 1,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 7,
-  "userID" : 1,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 8,
+  "id" : 2,
   "userID" : 2,
   "bio" : "",
   "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 9,
-  "userID" : 2,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 10,
-  "userID" : 2,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 11,
-  "userID" : 2,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 12,
-  "userID" : 2,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 13,
-  "userID" : 2,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 14,
-  "userID" : 2,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 15,
-  "userID" : 2,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 16,
-  "userID" : 2,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 17,
-  "userID" : 2,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 18,
-  "userID" : 1,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 19,
-  "userID" : 2,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 20,
-  "userID" : 1,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 21,
-  "userID" : 1,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 22,
-  "userID" : 1,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
-  "type" : "Profile"
-}, {
-  "id" : 23,
-  "userID" : 4,
-  "bio" : "",
-  "profilePhotoPath" : "src/assets/default-profile.png",
-  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "coverPhotoPath" : "C:\\Users\\ibrahim alkady\\Documents\\Screenshot (1).png",
   "type" : "Profile"
 }, {
   "id" : 24,

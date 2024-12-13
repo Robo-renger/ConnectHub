@@ -118,6 +118,7 @@ public class UpdatePass extends javax.swing.JFrame {
         try {
 
             FrontProfile f = FrontProfile.getInstanceOf();
+            f.handleButtonsTrue();
             f.setVisible(true);
             f.setLocation(null);
             setVisible(false);

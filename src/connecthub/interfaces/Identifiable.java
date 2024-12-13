@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = connecthub.entities.User.class, name = "User"), // User entity
     @JsonSubTypes.Type(value = connecthub.entities.Profile.class, name = "Profile"), // Profile entity
     @JsonSubTypes.Type(value = connecthub.entities.Post.class, name = "Post"), // Post entity
+    @JsonSubTypes.Type(value = connecthub.entities.PostGroup.class, name = "PostGroup"), // Post entity
     @JsonSubTypes.Type(value = connecthub.entities.Story.class, name = "Story"), // Story entity
     @JsonSubTypes.Type(value = connecthub.entities.Friend.class, name = "Friend"), // Friend entity
     @JsonSubTypes.Type(value = connecthub.entities.Blocked.class, name = "Blocked"), // Blocked entity
@@ -28,8 +29,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public interface Identifiable {
 
     int getID();
-    
+
+
     void setID(int id);
-    
+
+
     String getType();
 }

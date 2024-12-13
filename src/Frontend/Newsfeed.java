@@ -296,6 +296,7 @@ public class Newsfeed extends javax.swing.JFrame implements Observer{
                 notificationService.interrupt();
             
             FrontProfile f = FrontProfile.getInstanceOf();
+            f.handleButtonsTrue();
             f.setVisible(true);
             f.setLocation(null);
             setVisible(false);

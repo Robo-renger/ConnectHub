@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class FriendsManager {
-    
+
     private static final NotificationManager notificationManager = new NotificationManager();
-    
+
     public static void sendFriendRequest(int senderId, int receiverId) {
         Optional<Friend> alreadyFriends = FriendMapper.get(senderId, receiverId);
         if (alreadyFriends.isPresent()) {
@@ -24,6 +24,7 @@ public class FriendsManager {
         if (alreadyRequested.isPresent())
             throw new InvalidDataException("A request already sent");
         
+        }
         FriendRequestMapper.create(new FriendRequest(senderId, receiverId, "PENDING"));
         notificationManager.sendNotification(receiverId, "FriendRequest", "You have a new friend request from User " + senderId);
     }
@@ -35,7 +36,7 @@ public class FriendsManager {
         FriendMapper.create(friend);
         notificationManager.sendNotification(friendRequest.getSenderId(), "Friend request accepted", "Your friend request has been accepted by User " + friendRequest.getReceiverId());
     }
-    
+
     public static void rejectFriendRequest(FriendRequest friendRequest) {
         friendRequest.setStatus("REJECTED");
         FriendRequestMapper.delete(friendRequest.getID());

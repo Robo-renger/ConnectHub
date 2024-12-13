@@ -7,8 +7,10 @@ import connecthub.entities.Comment;
 import connecthub.entities.Friend;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CommentMapper {
 
@@ -54,14 +56,16 @@ public class CommentMapper {
         }
     }
 
-    public static Optional<Comment> getPostComments(int postId) {
+    public static List<Comment> getPostComments(int postId) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             List<Comment> comments = getAll();
-            return comments.stream().filter(comment -> comment.getPostId() == postId).findFirst();
+            return comments.stream()
+                    .filter(comment -> comment.getPostId() == postId)
+                    .collect(Collectors.toList());
         } catch (Exception e) {
-            System.out.println("Error retrieving Comment: " + e.getMessage());
-            return Optional.empty();
+            System.out.println("Error retrieving Comments: " + e.getMessage());
+            return Collections.emptyList();
         }
     }
 

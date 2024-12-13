@@ -125,6 +125,7 @@ public class ViewPosts extends javax.swing.JFrame {
         try {
 
             FrontProfile f = FrontProfile.getInstanceOf();
+            f.handleButtonsTrue();
             f.setVisible(true);
             setVisible(false);
         } catch (Exception e) {

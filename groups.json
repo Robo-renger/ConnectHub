@@ -6,25 +6,11 @@
   "description" : "1",
   "type" : "Group"
 }, {
-  "id" : 8,
-  "creatorID" : 1,
-  "name" : "alooo",
-  "imagePath" : "src/assets/default-group.png",
-  "description" : "alooo",
-  "type" : "Group"
-}, {
-  "id" : 9,
+  "id" : 2,
   "creatorID" : 2,
-  "name" : "test",
+  "name" : "aq",
   "imagePath" : "src/assets/default-group.png",
-  "description" : "asd",
-  "type" : "Group"
-}, {
-  "id" : 10,
-  "creatorID" : 1,
-  "name" : "hellooo",
-  "imagePath" : "src/assets/default-group.png",
-  "description" : "hereee",
+  "description" : "",
   "type" : "Group"
 }, {
   "id" : 4,
@@ -32,5 +18,12 @@
   "name" : "zerbewelnew",
   "imagePath" : "src/assets/default-group.png",
   "description" : "zerbewzzz",
+  "type" : "Group"
+}, {
+  "id" : 5,
+  "creatorID" : 1,
+  "name" : "aa",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "",
   "type" : "Group"
 } ]

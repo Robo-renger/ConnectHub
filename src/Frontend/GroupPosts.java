@@ -6,8 +6,10 @@ package Frontend;
 
 import connecthub.GroupAuthorityManager;
 import connecthub.controllers.GroupController;
+import connecthub.entities.Comment;
 import connecthub.entities.Group;
 import connecthub.entities.Post;
+import connecthub.mappers.CommentMapper;
 import connecthub.entities.PostGroup;
 import connecthub.entities.User;
 import connecthub.mappers.PostGroupMapper;
@@ -60,9 +62,9 @@ public class GroupPosts extends javax.swing.JFrame {
         if (selectedValue >= 0) {
             PostGroup selectedPost = posts.get(selectedValue);
 
-            boolean isMyPost = (selectedPost.getAuthorId() == user.getID() ||
-                    group.getCreatorID() == user.getID() ||
-                    GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Admin"));
+            boolean isMyPost = (selectedPost.getAuthorId() == user.getID()
+                    || group.getCreatorID() == user.getID()
+                    || GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Admin"));
 
             editPost.setVisible(false);
             deletePost.setVisible(false);
@@ -182,7 +184,6 @@ public class GroupPosts extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(deletePost, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -192,7 +193,10 @@ public class GroupPosts extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(editPost, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                                     .addComponent(view, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(like, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                    .addComponent(like, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
@@ -201,7 +205,7 @@ public class GroupPosts extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(createPost)
@@ -210,7 +214,7 @@ public class GroupPosts extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deletePost)
                     .addComponent(view))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comments)
                     .addComponent(like))
@@ -246,7 +250,7 @@ public class GroupPosts extends javax.swing.JFrame {
         }
         try {
             int index = postsList.getSelectedIndex();
-            
+
             if (index >= 0) {
                 EditPost editPost = new EditPost(posts.get(postsList.getSelectedIndex()), this, user);
                 editPost.setVisible(true);
@@ -329,16 +333,63 @@ public class GroupPosts extends javax.swing.JFrame {
 
     private void commentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commentsActionPerformed
         // TODO add your handling code here:
+        if (user == null || group == null || groupProfile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or GroupProfile or group data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int selectedValue = postsList.getSelectedIndex();
+
+            if (selectedValue >= 0) {
+                PostGroup selectedPost = posts.get(selectedValue);
+//                List<Comment> postComments = CommentMapper.getPostComments(selectedPost.getID());
+                Comments commentsPage = new Comments(selectedPost);
+                commentsPage.setLocationRelativeTo(null);
+                commentsPage.setVisible(true);
+            }
+        } catch (Exception e) {
+        }
+
     }//GEN-LAST:event_commentsActionPerformed
 
     private void likeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_likeActionPerformed
         // TODO add your handling code here:
+        if (user == null || group == null || groupProfile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or GroupProfile or group data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int selectedValue = postsList.getSelectedIndex();
+            if (selectedValue >= 0) {
+                PostGroup selectedPost = posts.get(selectedValue);
+                if (liked == false) {
+                    selectedPost.like();
+                    liked = true;
+                    JOptionPane.showMessageDialog(this,
+                            "You have liked this post!",
+                            "Information",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "You have ALREADY liked this post!",
+                            "Information",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_likeActionPerformed
 
     /**
      * @param args the command line arguments
      */
-
+    private boolean liked = false;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton comments;
     private javax.swing.JToggleButton createPost;
