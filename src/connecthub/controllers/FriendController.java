@@ -116,19 +116,25 @@ public class FriendController {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * *
-     * @param username
-     * @return A list of users that match the input parameter
+    /***
+     * @param username The search term for usernames
+     * @param userID The ID of the user performing the search
+     * @return A list of non-blocked users that match the input parameter
      */
-    public static List<User> searchUsers(String username) {
+    public static List<User> searchUsers(String username,int userID) {
 
-        // Filter for matching usernames case-insensitively
+        List<Blocked> blockedUsers = BlockedController.getAllBlocks(userID);
+        Set<Integer> blockedUsersIDs = blockedUsers.stream()
+                .map(blocked -> blocked.getUserId() == userID ? blocked.getBlockedId() : blocked.getUserId())
+                .collect(Collectors.toSet());
+        
+        // Filter for matching usernames case-insensitively and not blocked
         Predicate<User> usernameFilter = user -> user.getUsername().toLowerCase().contains(username.toLowerCase());
-
+        Predicate<User> notBlockedFilter = user -> !blockedUsersIDs.contains(user.getID());
+        
         //Filter list with the username filter
-        List<Predicate<User>> filters = List.of(usernameFilter);
-
+        List<Predicate<User>> filters = List.of(usernameFilter, notBlockedFilter);
+        
         return UserMapper.get(filters)
                 .stream()
                 .collect(Collectors.toList());

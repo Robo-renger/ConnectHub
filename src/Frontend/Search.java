@@ -156,7 +156,7 @@ public class Search extends javax.swing.JFrame {
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
         try {
             if (!name.getText().isEmpty()) {
-                users = FriendController.searchUsers(name.getText());
+                users = FriendController.searchUsers(name.getText(), u.getID());
                 groups=GroupController.search(name.getText());
                 for (User user : users) {
                     System.out.println("USER");
