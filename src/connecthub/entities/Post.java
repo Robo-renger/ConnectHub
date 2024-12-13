@@ -8,8 +8,7 @@ import connecthub.mappers.ContentMapper;
 public class Post extends Content {
 
     private static final String TYPE = "Post";
-    private int likesCount = 0;
-    private int commentsCount = 0;
+
 
     public Post() {
     } // Default constructor for Jackson}
@@ -23,29 +22,6 @@ public class Post extends Content {
         super.setExpiry(false);
         return false;
     }
-
-    public int like() {
-        this.likesCount++;
-        ContentMapper.update(this.getID(), this);
-        return this.likesCount;
-    }
-
-    public int getLikesCount() {
-        return this.likesCount;
-    }
-
-    public int getCommentsCount() {
-        return this.commentsCount;
-    }
-
-    public int comment(int userId, String commentContent) {
-        Comment newComment = new Comment(userId, this.getID(), commentContent);
-        CommentMapper.create(newComment);
-        this.commentsCount++;
-        ContentMapper.update(this.getID(), this);
-        return this.commentsCount;
-    }
-
     @Override
     public String getType() {
         return TYPE;

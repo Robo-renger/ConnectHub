@@ -4,16 +4,28 @@
  */
 package Frontend;
 
+import connecthub.entities.Post;
+import connecthub.entities.PostGroup;
+import connecthub.entities.User;
+import connecthub.mappers.UserMapper;
+import java.util.Optional;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mahinour Mohamed
  */
 public class AddComment extends javax.swing.JFrame {
-
+//
     /**
      * Creates new form AddComment
      */
-    public AddComment() {
+    public AddComment(PostGroup post) {
+        this.post = post;
+        Optional<User> optUser = UserMapper.getLoggedInUser();
+        if (optUser.isPresent()) {
+            this.user = optUser.get();
+        }
         initComponents();
     }
 
@@ -101,18 +113,26 @@ public class AddComment extends javax.swing.JFrame {
 
     private void CommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CommentActionPerformed
         // TODO add your handling code here:
+        String commentContent = content.getText();
+        this.post.comment(this.user.getID(), commentContent);
+        
+        JOptionPane.showMessageDialog(this,
+                "You have commented on this post!",
+                "Information",
+                JOptionPane.INFORMATION_MESSAGE);
+
     }//GEN-LAST:event_CommentActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
      */
-   
-    
-
+    private PostGroup post;
+    private User user;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton Comment;
     private javax.swing.JTextArea content;

@@ -10,10 +10,4 @@
   "receiverId" : 3,
   "status" : "PENDING",
   "type" : "FriendRequest"
-}, {
-  "id" : 3,
-  "senderId" : 1,
-  "receiverId" : 2,
-  "status" : "PENDING",
-  "type" : "FriendRequest"
 } ]
