@@ -507,7 +507,10 @@ public class FrontProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_groupsActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        // TODO add your handling code here:
+        Search searchPage = new Search (user);
+        searchPage.setVisible(true);
+        searchPage.setLocationRelativeTo(null);
+        setVisible(false);
     }//GEN-LAST:event_searchActionPerformed
 
     /**

@@ -18,33 +18,79 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 public class Search extends javax.swing.JFrame {
-
+    
     User u;
-    FriendsManagement f;
     List<User> users;
-     List<Group> groups;
-     
-     
-    public Search(User u, FriendsManagement f) {
+    List<Group> groups;
+    
+    public Search(User u) {
         initComponents();
         this.u = u;
-        this.f = f;
+        add.setVisible(false);
+        join.setVisible(false);
+        initListSelectionListener();
     }
-
+    
     private void fillList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         for (User user : users) {
-            listModel.addElement(user.getUsername());
+            if (u.getID() != user.getID()) {
+                listModel.addElement(user.getUsername());
+            }
         }
-         for (Group group : groups) {
-            listModel.addElement(group.getName());
+        for (Group group : groups) {
+            if (u.getID() != group.getCreatorID()) {
+                listModel.addElement(group.getName());
+            }
         }
         list.setModel(listModel);
-        add.setVisible(false);
-        join.setVisible(false);
-
     }
+    
+    private void onListSelectionChanged(javax.swing.event.ListSelectionEvent evt) {
+        String selectedValue = list.getSelectedValue();
+        
+        if (selectedValue != null) {
+            // Check if the selected item is a User or Group
+            boolean isUserSelected = false;
+            boolean isGroupSelected = false;
 
+            // Reset visibility of buttons
+            add.setVisible(false);
+            join.setVisible(false);
+
+            // Check if the selected value corresponds to a user
+            for (User user : users) {
+                if (selectedValue.equals(user.getUsername())) {
+                    isUserSelected = true;
+                    break;
+                }
+            }
+
+            // Check if the selected value corresponds to a group
+            for (Group group : groups) {
+                if (selectedValue.equals(group.getName())) {
+                    isGroupSelected = true;
+                    break;
+                }
+            }
+
+            // Show the appropriate button based on selection
+            if (isUserSelected) {
+                add.setVisible(true);  // Show the add button if a user is selected
+            } else if (isGroupSelected) {
+                join.setVisible(true); // Show the join button if a group is selected
+            }
+        }
+    }
+    
+    private void initListSelectionListener() {
+        list.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                onListSelectionChanged(evt);
+            }
+        });
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -62,6 +108,9 @@ public class Search extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -157,25 +206,26 @@ public class Search extends javax.swing.JFrame {
         try {
             if (!name.getText().isEmpty()) {
                 users = FriendController.searchUsers(name.getText());
-                groups=GroupController.search(name.getText());
+                groups = GroupController.search(name.getText());
                 for (User user : users) {
                     System.out.println("USER");
                     System.out.println(user);
                 }
-                System.out.println(name.getText());
+//                System.out.println(name.getText());
                 fillList();
             }
+            
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-
+            
         }
     }//GEN-LAST:event_searchActionPerformed
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         try {
             for (User user : users) {
-                if(list.getSelectedValue().equals(user))
-                    add.setVisible(true);
+                if (list.getSelectedValue().equals(user)) {
+                }
             }
             List<User> friends = FriendController.getAllFriends(u.getID());
             for (User friend : friends) {
@@ -187,12 +237,10 @@ public class Search extends javax.swing.JFrame {
             FriendsManager.sendFriendRequest(u.getID(), users.get(list.getSelectedIndex()).getID());
             fillList();
             javax.swing.JOptionPane.showMessageDialog(null, "Added Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-
+            
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-
         }
-
     }//GEN-LAST:event_addActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -204,38 +252,30 @@ public class Search extends javax.swing.JFrame {
             return;
         }
         try {
-
+            
+            FrontProfile f = FrontProfile.getInstanceOf();
             f.setVisible(true);
-            f.setLocationRelativeTo(null);
+            f.setLocation(null);
             setVisible(false);
         } catch (Exception e) {
-
+            
         }
     }//GEN-LAST:event_formWindowClosing
 
     private void joinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinActionPerformed
-         try {
-            for (Group group : groups) {
-                if(list.getSelectedValue().equals(group))
-                    join.setVisible(true);
-            }
-            List<UserGroup> userGroups = UserGroupMapper.getAllJoinedGroups(u.getID());
-            for (UserGroup userGroup : userGroups) {
-                if (groups.get(list.getSelectedIndex()).getID() == (userGroup.getGroupID())) {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Already member!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            }
-            GroupAuthorityManager.sendMembershipRequest(groups.get(list.getSelectedIndex()).getID(),u.getID());
-            fillList();
-            javax.swing.JOptionPane.showMessageDialog(null, "Joined Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-
+        try {
+            int index = list.getSelectedIndex();
+            System.out.println(index);
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-
+            
         }
 
     }//GEN-LAST:event_joinActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
