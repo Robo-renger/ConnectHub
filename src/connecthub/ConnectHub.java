@@ -1,4 +1,4 @@
-//package connecthub;
+package connecthub;
 //
 //import connecthub.entities.User;
 //import connecthub.entities.Group;
@@ -511,412 +511,412 @@
 //        } catch (InterruptedException ex) {
 //            Logger.getLogger(ConnectHub.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-    }
-
-// ########### User test cases ###########  
-    private static void testCreateUser() throws InvalidKeySpecException {
-        System.out.println("Running Test Case 1: Create User");
-        User newUser = new User("roborenger72@gmail.com", "ibrahim", "111555333", LocalDate.of(2003, 10, 26));
-        UserMapper.create(newUser);
-        System.out.println("User created successfully.");
-    }
-
-    private static void testGetAllUsers() {
-        System.out.println("Running Test Case 2: Get All Users");
-        List<User> usersList = UserMapper.getAll();
-        if (usersList.isEmpty()) {
-            System.out.println("No users found.");
-        } else {
-            usersList.forEach(user -> System.out.println("ID: " + user.getID() + " Name: " + user.getUsername()
-                    + ", Email: " + user.getEmail() + " Password: " + user.getPassword() + " Date: " + user.getDateOfBirth()));
-        }
-    }
-
-    private static void testDeleteUserById() {
-        System.out.println("Running Test Case 3: Delete User By ID");
-        UserMapper.delete(0);
-        System.out.println("User deleted successfully.");
-    }
-
-    private static void testUpdateUser() throws InvalidKeySpecException {
-        System.out.println("Running Test Case 4: Update User");
-        User updatedUser = new User("roborenger72@gmail.com", "sha3boly", "12341231", LocalDate.of(2003, 10, 26));
-        UserMapper.update(12, updatedUser);
-        System.out.println("User updated successfully.");
-    }
-
-    private static void testRetrieveUserWithFilters() {
-        System.out.println("Running Test Case 5: Retrieve User with Filters");
-
-        Predicate<User> filterByEmail = user -> user.getEmail().equals("roborenger72@gmail.com");
-        Predicate<User> filterByStatus = user -> user.getStatus().equals("offline");
-        Predicate<User> filterById = user -> user.getID() == 15;
-
-        List<Predicate<User>> filters = List.of(filterByEmail, filterByStatus, filterById);
-
-        Optional<User> user = UserMapper.get(filters);
-        user.ifPresentOrElse(
-                u -> System.out.println("User found: " + u.getUsername()),
-                () -> System.out.println("No user found with the given filters.")
-        );
-    }
-
-    private static void testRetrieveUserById() {
-        System.out.println("Running Test Case 6: Retrieve User by ID");
-        Optional<User> userByID = UserMapper.get(15);
-        userByID.ifPresentOrElse(
-                u -> System.out.println("User found: " + u.getUsername()),
-                () -> System.out.println("No user found with the given ID.")
-        );
-    }
-
-    // ########### Profile test cases ###########
-    private static void testCreateProfile() {
-        System.out.println("Running Test Case 1: Create Profile");
-        Profile profile = new Profile(1, "Hello, world!", "path/to/profile.jpg", "path/to/cover.jpg");
-        ProfileMapper.create(profile);
-        System.out.println("Profile created successfully.");
-    }
-
-    private static void testGetAllProfiles() {
-        System.out.println("Running Test Case 2: Get All Profiles");
-        var profiles = ProfileMapper.getAll();
-        if (profiles.isEmpty()) {
-            System.out.println("No profiles found.");
-        } else {
-            System.out.println("Retrieved profiles: " + profiles.size());
-        }
-    }
-
-    private static void testGetProfileByUserId() {
-        System.out.println("Running Test Case 3: Get Profile by User ID");
-        Optional<Profile> profile = ProfileMapper.get(4);
-        if (profile.isPresent()) {
-            System.out.println("Profile found " + profile.get().getBio());
-        } else {
-            System.out.println("No profile found");
-        }
-    }
-
-    private static void testUpdateProfile() {
-        System.out.println("Running Test Case 4: Update Profile");
-        Profile updatedProfile = new Profile(11, "Updated Bio", "new/path/profile.jpg", "new/path/cover.jpg");
-        boolean isUpdated = ProfileMapper.update(2, updatedProfile);
-        if (isUpdated) {
-            System.out.println("Profile updated successfully.");
-        } else {
-            System.out.println("Failed to update profile.");
-        }
-    }
-
-    private static void testDeleteProfile() {
-        System.out.println("Running Test Case 5: Delete Profile");
-        boolean isDeleted = ProfileMapper.delete(1);
-        if (isDeleted) {
-            System.out.println("Profile deleted successfully.");
-        } else {
-            System.out.println("Failed to delete profile.");
-        }
-    }
-
-    private static void testNonExistingUserId() {
-        System.out.println("Running Test Case 6: Non-Existing User ID");
-        Optional<Profile> profile = ProfileMapper.get(99);
-        if (profile.isEmpty()) {
-            System.out.println("Correctly handled non-existing User ID.");
-        } else {
-            System.out.println("Unexpected profile found: " + profile.get().getBio());
-        }
-    }
-
-    private static void testEmptyDatabase() {
-        System.out.println("Running Test Case 7: Empty Database");
-        var profiles = ProfileMapper.getAll();
-        if (profiles.isEmpty()) {
-            System.out.println("Empty database handled correctly.");
-        } else {
-            System.out.println("Unexpected data found in empty database.");
-        }
-    }
-
-    // ########### Content test cases ###########
-    private static void testCreatePost() {
-        System.out.println("Running Test Case 1: Create Post");
-        Post newPost = new Post(1, "This is a test post.", null);
-        ContentMapper.create(newPost);
-        System.out.println("Post created successfully.");
-    }
-
-    private static void testCreateStory() {
-        System.out.println("Running Test Case 2: Create Story");
-        Story newStory = new Story(2, "This is a test story.", null);
-        ContentMapper.create(newStory);
-        System.out.println("Story created successfully.");
-    }
-
-    private static void testGetAllContent() {
-        System.out.println("Running Test Case 3: Get All Content");
-        List<Content> contentList = ContentMapper.getAll();
-        if (contentList.isEmpty()) {
-            System.out.println("No content found.");
-        } else {
-            contentList.forEach(content -> System.out.println("ID: " + content.getID() + " Content: " + content.getContent()));
-        }
-    }
-
-    private static void testUpdatePost() {
-        System.out.println("Running Test Case 4: Update Post");
-        Post updatedPost = new Post(1, "Updated content for post.", null);
-        ContentMapper.update(1, updatedPost);
-        System.out.println("Post updated successfully.");
-    }
-
-    private static void testDeletePost() {
-        System.out.println("Running Test Case 5: Delete Post");
-        ContentMapper.delete(1);
-        System.out.println("Post deleted successfully.");
-    }
-
-    private static void testRetrievePostById() {
-        System.out.println("Running Test Case 6: Retrieve Post by ID");
-        Optional<Content> contentOptional = ContentMapper.get(3); // This returns Optional<Content>
-
-        contentOptional.ifPresentOrElse(
-                content -> {
-                    if (content instanceof Post) {
-                        Post post = (Post) content;
-                        System.out.println("Post found: " + post.getContent());
-                    } else {
-                        System.out.println("Found content is not a Post.");
-                    }
-                },
-                () -> System.out.println("No content found with the given ID.")
-        );
-    }
-
-    private static void testRetrieveStoryById() {
-        System.out.println("Running Test Case 7: Retrieve Story by ID");
-        Optional<Content> contentOptional = ContentMapper.get(2); // This returns Optional<Content>
-
-        contentOptional.ifPresentOrElse(
-                content -> {
-                    if (content instanceof Story) {
-                        Story story = (Story) content;
-                        System.out.println("Story found: " + story.getContent());
-                    } else {
-                        System.out.println("Found content is not a Story.");
-                    }
-                },
-                () -> System.out.println("No content found with the given ID.")
-        );
-    }
-
-    private static void testStoryExpiration() {
-        System.out.println("Running Test Case 8: Test Story Expiration");
-//        Story story = new Story(3, "Story that should expire.");
-//        story.setTimestamp(LocalDateTime.now().minus(25, ChronoUnit.HOURS));  // Set story's timestamp to 25 hours ago
-
-        Optional<Content> contentOptional = ContentMapper.get(1); // This returns Optional<Content>
-
-        contentOptional.ifPresentOrElse(
-                content -> {
-                    if (content instanceof Story) {
-                        if (content.isExpired()) {
-                            System.out.println("Story expired as expected.");
-                        } else {
-                            System.out.println("Story did not expire as expected.");
-                        }
-                    } else {
-                        System.out.println("Found content is not a Story.");
-                    }
-                },
-                () -> System.out.println("No content found with the given ID.")
-        );
-    }
-
-    public static void testGetAllContentsWithContents() {
-        int userId = 1;
-        List<Content> contents = ContentController.getAllContents(userId);
-        System.out.println("Contents for user " + userId);
-        for (Content content : contents) {
-            System.out.println(content);
-        }
-        // Expected: List of all contents authored by userId
-    }
-
-    public static void testGetAllContentsWithoutContents() {
-        int userId = 99; // Assume this user has no content
-        List<Content> contents = ContentController.getAllContents(userId);
-        System.out.println("Contents for user " + userId + ": " + contents);
-        // Expected: Empty list []
-    }
-
-    public static void testGetAllPosts() {
-        int userId = 30;
-        List<Content> posts = ContentController.getAllPosts(userId);
-        System.out.println("Contents for user " + userId);
-        for (Content content : posts) {
-            System.out.println(content);
-        }
-        // Expected: List of posts authored by userId
-    }
-
-    public static void testGetAllStories() {
-        int userId = 30;
-        List<Content> stories = ContentController.getAllStories(userId);
-        System.out.println("Stories for user " + userId);
-        for (Content content : stories) {
-            System.out.println(content);
-        }
-        // Expected: List of stories authored by userId
-    }
-
-    public static void testGetAllPostsWithoutPosts() {
-        int userId = 99; // Assume this user has no posts
-        List<Content> posts = ContentController.getAllPosts(userId);
-        System.out.println("Posts for user " + userId + ": " + posts);
-        // Expected: Empty list []
-    }
-
-    public static void testGetAllStoriesWithoutStories() {
-        int userId = 99; // Assume this user has no stories
-        List<Content> stories = ContentController.getAllStories(userId);
-        System.out.println("Stories for user " + userId + ": " + stories);
-        // Expected: Empty list []
-    }
-
-    public static void testGetAllContentsWithInvalidUserId() {
-        int userId = -1; // Invalid user ID
-        List<Content> contents = ContentController.getAllContents(userId);
-        System.out.println("Contents for invalid user ID " + userId + ": " + contents);
-        // Expected: Empty list []
-    }
-
-    public static void testGetAllPostsWithMixedContent() {
-        int userId = 2; // Assume this user has posts and stories
-        List<Content> posts = ContentController.getAllPosts(userId);
-        System.out.println("Posts for user " + userId + ": " + posts);
-        // Expected: List containing only posts authored by userId
-    }
-
-    // ########### Friends Management test cases ###########
-    // Test Case 1: Send a friend request
-    public static void testSendFriendRequest(FriendsManager friendsManager) {
-        System.out.println("Test Case 1: Send a friend request");
-        friendsManager.sendFriendRequest(4, 5);  // Sender ID: 1, Receiver ID: 2
-        System.out.println("Friend request sent from User 1 to User 2");
-    }
-
-    // Test Case 2: Accept a friend request
-    public static void testAcceptFriendRequest(FriendsManager friendsManager) {
-        System.out.println("Test Case 2: Accept a friend request");
-
-        // Assuming that a friend request from User 1 to User 2 exists in the list
-        FriendRequest request = friendsManager.getFriendRequests().get(0); // Get first request
-        friendsManager.acceptFriendRequest(request);
-        System.out.println("Friend request from User 1 to User 2 accepted");
-    }
-
-    // Test Case 3: Reject a friend request
-    public static void testRejectFriendRequest(FriendsManager friendsManager) {
-        System.out.println("Test Case 3: Reject a friend request");
-
-        // Assuming a second friend request exists
-        FriendRequest request = friendsManager.getFriendRequests().get(0); // Get second request
-        friendsManager.rejectFriendRequest(request);
-        System.out.println("Friend request from User 2 to User 3 rejected");
-    }
-
-    // Test Case 4: Block a user
-    public static void testBlockUser(FriendsManager friendsManager) {
-        System.out.println("Test Case 4: Block a user");
-
-        // Block User 2 by User 1
-        friendsManager.blockUser(6, 9);
-        System.out.println("User X blocked User Y");
-
-        // Block User 3 by User 1 (testing prevention of duplicate blocks)
-//        friendsManager.blockUser(9, 13);
-//        System.out.println("User 1 blocked User 3");
-        // Block User 2 by User 1 again (should prevent duplicate block)
-//        friendsManager.blockUser(9, 13);
-//        System.out.println("Attempt to block User 2 again (duplicate block prevented)");
-    }
-
-    // Test Case 5: Get all friends
-    public static void testGetFriends(FriendsManager friendsManager) {
-        System.out.println("Test Case 5: Get all friends");
-        friendsManager.getFriends().forEach(friend -> System.out.println("Friend: User " + friend.getUserId() + " and User " + friend.getFriendId()));
-    }
-
-    // Test Case 6: Get all friend requests
-    public static void testGetFriendRequests(FriendsManager friendsManager) {
-        System.out.println("Test Case 6: Get all friend requests");
-        friendsManager.getFriendRequests().forEach(request -> System.out.println("Friend Request: " + request.getSenderId() + " to " + request.getReceiverId()));
-    }
-
-    // Test Case 7: Get all blocked users
-    public static void testGetBlockedUsers(FriendsManager friendsManager) {
-        System.out.println("Test Case 7: Get all blocked users");
-        friendsManager.getBlocks().forEach(block -> System.out.println("Blocked: User " + block.getUserId() + " blocked User " + block.getBlockedId()));
-    }
-
-    public static void testGetAllFriends() {
-        // Assume user with ID 1 has friends in the database.
-        int userId = 1;
-
-        // Act
-        List<User> friends = FriendController.getAllFriends(userId);
-        for (User friend : friends) {
-            System.out.println(friend.getID());
-        }
-    }
-
-    public static void testSuggestFriends() {
-        // Assume user with ID 1 has friends in the database.
-        int userId = 6;
-
-        // Act
-        List<User> suggestedUsers = FriendController.suggestFriends(userId);
-        for (User suggestedUser : suggestedUsers) {
-            System.out.println(suggestedUser.getID());
-        }
-    }
-
-    // ########### DPs test cases ###########
-    public static void testDPEntityCreation() {
-        System.out.println("Test Case 1: constructing a user using factory");
-        UserBuilder userBuilder = UserBuilder.getInstance()
-                .setEmail("user@example.com")
-                .setUsername("john_doe")
-                .setPassword("securePassword")
-                .setDateOfBirth(LocalDate.of(1990, 1, 1));
-        User newUser = (User) Factory.createEntity(userBuilder.getInstance());
-        System.out.println(newUser);
-        //////////////////////////////////////////////////////////////////////////
-        System.out.println("Test Case 2: constructing a post using factory");
-        ContentBuilder contentBuilder = ContentBuilder.getInstance()
-                .setContent("zrbew lnew")
-                .setAuthorId(30)
-                .setContentType(ContentType.POST);
-        Content newPost = (Post) Factory.createEntity(contentBuilder.getInstance());
-        System.out.println(newPost);
-        System.out.println("Test Case 3: constructing a story using factory");
-        contentBuilder
-                .setContent("zrbew lnew")
-                .setAuthorId(30)
-                .setContentType(ContentType.STORY);
-        Content newStory = (Story) Factory.createEntity(contentBuilder.getInstance());
-        System.out.println(newStory);
-    }
-
-    private void assertFalse(boolean empty) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void assertTrue(boolean anyMatch) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+//    }
+//
+//// ########### User test cases ###########  
+//    private static void testCreateUser() throws InvalidKeySpecException {
+//        System.out.println("Running Test Case 1: Create User");
+//        User newUser = new User("roborenger72@gmail.com", "ibrahim", "111555333", LocalDate.of(2003, 10, 26));
+//        UserMapper.create(newUser);
+//        System.out.println("User created successfully.");
+//    }
+//
+//    private static void testGetAllUsers() {
+//        System.out.println("Running Test Case 2: Get All Users");
+//        List<User> usersList = UserMapper.getAll();
+//        if (usersList.isEmpty()) {
+//            System.out.println("No users found.");
+//        } else {
+//            usersList.forEach(user -> System.out.println("ID: " + user.getID() + " Name: " + user.getUsername()
+//                    + ", Email: " + user.getEmail() + " Password: " + user.getPassword() + " Date: " + user.getDateOfBirth()));
+//        }
+//    }
+//
+//    private static void testDeleteUserById() {
+//        System.out.println("Running Test Case 3: Delete User By ID");
+//        UserMapper.delete(0);
+//        System.out.println("User deleted successfully.");
+//    }
+//
+//    private static void testUpdateUser() throws InvalidKeySpecException {
+//        System.out.println("Running Test Case 4: Update User");
+//        User updatedUser = new User("roborenger72@gmail.com", "sha3boly", "12341231", LocalDate.of(2003, 10, 26));
+//        UserMapper.update(12, updatedUser);
+//        System.out.println("User updated successfully.");
+//    }
+//
+//    private static void testRetrieveUserWithFilters() {
+//        System.out.println("Running Test Case 5: Retrieve User with Filters");
+//
+//        Predicate<User> filterByEmail = user -> user.getEmail().equals("roborenger72@gmail.com");
+//        Predicate<User> filterByStatus = user -> user.getStatus().equals("offline");
+//        Predicate<User> filterById = user -> user.getID() == 15;
+//
+//        List<Predicate<User>> filters = List.of(filterByEmail, filterByStatus, filterById);
+//
+//        Optional<User> user = UserMapper.get(filters);
+//        user.ifPresentOrElse(
+//                u -> System.out.println("User found: " + u.getUsername()),
+//                () -> System.out.println("No user found with the given filters.")
+//        );
+//    }
+//
+//    private static void testRetrieveUserById() {
+//        System.out.println("Running Test Case 6: Retrieve User by ID");
+//        Optional<User> userByID = UserMapper.get(15);
+//        userByID.ifPresentOrElse(
+//                u -> System.out.println("User found: " + u.getUsername()),
+//                () -> System.out.println("No user found with the given ID.")
+//        );
+//    }
+//
+//    // ########### Profile test cases ###########
+//    private static void testCreateProfile() {
+//        System.out.println("Running Test Case 1: Create Profile");
+//        Profile profile = new Profile(1, "Hello, world!", "path/to/profile.jpg", "path/to/cover.jpg");
+//        ProfileMapper.create(profile);
+//        System.out.println("Profile created successfully.");
+//    }
+//
+//    private static void testGetAllProfiles() {
+//        System.out.println("Running Test Case 2: Get All Profiles");
+//        var profiles = ProfileMapper.getAll();
+//        if (profiles.isEmpty()) {
+//            System.out.println("No profiles found.");
+//        } else {
+//            System.out.println("Retrieved profiles: " + profiles.size());
+//        }
+//    }
+//
+//    private static void testGetProfileByUserId() {
+//        System.out.println("Running Test Case 3: Get Profile by User ID");
+//        Optional<Profile> profile = ProfileMapper.get(4);
+//        if (profile.isPresent()) {
+//            System.out.println("Profile found " + profile.get().getBio());
+//        } else {
+//            System.out.println("No profile found");
+//        }
+//    }
+//
+//    private static void testUpdateProfile() {
+//        System.out.println("Running Test Case 4: Update Profile");
+//        Profile updatedProfile = new Profile(11, "Updated Bio", "new/path/profile.jpg", "new/path/cover.jpg");
+//        boolean isUpdated = ProfileMapper.update(2, updatedProfile);
+//        if (isUpdated) {
+//            System.out.println("Profile updated successfully.");
+//        } else {
+//            System.out.println("Failed to update profile.");
+//        }
+//    }
+//
+//    private static void testDeleteProfile() {
+//        System.out.println("Running Test Case 5: Delete Profile");
+//        boolean isDeleted = ProfileMapper.delete(1);
+//        if (isDeleted) {
+//            System.out.println("Profile deleted successfully.");
+//        } else {
+//            System.out.println("Failed to delete profile.");
+//        }
+//    }
+//
+//    private static void testNonExistingUserId() {
+//        System.out.println("Running Test Case 6: Non-Existing User ID");
+//        Optional<Profile> profile = ProfileMapper.get(99);
+//        if (profile.isEmpty()) {
+//            System.out.println("Correctly handled non-existing User ID.");
+//        } else {
+//            System.out.println("Unexpected profile found: " + profile.get().getBio());
+//        }
+//    }
+//
+//    private static void testEmptyDatabase() {
+//        System.out.println("Running Test Case 7: Empty Database");
+//        var profiles = ProfileMapper.getAll();
+//        if (profiles.isEmpty()) {
+//            System.out.println("Empty database handled correctly.");
+//        } else {
+//            System.out.println("Unexpected data found in empty database.");
+//        }
+//    }
+//
+//    // ########### Content test cases ###########
+//    private static void testCreatePost() {
+//        System.out.println("Running Test Case 1: Create Post");
+//        Post newPost = new Post(1, "This is a test post.", null);
+//        ContentMapper.create(newPost);
+//        System.out.println("Post created successfully.");
+//    }
+//
+//    private static void testCreateStory() {
+//        System.out.println("Running Test Case 2: Create Story");
+//        Story newStory = new Story(2, "This is a test story.", null);
+//        ContentMapper.create(newStory);
+//        System.out.println("Story created successfully.");
+//    }
+//
+//    private static void testGetAllContent() {
+//        System.out.println("Running Test Case 3: Get All Content");
+//        List<Content> contentList = ContentMapper.getAll();
+//        if (contentList.isEmpty()) {
+//            System.out.println("No content found.");
+//        } else {
+//            contentList.forEach(content -> System.out.println("ID: " + content.getID() + " Content: " + content.getContent()));
+//        }
+//    }
+//
+//    private static void testUpdatePost() {
+//        System.out.println("Running Test Case 4: Update Post");
+//        Post updatedPost = new Post(1, "Updated content for post.", null);
+//        ContentMapper.update(1, updatedPost);
+//        System.out.println("Post updated successfully.");
+//    }
+//
+//    private static void testDeletePost() {
+//        System.out.println("Running Test Case 5: Delete Post");
+//        ContentMapper.delete(1);
+//        System.out.println("Post deleted successfully.");
+//    }
+//
+//    private static void testRetrievePostById() {
+//        System.out.println("Running Test Case 6: Retrieve Post by ID");
+//        Optional<Content> contentOptional = ContentMapper.get(3); // This returns Optional<Content>
+//
+//        contentOptional.ifPresentOrElse(
+//                content -> {
+//                    if (content instanceof Post) {
+//                        Post post = (Post) content;
+//                        System.out.println("Post found: " + post.getContent());
+//                    } else {
+//                        System.out.println("Found content is not a Post.");
+//                    }
+//                },
+//                () -> System.out.println("No content found with the given ID.")
+//        );
+//    }
+//
+//    private static void testRetrieveStoryById() {
+//        System.out.println("Running Test Case 7: Retrieve Story by ID");
+//        Optional<Content> contentOptional = ContentMapper.get(2); // This returns Optional<Content>
+//
+//        contentOptional.ifPresentOrElse(
+//                content -> {
+//                    if (content instanceof Story) {
+//                        Story story = (Story) content;
+//                        System.out.println("Story found: " + story.getContent());
+//                    } else {
+//                        System.out.println("Found content is not a Story.");
+//                    }
+//                },
+//                () -> System.out.println("No content found with the given ID.")
+//        );
+//    }
+//
+//    private static void testStoryExpiration() {
+//        System.out.println("Running Test Case 8: Test Story Expiration");
+////        Story story = new Story(3, "Story that should expire.");
+////        story.setTimestamp(LocalDateTime.now().minus(25, ChronoUnit.HOURS));  // Set story's timestamp to 25 hours ago
+//
+//        Optional<Content> contentOptional = ContentMapper.get(1); // This returns Optional<Content>
+//
+//        contentOptional.ifPresentOrElse(
+//                content -> {
+//                    if (content instanceof Story) {
+//                        if (content.isExpired()) {
+//                            System.out.println("Story expired as expected.");
+//                        } else {
+//                            System.out.println("Story did not expire as expected.");
+//                        }
+//                    } else {
+//                        System.out.println("Found content is not a Story.");
+//                    }
+//                },
+//                () -> System.out.println("No content found with the given ID.")
+//        );
+//    }
+//
+//    public static void testGetAllContentsWithContents() {
+//        int userId = 1;
+//        List<Content> contents = ContentController.getAllContents(userId);
+//        System.out.println("Contents for user " + userId);
+//        for (Content content : contents) {
+//            System.out.println(content);
+//        }
+//        // Expected: List of all contents authored by userId
+//    }
+//
+//    public static void testGetAllContentsWithoutContents() {
+//        int userId = 99; // Assume this user has no content
+//        List<Content> contents = ContentController.getAllContents(userId);
+//        System.out.println("Contents for user " + userId + ": " + contents);
+//        // Expected: Empty list []
+//    }
+//
+//    public static void testGetAllPosts() {
+//        int userId = 30;
+//        List<Content> posts = ContentController.getAllPosts(userId);
+//        System.out.println("Contents for user " + userId);
+//        for (Content content : posts) {
+//            System.out.println(content);
+//        }
+//        // Expected: List of posts authored by userId
+//    }
+//
+//    public static void testGetAllStories() {
+//        int userId = 30;
+//        List<Content> stories = ContentController.getAllStories(userId);
+//        System.out.println("Stories for user " + userId);
+//        for (Content content : stories) {
+//            System.out.println(content);
+//        }
+//        // Expected: List of stories authored by userId
+//    }
+//
+//    public static void testGetAllPostsWithoutPosts() {
+//        int userId = 99; // Assume this user has no posts
+//        List<Content> posts = ContentController.getAllPosts(userId);
+//        System.out.println("Posts for user " + userId + ": " + posts);
+//        // Expected: Empty list []
+//    }
+//
+//    public static void testGetAllStoriesWithoutStories() {
+//        int userId = 99; // Assume this user has no stories
+//        List<Content> stories = ContentController.getAllStories(userId);
+//        System.out.println("Stories for user " + userId + ": " + stories);
+//        // Expected: Empty list []
+//    }
+//
+//    public static void testGetAllContentsWithInvalidUserId() {
+//        int userId = -1; // Invalid user ID
+//        List<Content> contents = ContentController.getAllContents(userId);
+//        System.out.println("Contents for invalid user ID " + userId + ": " + contents);
+//        // Expected: Empty list []
+//    }
+//
+//    public static void testGetAllPostsWithMixedContent() {
+//        int userId = 2; // Assume this user has posts and stories
+//        List<Content> posts = ContentController.getAllPosts(userId);
+//        System.out.println("Posts for user " + userId + ": " + posts);
+//        // Expected: List containing only posts authored by userId
+//    }
+//
+//    // ########### Friends Management test cases ###########
+//    // Test Case 1: Send a friend request
+//    public static void testSendFriendRequest(FriendsManager friendsManager) {
+//        System.out.println("Test Case 1: Send a friend request");
+//        friendsManager.sendFriendRequest(4, 5);  // Sender ID: 1, Receiver ID: 2
+//        System.out.println("Friend request sent from User 1 to User 2");
+//    }
+//
+//    // Test Case 2: Accept a friend request
+//    public static void testAcceptFriendRequest(FriendsManager friendsManager) {
+//        System.out.println("Test Case 2: Accept a friend request");
+//
+//        // Assuming that a friend request from User 1 to User 2 exists in the list
+//        FriendRequest request = friendsManager.getFriendRequests().get(0); // Get first request
+//        friendsManager.acceptFriendRequest(request);
+//        System.out.println("Friend request from User 1 to User 2 accepted");
+//    }
+//
+//    // Test Case 3: Reject a friend request
+//    public static void testRejectFriendRequest(FriendsManager friendsManager) {
+//        System.out.println("Test Case 3: Reject a friend request");
+//
+//        // Assuming a second friend request exists
+//        FriendRequest request = friendsManager.getFriendRequests().get(0); // Get second request
+//        friendsManager.rejectFriendRequest(request);
+//        System.out.println("Friend request from User 2 to User 3 rejected");
+//    }
+//
+//    // Test Case 4: Block a user
+//    public static void testBlockUser(FriendsManager friendsManager) {
+//        System.out.println("Test Case 4: Block a user");
+//
+//        // Block User 2 by User 1
+//        friendsManager.blockUser(6, 9);
+//        System.out.println("User X blocked User Y");
+//
+//        // Block User 3 by User 1 (testing prevention of duplicate blocks)
+////        friendsManager.blockUser(9, 13);
+////        System.out.println("User 1 blocked User 3");
+//        // Block User 2 by User 1 again (should prevent duplicate block)
+////        friendsManager.blockUser(9, 13);
+////        System.out.println("Attempt to block User 2 again (duplicate block prevented)");
+//    }
+//
+//    // Test Case 5: Get all friends
+//    public static void testGetFriends(FriendsManager friendsManager) {
+//        System.out.println("Test Case 5: Get all friends");
+//        friendsManager.getFriends().forEach(friend -> System.out.println("Friend: User " + friend.getUserId() + " and User " + friend.getFriendId()));
+//    }
+//
+//    // Test Case 6: Get all friend requests
+//    public static void testGetFriendRequests(FriendsManager friendsManager) {
+//        System.out.println("Test Case 6: Get all friend requests");
+//        friendsManager.getFriendRequests().forEach(request -> System.out.println("Friend Request: " + request.getSenderId() + " to " + request.getReceiverId()));
+//    }
+//
+//    // Test Case 7: Get all blocked users
+//    public static void testGetBlockedUsers(FriendsManager friendsManager) {
+//        System.out.println("Test Case 7: Get all blocked users");
+//        friendsManager.getBlocks().forEach(block -> System.out.println("Blocked: User " + block.getUserId() + " blocked User " + block.getBlockedId()));
+//    }
+//
+//    public static void testGetAllFriends() {
+//        // Assume user with ID 1 has friends in the database.
+//        int userId = 1;
+//
+//        // Act
+//        List<User> friends = FriendController.getAllFriends(userId);
+//        for (User friend : friends) {
+//            System.out.println(friend.getID());
+//        }
+//    }
+//
+//    public static void testSuggestFriends() {
+//        // Assume user with ID 1 has friends in the database.
+//        int userId = 6;
+//
+//        // Act
+//        List<User> suggestedUsers = FriendController.suggestFriends(userId);
+//        for (User suggestedUser : suggestedUsers) {
+//            System.out.println(suggestedUser.getID());
+//        }
+//    }
+//
+//    // ########### DPs test cases ###########
+//    public static void testDPEntityCreation() {
+//        System.out.println("Test Case 1: constructing a user using factory");
+//        UserBuilder userBuilder = UserBuilder.getInstance()
+//                .setEmail("user@example.com")
+//                .setUsername("john_doe")
+//                .setPassword("securePassword")
+//                .setDateOfBirth(LocalDate.of(1990, 1, 1));
+//        User newUser = (User) Factory.createEntity(userBuilder.getInstance());
+//        System.out.println(newUser);
+//        //////////////////////////////////////////////////////////////////////////
+//        System.out.println("Test Case 2: constructing a post using factory");
+//        ContentBuilder contentBuilder = ContentBuilder.getInstance()
+//                .setContent("zrbew lnew")
+//                .setAuthorId(30)
+//                .setContentType(ContentType.POST);
+//        Content newPost = (Post) Factory.createEntity(contentBuilder.getInstance());
+//        System.out.println(newPost);
+//        System.out.println("Test Case 3: constructing a story using factory");
+//        contentBuilder
+//                .setContent("zrbew lnew")
+//                .setAuthorId(30)
+//                .setContentType(ContentType.STORY);
+//        Content newStory = (Story) Factory.createEntity(contentBuilder.getInstance());
+//        System.out.println(newStory);
+//    }
+//
+//    private void assertFalse(boolean empty) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
+//
+//    private void assertTrue(boolean anyMatch) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
 
 //    private static void testMessaging() throws InterruptedException {
 //        ChatWatcher chatWatcher = new ChatWatcher();
@@ -946,7 +946,7 @@
 //        List<Message> finalMessages = chatWatcher.getNewMessages();
 //        System.out.println("Final fetched messages: " + finalMessages);
 //    }
-}
+//}
 //    }
 //
 //    public static void testSuggestFriends() {
