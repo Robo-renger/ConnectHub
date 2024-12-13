@@ -365,6 +365,7 @@ public class Search extends javax.swing.JFrame {
         try {
 
             FrontProfile frontProfile = FrontProfile.getInstanceOf(u, profile);
+            frontProfile.handleButtonsTrue();
             frontProfile.setVisible(true);
             frontProfile.setLocationRelativeTo(null);
             setVisible(false);
@@ -389,15 +390,16 @@ public class Search extends javax.swing.JFrame {
                         javax.swing.JOptionPane.showMessageDialog(null, "Already Joined!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    GroupAuthorityManager.sendMembershipRequest(optGroup.getID(), u.getID());
                 }
+                GroupAuthorityManager.sendMembershipRequest(optGroup.getID(), u.getID());
                 javax.swing.JOptionPane.showMessageDialog(null, "Joined Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-
             }
+        } catch (InvalidDataException ex) {
+            javax.swing.JOptionPane.showMessageDialog(null, "User already a member of this group", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-
         }
 
     }//GEN-LAST:event_joinActionPerformed
@@ -434,15 +436,17 @@ public class Search extends javax.swing.JFrame {
                 if (thisProfile.isPresent()) {
                     Profile foundProfile = thisProfile.get();
                     FrontProfile frontProfile = FrontProfile.getInstanceOf(optUser, foundProfile, this);
+                    frontProfile.handleButtonsFalse();
                     frontProfile.setVisible(true);
                     frontProfile.setLocationRelativeTo(null);
                     setVisible(false);
+                    
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "Profile not found. Please try again later.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
                 }
-                else
-                     JOptionPane.showMessageDialog(this,
-                "Profile not found. Please try again later.",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (Exception e) {
@@ -461,13 +465,14 @@ public class Search extends javax.swing.JFrame {
                         GroupController.leave(optGroup.getID(), u.getID());
                         javax.swing.JOptionPane.showMessageDialog(null, "Leave Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                         return;
-                    } if (optGroup.getCreatorID() == u.getID()) {
+                    }
+                    if (optGroup.getCreatorID() == u.getID()) {
                         javax.swing.JOptionPane.showMessageDialog(null, "Creator cannot leave!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                        return;                   
-                    } 
+                        return;
+                    }
 
                 }
-                 javax.swing.JOptionPane.showMessageDialog(null, "Not member!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(null, "Not member!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
             }
         } catch (Exception e) {
@@ -503,7 +508,7 @@ public class Search extends javax.swing.JFrame {
                         FriendController.removeFriend(u.getID(), optUser.getID());
                         fillList();
                         javax.swing.JOptionPane.showMessageDialog(null, "Removed Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                              return;
+                        return;
                     }
                 }
                 javax.swing.JOptionPane.showMessageDialog(null, "Not friend!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);

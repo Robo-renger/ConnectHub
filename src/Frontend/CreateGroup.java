@@ -26,7 +26,11 @@ public class CreateGroup extends javax.swing.JFrame {
     GroupsManagement group;
 
     public CreateGroup(User user, GroupsManagement group) {
+
+    public CreateGroup(User user, GroupsManagement group) {
         initComponents();
+        this.user = user;
+        this.group = group;
         this.user = user;
         this.group = group;
     }
@@ -136,11 +140,14 @@ public class CreateGroup extends javax.swing.JFrame {
 
     private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
         if (user == null) {
+        if (user == null) {
             JOptionPane.showMessageDialog(this,
                     "User or Newsfeed data is missing. Please log in again.",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
+        }
+        try {
         }
         try {
             JFileChooser fileChooser = new JFileChooser();
@@ -172,6 +179,8 @@ public class CreateGroup extends javax.swing.JFrame {
 
             Group group = new Group(user.getID(), name.getText(), description.getText().trim(),
                     selectedFile != null ? selectedFile.getAbsolutePath() : "");
+            Group group = new Group(user.getID(), name.getText(), description.getText().trim(),
+                    selectedFile != null ? selectedFile.getAbsolutePath() : "");
             GroupMapper.create(group);
 
             javax.swing.JOptionPane.showMessageDialog(
@@ -189,6 +198,7 @@ public class CreateGroup extends javax.swing.JFrame {
             );
             e.printStackTrace();
         }
+
 
 
     }//GEN-LAST:event_createActionPerformed
@@ -209,6 +219,7 @@ public class CreateGroup extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
+
 
     }//GEN-LAST:event_formWindowClosing
 

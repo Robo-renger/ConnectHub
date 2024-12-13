@@ -172,6 +172,7 @@ public class Login extends javax.swing.JFrame {
                 }
                 // Proceed to the profile screen
                 FrontProfile fp = FrontProfile.getInstanceOf(foundUser, profileUser);
+                fp.handleButtonsTrue();
 //                fp.setUser(foundUser);
 //                fp.setProfile(profileUser);
                 fp.setVisible(true);

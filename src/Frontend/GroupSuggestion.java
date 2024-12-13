@@ -13,7 +13,6 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-
 public class GroupSuggestion extends javax.swing.JFrame {
 
     User user;
@@ -38,6 +37,7 @@ public class GroupSuggestion extends javax.swing.JFrame {
             }
 
             list.setModel(listModel);
+            System.out.println(listModel);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error retrieving group suggestions.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -124,7 +124,7 @@ public class GroupSuggestion extends javax.swing.JFrame {
         try {
             if (j >= -1) {
                 Group selectedGroup = groups.get(j);
-                GroupAuthorityManager.sendMembershipRequest(selectedGroup.getID(),user.getID());
+                GroupAuthorityManager.sendMembershipRequest(selectedGroup.getID(), user.getID());
                 fillList();
 
                 JOptionPane.showMessageDialog(null, "Group join request Sent Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -135,7 +135,6 @@ public class GroupSuggestion extends javax.swing.JFrame {
             // Handle any errors that occur
             JOptionPane.showMessageDialog(null, "Error occurred while sending the join request.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
 
 
     }//GEN-LAST:event_joinActionPerformed

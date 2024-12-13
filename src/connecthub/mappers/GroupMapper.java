@@ -21,6 +21,7 @@ public class GroupMapper {
 
 //    Create a new group
     public static void create(Group group) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             DataBaseManager.getDBM().createEntityWithID(group);
             group.creatorGroup();

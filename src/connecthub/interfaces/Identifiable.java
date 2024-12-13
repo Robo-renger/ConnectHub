@@ -30,7 +30,9 @@ public interface Identifiable {
 
     int getID();
 
+
     void setID(int id);
+
 
     String getType();
 }
