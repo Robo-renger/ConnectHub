@@ -2,7 +2,14 @@
   "id" : 1,
   "userID" : 2,
   "groupID" : 1,
-  "status" : "joined",
+  "status" : "left",
   "role" : "MEMBER",
+  "type" : "UserGroup"
+}, {
+  "id" : 2,
+  "userID" : 2,
+  "groupID" : 2,
+  "status" : "joined",
+  "role" : "CREATOR",
   "type" : "UserGroup"
 } ]
