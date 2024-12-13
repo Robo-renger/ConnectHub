@@ -193,6 +193,7 @@ public class EditPost extends javax.swing.JFrame {
         }
         groupPosts.setVisible(true);
         groupPosts.setLocationRelativeTo(null); // Center the window
+        groupPosts.fillList();
         setVisible(false);
     }//GEN-LAST:event_formWindowClosing
 

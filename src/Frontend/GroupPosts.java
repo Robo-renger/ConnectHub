@@ -39,7 +39,7 @@ public class GroupPosts extends javax.swing.JFrame {
         initListSelectionListener();
     }
 
-    private void fillList() {
+    public void fillList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         posts = PostGroupMapper.getAllGroupPosts(group.getID());
         for (PostGroup post : posts) {

@@ -148,14 +148,18 @@ public class GroupsList extends javax.swing.JFrame {
             int index = list.getSelectedIndex();
             if (index >= 0) {
                 System.out.println(groups.get(index).getID());
+                  if(user.getID()==groups.get(index).getCreatorID())
+                javax.swing.JOptionPane.showMessageDialog(null, "Creator cannot leave the group", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                  else{
                 GroupController.leave(groups.get(index).getID(), user.getID());
-                javax.swing.JOptionPane.showMessageDialog(null, "Leave Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(null, "Left Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 fillList();
-            }
+            }}
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
+       
     }//GEN-LAST:event_leaveActionPerformed
 
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed

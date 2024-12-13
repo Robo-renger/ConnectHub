@@ -180,7 +180,8 @@ public class AddGroupPost extends javax.swing.JFrame {
         }
         groupPosts.setVisible(true);
        groupPosts.setLocationRelativeTo(null); // Center the window
-        setVisible(false);
+       groupPosts.fillList();
+       setVisible(false);
 
     }//GEN-LAST:event_formWindowClosing
 
