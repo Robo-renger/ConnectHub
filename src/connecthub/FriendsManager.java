@@ -16,11 +16,12 @@ public class FriendsManager {
     
     public static void sendFriendRequest(int senderId, int receiverId) {
         Optional<Friend> alreadyFriends = FriendMapper.get(senderId, receiverId);
-        if (alreadyFriends.isPresent())
+        if (alreadyFriends.isPresent()) {
             throw new InvalidDataException("Friendship already exists");
-        
+        }
+        System.out.println("SenderId: " + senderId + " RecieverId: " + receiverId);
         Optional<FriendRequest> alreadyRequested = FriendRequestMapper.get(senderId, receiverId);
-        if(alreadyRequested.isPresent())
+        if (alreadyRequested.isPresent()) {
             throw new InvalidDataException("A request already sent");
         
         FriendRequestMapper.create(new FriendRequest(senderId, receiverId, "PENDING"));

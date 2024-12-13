@@ -53,14 +53,13 @@ public class DataBaseManager {
     }
 
     // Create: Add a new entity to the database, automatically generating and setting an ID
-    public <T extends Identifiable> int createEntityWithID(T entity) throws IOException {
+    public <T extends Identifiable> void createEntityWithID(T entity) throws IOException {
         List<T> entities = readEntities(new TypeReference<List<T>>() {
         });
         int latestId = getLatestID(entities);
         entity.setID(latestId + 1); // Increment ID by one
         entities.add(entity);        
         writeEntities(entities);
-        return latestId + 1;
     }
 
     public <T extends Identifiable> void createEntity(T entity) throws IOException {

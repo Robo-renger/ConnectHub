@@ -4,6 +4,15 @@
  */
 package Frontend;
 
+import connecthub.entities.Group;
+import connecthub.entities.User;
+import connecthub.mappers.GroupMapper;
+import java.awt.Image;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mahinour Mohamed
@@ -13,8 +22,13 @@ public class CreateGroup extends javax.swing.JFrame {
     /**
      * Creates new form CreateGroup
      */
-    public CreateGroup() {
+    User user;
+    GroupsManagement group;
+    
+    public CreateGroup(User user,GroupsManagement group) {
         initComponents();
+        this.user=user;
+        this.group=group;
     }
 
     /**
@@ -35,7 +49,13 @@ public class CreateGroup extends javax.swing.JFrame {
         photo = new javax.swing.JLabel();
         create = new javax.swing.JToggleButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Create group");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Ebrima", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 102));
@@ -115,9 +135,81 @@ public class CreateGroup extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
+          if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        } try {
+            JFileChooser fileChooser = new JFileChooser();
+            int returnValue = fileChooser.showOpenDialog(this);
+
+            File selectedFile = null;
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                selectedFile = fileChooser.getSelectedFile();
+            }
+
+            if ((selectedFile == null || !selectedFile.exists()) && name.getText().trim().isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(
+                        null,
+                        "Both fields are empty! Please provide text content or an image.",
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            if (selectedFile != null && selectedFile.exists()) {
+                ImageIcon originalIcon = new ImageIcon(selectedFile.getAbsolutePath());
+                Image img = originalIcon.getImage();
+
+                Image scaledImg = img.getScaledInstance(photo.getWidth(), photo.getHeight(), Image.SCALE_SMOOTH);
+                ImageIcon scaledIcon = new ImageIcon(scaledImg);
+                photo.setIcon(scaledIcon);
+            }
+
+            Group group = new Group(name.getText(), description.getText().trim(),
+                    selectedFile != null ? selectedFile.getAbsolutePath() : "", user.getID());
+            GroupMapper.create(group);
+
+            javax.swing.JOptionPane.showMessageDialog(
+                    null,
+                    "Create created successfully!",
+                    "Success",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    null,
+                    "An error occurred while creating the group. Please try again.",
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+            e.printStackTrace();
+        }
 
        
     }//GEN-LAST:event_createActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            group.setVisible(true);
+            group.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
+        
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

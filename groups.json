@@ -1,16 +1,30 @@
 [ {
-  "id" : 2,
-  "creatorID" : 6,
-  "name" : "zrbewss",
+  "id" : 1,
+  "creatorID" : 1,
+  "name" : "11",
   "imagePath" : "src/assets/default-group.png",
-  "description" : "lnew",
+  "description" : "1",
   "type" : "Group"
 }, {
-  "id" : 3,
-  "creatorID" : 9,
-  "name" : "zrbewss",
+  "id" : 8,
+  "creatorID" : 1,
+  "name" : "alooo",
   "imagePath" : "src/assets/default-group.png",
-  "description" : "lnew",
+  "description" : "alooo",
+  "type" : "Group"
+}, {
+  "id" : 9,
+  "creatorID" : 2,
+  "name" : "test",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "asd",
+  "type" : "Group"
+}, {
+  "id" : 10,
+  "creatorID" : 1,
+  "name" : "hellooo",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "hereee",
   "type" : "Group"
 }, {
   "id" : 4,

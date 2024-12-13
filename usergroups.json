@@ -1,8 +1,8 @@
 [ {
   "id" : 1,
-  "userID" : 8,
-  "groupID" : 2,
-  "status" : "joined",
+  "userID" : 2,
+  "groupID" : 1,
+  "status" : "left",
   "role" : "MEMBER",
   "type" : "UserGroup"
 }, {

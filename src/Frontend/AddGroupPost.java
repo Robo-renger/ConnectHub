@@ -1,8 +1,11 @@
 package Frontend;
 
+import connecthub.entities.Group;
 import connecthub.entities.Post;
+import connecthub.entities.PostGroup;
 import connecthub.entities.User;
 import connecthub.mappers.ContentMapper;
+import connecthub.mappers.PostGroupMapper;
 import java.awt.Image;
 import java.io.File;
 import javax.swing.ImageIcon;
@@ -11,16 +14,19 @@ import javax.swing.JOptionPane;
 
 public class AddGroupPost extends javax.swing.JFrame {
 
-    User u;
-    Newsfeed newsfeed;
+    Group group;
+    User user;
+    GroupPosts groupPosts;
     
-    public AddGroupPost(User u, Newsfeed newsfeed) {
-        if (u == null || newsfeed == null) {
+    public AddGroupPost(Group group, GroupPosts groupPosts,User user) {
+        if (group == null || groupPosts == null) {
             throw new IllegalArgumentException("User and Newsfeed cannot be null");
         }
-        this.u = u;
-        this.newsfeed = newsfeed;
         initComponents();
+        this.group = group;
+        this.groupPosts = groupPosts;
+        this.user=user;
+        
 
     }
 
@@ -142,9 +148,9 @@ public class AddGroupPost extends javax.swing.JFrame {
                 photo.setIcon(scaledIcon);
             }
 
-            Post post = new Post(u.getID(), content.getText().trim(),
+            PostGroup post = new PostGroup(user.getID(),group.getID(), content.getText().trim(),
                     selectedFile != null ? selectedFile.getAbsolutePath() : null);
-            ContentMapper.create(post);
+            PostGroupMapper.create(post);
 
             javax.swing.JOptionPane.showMessageDialog(
                     null,
@@ -165,6 +171,17 @@ public class AddGroupPost extends javax.swing.JFrame {
     }//GEN-LAST:event_postActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+         if (group == null || user == null|| groupPosts==null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or groupPosts or group data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        groupPosts.setVisible(true);
+       groupPosts.setLocationRelativeTo(null); // Center the window
+       groupPosts.fillList();
+       setVisible(false);
 
     }//GEN-LAST:event_formWindowClosing
 
