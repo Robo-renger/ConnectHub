@@ -45,9 +45,9 @@ public class Newsfeed extends javax.swing.JFrame {
                 this.p = profile;
             }
         }
-        if (this.u == null || this.p == null) {
-            throw new IllegalArgumentException("User and Profile cannot be null");
-        }
+//        if (this.u == null || this.p == null) {
+//            throw new IllegalArgumentException("User and Profile cannot be null");
+//        }
         FillPostList();
         FillStoryList();
     }
@@ -87,6 +87,7 @@ public class Newsfeed extends javax.swing.JFrame {
         Stories.setModel(listModel);
 
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -108,7 +109,7 @@ public class Newsfeed extends javax.swing.JFrame {
         label = new javax.swing.JLabel();
         label1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        Posts1 = new javax.swing.JList<>();
+        notifications = new javax.swing.JList<>();
         label2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -171,7 +172,7 @@ public class Newsfeed extends javax.swing.JFrame {
         label1.setForeground(new java.awt.Color(0, 51, 102));
         label1.setText("              Posts");
 
-        jScrollPane3.setViewportView(Posts1);
+        jScrollPane3.setViewportView(notifications);
 
         label2.setFont(new java.awt.Font("Ebrima", 1, 24)); // NOI18N
         label2.setForeground(new java.awt.Color(0, 51, 102));
@@ -239,19 +240,20 @@ public class Newsfeed extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (u == null || p == null) {
-            JOptionPane.showMessageDialog(this,
-                    "User or Newsfeed data is missing. Please log in again.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+//        if (u == null || p == null) {
+//            JOptionPane.showMessageDialog(this,
+//                    "User or Newsfeed data is missing. Please log in again.",
+//                    "Error",
+//                    JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
         try {
             FrontProfile f = FrontProfile.getInstanceOf();
             f.setVisible(true);
             f.setLocation(null);
             setVisible(false);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
     }//GEN-LAST:event_formWindowClosing
@@ -265,13 +267,8 @@ public class Newsfeed extends javax.swing.JFrame {
             return;
         }
 
-        System.out.println("POST WE USER");
-        System.out.println(u);
 
-        System.out.println("POST IDD");
-        System.out.println(p.getID()); // Debugging log for profile ID
-
-        AddGroupPost addPostWindow = new AddGroupPost(u, this);
+        AddPost addPostWindow = new AddPost(u, this);
         addPostWindow.setVisible(true);
         addPostWindow.setLocationRelativeTo(null); // Center the window
         setVisible(false);
@@ -345,7 +342,6 @@ public class Newsfeed extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> Posts;
-    private javax.swing.JList<String> Posts1;
     private javax.swing.JList<String> Stories;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -353,6 +349,7 @@ public class Newsfeed extends javax.swing.JFrame {
     private javax.swing.JLabel label;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label2;
+    private javax.swing.JList<String> notifications;
     private javax.swing.JToggleButton post;
     private javax.swing.JToggleButton refresh;
     private javax.swing.JToggleButton story;

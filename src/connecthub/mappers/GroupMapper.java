@@ -7,6 +7,7 @@ import connecthub.entities.Group;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class GroupMapper {
 
@@ -36,6 +37,22 @@ public class GroupMapper {
         } catch (IOException e) {
             System.out.println("Error retrieving all groups: " + e.getMessage());
             return List.of();
+        }
+    }
+
+// Retrieve all Groups entities by CreatorID
+    public static List<Group> getAllCreatedGroups(int creatorID) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+        try {
+            List<Group> groups = getAll();
+
+            // Filter the UserGroup entities by UserID
+            return groups.stream()
+                    .filter(userGroup -> userGroup.getCreatorID() == creatorID)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("Error retrieving groups by creatorID: " + e.getMessage());
+            return List.of(); // Return an empty list in case of an error
         }
     }
 

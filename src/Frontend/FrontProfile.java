@@ -14,6 +14,7 @@ public class FrontProfile extends javax.swing.JFrame {
 
     private static User user;
     private static Profile profile;
+    private static Search searchFrame;
     public static FrontProfile front = null;
 
     /**
@@ -33,6 +34,23 @@ public class FrontProfile extends javax.swing.JFrame {
             if (u != null && p != null) {
                 user = u;
                 profile = p;
+           searchFrame=null;
+                front.initializeProfile(user, profile);
+            }
+        }
+        return front;
+    }
+     public static FrontProfile getInstanceOf(User u, Profile p,Search searchFrame) {
+        if (front == null) {
+            if (u == null || p == null) {
+                throw new IllegalArgumentException("User and Profile cannot be null when initializing FrontProfile.");
+            }
+            front = new FrontProfile(u, p);
+        } else {
+            if (u != null && p != null) {
+                user = u;
+                profile = p;
+                FrontProfile.searchFrame=searchFrame;
                 front.initializeProfile(user, profile);
             }
         }
@@ -54,10 +72,6 @@ public class FrontProfile extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
-        System.out.println("INITIALIZING: .....");
-        System.out.println(u);
-        System.out.println("INIT POST ID");
-        System.out.println(p.getID());
 
         user = u;
         profile = p;
@@ -474,10 +488,16 @@ public class FrontProfile extends javax.swing.JFrame {
             return;
         }
         try {
+            if(searchFrame==null){
             Login loginPage=Login.getInstanceOf();
             loginPage.setVisible(true);
             loginPage.setLocationRelativeTo(null);
+            setVisible(false);}
+            else{
+            searchFrame.setVisible(true);
+            searchFrame.setLocationRelativeTo(null);
             setVisible(false);
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -490,11 +510,31 @@ public class FrontProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_NotificationsActionPerformed
 
     private void groupsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_groupsActionPerformed
-        // TODO add your handling code here:
+         if (user == null || profile == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            GroupsManagement group = new GroupsManagement(user);
+            group.setVisible(true);
+            group.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
+        
     }//GEN-LAST:event_groupsActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        // TODO add your handling code here:
+        Search searchPage = new Search (user,profile);
+        searchPage.setVisible(true);
+        searchPage.setLocationRelativeTo(null);
+        setVisible(false);
     }//GEN-LAST:event_searchActionPerformed
 
     /**

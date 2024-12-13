@@ -4,6 +4,16 @@
  */
 package Frontend;
 
+import connecthub.GroupAuthorityManager;
+import connecthub.entities.PostGroup;
+import connecthub.entities.User;
+import connecthub.mappers.PostGroupMapper;
+import java.awt.Image;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mahinour Mohamed
@@ -13,8 +23,15 @@ public class EditPost extends javax.swing.JFrame {
     /**
      * Creates new form EditPost
      */
-    public EditPost() {
+    PostGroup groupPost;
+    User user;
+    GroupPosts groupPosts;
+
+    public EditPost(PostGroup groupPost, GroupPosts groupPosts, User user) {
         initComponents();
+        this.groupPost = groupPost;
+        this.groupPosts = groupPosts;
+        this.user = user;
     }
 
     /**
@@ -109,19 +126,80 @@ public class EditPost extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
+        try {
+            JFileChooser fileChooser = new JFileChooser();
+            int returnValue = fileChooser.showOpenDialog(this);
 
-     
-        
+            File selectedFile = null;
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                selectedFile = fileChooser.getSelectedFile();
+            }
+
+            if ((selectedFile == null || !selectedFile.exists()) && content.getText().trim().isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(
+                        null,
+                        "Both fields are empty! Please provide text content or an image.",
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            if (selectedFile != null && selectedFile.exists()) {
+                ImageIcon originalIcon = new ImageIcon(selectedFile.getAbsolutePath());
+                Image img = originalIcon.getImage();
+
+                Image scaledImg = img.getScaledInstance(photo.getWidth(), photo.getHeight(), Image.SCALE_SMOOTH);
+                ImageIcon scaledIcon = new ImageIcon(scaledImg);
+                photo.setIcon(scaledIcon);
+            }
+
+            groupPost.setContent(content.getText());
+            if (selectedFile == null) {
+                groupPost.setImagePath("");
+            }
+            if (selectedFile != null) {
+                if (selectedFile.getAbsolutePath() != null) {
+                    groupPost.setImagePath(selectedFile.getAbsolutePath());
+                }
+            }
+            GroupAuthorityManager.editPost(groupPost, user.getID());
+            javax.swing.JOptionPane.showMessageDialog(
+                    null,
+                    "Post edited successfully!",
+                    "Success",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    null,
+                    "An error occurred while creating the post. Please try again.",
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+            e.printStackTrace();
+        }
+
+
     }//GEN-LAST:event_editActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+        if (groupPost == null || user == null || groupPosts == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or groupPosts or group data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        groupPosts.setVisible(true);
+        groupPosts.setLocationRelativeTo(null); // Center the window
+        groupPosts.fillList();
+        setVisible(false);
     }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea content;
