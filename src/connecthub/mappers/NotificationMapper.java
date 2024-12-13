@@ -65,6 +65,20 @@ public class NotificationMapper {
             return List.of();
         }
     }
+    
+    // Retrieve all unread notifications 
+    public static List<Notification> getAllUnread() {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+        try {
+            List<Notification> notifications = getAll();
+            return notifications.stream()
+                    .filter(notification -> !notification.isRead())
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("Error retrieving unread notifications " + e.getMessage());
+            return List.of();
+        }
+    }
 
     // Retrieve a specific notification by entity's ID
     public static Optional<Notification> get(int id) {

@@ -21,8 +21,8 @@
   "type" : "UserGroup"
 }, {
   "id" : 4,
-  "userID" : 5,
-  "groupID" : 4,
+  "userID" : 2,
+  "groupID" : 9,
   "status" : "joined",
   "role" : "CREATOR",
   "type" : "UserGroup"

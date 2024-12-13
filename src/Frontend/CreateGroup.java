@@ -169,8 +169,8 @@ public class CreateGroup extends javax.swing.JFrame {
                 photo.setIcon(scaledIcon);
             }
 
-            Group group = new Group(name.getText(), description.getText().trim(),
-                    selectedFile != null ? selectedFile.getAbsolutePath() : "", user.getID());
+            Group group = new Group(user.getID(), name.getText(), description.getText().trim(),
+                    selectedFile != null ? selectedFile.getAbsolutePath() : "");
             GroupMapper.create(group);
 
             javax.swing.JOptionPane.showMessageDialog(

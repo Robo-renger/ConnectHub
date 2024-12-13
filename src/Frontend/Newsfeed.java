@@ -4,29 +4,38 @@
  */
 package Frontend;
 
+import connecthub.NotificationManager;
+import connecthub.NotificationService;
 import connecthub.controllers.ContentController;
 import connecthub.controllers.FriendController;
 import connecthub.entities.Content;
+import connecthub.entities.Notification;
 import connecthub.entities.Profile;
 import connecthub.entities.User;
+import connecthub.interfaces.Observer;
 import connecthub.mappers.ContentMapper;
+import connecthub.mappers.NotificationMapper;
 import connecthub.mappers.ProfileMapper;
 import connecthub.mappers.UserMapper;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
  * @author Mahinour Mohamed
  */
-public class Newsfeed extends javax.swing.JFrame {
+public class Newsfeed extends javax.swing.JFrame implements Observer{
 
     User u;
     Profile p;
     List<Content> allStories;
     List<Content> allPosts;
+
+    NotificationManager notificationManager = new NotificationManager();
+    NotificationService notificationService = new NotificationService(notificationManager);
 
     /**
      * Creates new form Newsfeed
@@ -45,11 +54,46 @@ public class Newsfeed extends javax.swing.JFrame {
                 this.p = profile;
             }
         }
+        
+        loadNotifications();
+        notificationManager.addObserver(this);
+        notificationService.start();
+        
 //        if (this.u == null || this.p == null) {
 //            throw new IllegalArgumentException("User and Profile cannot be null");
 //        }
         FillPostList();
         FillStoryList();
+    }
+    
+    private void loadNotifications() {
+        // Fetch all notifications from the database
+        List<Notification> notificationList = NotificationMapper.getAllForRecipient(u.getID());
+
+        // Display the notifications in the notifications list
+        DefaultListModel<String> notificationListModel = new DefaultListModel<>();
+
+        for (Notification notification : notificationList) {
+            notificationListModel.addElement(notification.getMessage());
+            notification.setRead(true);
+            NotificationMapper.update(notification.getID(), notification);
+        }
+
+        notifications.setModel(notificationListModel); // Update the JList in the UI
+    }
+    
+    @Override
+    public void update(Notification notification) {
+        // This method will be called when a new notification arrives
+        SwingUtilities.invokeLater(() -> {
+            if(notification.getRecepientID() == this.u.getID())
+            {
+                DefaultListModel<String> model = (DefaultListModel<String>) notifications.getModel();
+                model.addElement(notification.getMessage()); // Add new notification to the UI list
+                notification.setRead(true);
+                NotificationMapper.update(notification.getID(), notification);
+            }    
+        });
     }
 
     private void FillPostList() {
@@ -248,6 +292,9 @@ public class Newsfeed extends javax.swing.JFrame {
 //            return;
 //        }
         try {
+            if(notificationService != null && notificationService.isAlive())
+                notificationService.interrupt();
+            
             FrontProfile f = FrontProfile.getInstanceOf();
             f.setVisible(true);
             f.setLocation(null);

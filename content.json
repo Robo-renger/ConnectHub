@@ -1,0 +1,15 @@
+[ {
+  "id" : 2,
+  "recepientID" : 1,
+  "notificationType" : "Friend request accepted",
+  "message" : "Your friend request has been accepted by User 2",
+  "read" : false,
+  "type" : "Notification"
+}, {
+  "id" : 1,
+  "recepientID" : 4,
+  "notificationType" : "Chat",
+  "message" : "You have a new message!",
+  "read" : true,
+  "type" : "Notification"
+} ]
