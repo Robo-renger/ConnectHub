@@ -19,14 +19,16 @@ public class Group implements Identifiable {
     public Group() {
     }
 
-    public Group(String name, String description, String imagePath) {
+    public Group(String name, String description, String imagePath, int creatorID) {
         this.name = name;
+        this.creatorID = creatorID;
         this.description = description;
         setImagePath(imagePath);
     }
 
-    public Group(String name, String description) {
+    public Group(String name, String description, int creatorID) {
         this.name = name;
+        this.creatorID = creatorID;
         this.description = description;
         setImagePath("");
     }
@@ -36,9 +38,8 @@ public class Group implements Identifiable {
     public int getID() {
         return id;
     }
-    
-    public int getCreatorID()
-    {
+
+    public int getCreatorID() {
         return creatorID;
     }
 
@@ -63,9 +64,8 @@ public class Group implements Identifiable {
     public void setID(int id) {
         this.id = id;
     }
-    
-    public void setCreatorId(int creatorID)
-    {
+
+    public void setCreatorId(int creatorID) {
         this.creatorID = creatorID;
     }
 
@@ -89,6 +89,7 @@ public class Group implements Identifiable {
     public String toString() {
         return "Group {"
                 + "Id='" + id + '\''
+                + "creatorID='" + creatorID + '\''
                 + "Name='" + name + '\''
                 + ", ImagePath='" + imagePath + '\''
                 + ", Description='" + description + '\''

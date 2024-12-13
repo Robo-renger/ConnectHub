@@ -1,55 +1,13 @@
 [ {
   "id" : 1,
-  "senderId" : 3,
+  "senderId" : 2,
   "receiverId" : 1,
-  "status" : "",
+  "status" : "PENDING",
   "type" : "FriendRequest"
 }, {
   "id" : 2,
-  "senderId" : 3,
-  "receiverId" : 1,
-  "status" : "",
-  "type" : "FriendRequest"
-}, {
-  "id" : 3,
-  "senderId" : 3,
-  "receiverId" : 1,
-  "status" : "",
-  "type" : "FriendRequest"
-}, {
-  "id" : 4,
-  "senderId" : 1,
+  "senderId" : 2,
   "receiverId" : 3,
-  "status" : "",
-  "type" : "FriendRequest"
-}, {
-  "id" : 5,
-  "senderId" : 1,
-  "receiverId" : 3,
-  "status" : "",
-  "type" : "FriendRequest"
-}, {
-  "id" : 6,
-  "senderId" : 3,
-  "receiverId" : 1,
-  "status" : "PENDING",
-  "type" : "FriendRequest"
-}, {
-  "id" : 7,
-  "senderId" : 1,
-  "receiverId" : 2,
-  "status" : "PENDING",
-  "type" : "FriendRequest"
-}, {
-  "id" : 8,
-  "senderId" : 1,
-  "receiverId" : 2,
-  "status" : "PENDING",
-  "type" : "FriendRequest"
-}, {
-  "id" : 9,
-  "senderId" : 1,
-  "receiverId" : 2,
   "status" : "PENDING",
   "type" : "FriendRequest"
 } ]

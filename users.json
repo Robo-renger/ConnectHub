@@ -2,8 +2,19 @@
   "id" : 5,
   "email" : "3@gmail.com",
   "username" : "3",
+  "id" : 3,
+  "email" : "3@gmail.com",
+  "username" : "3",
   "password" : "7oyzg+1LYbv8PWbnZTNSmnLwIGFKgSCssO4en3P1x4w=",
   "dateOfBirth" : [ 2024, 12, 4 ],
+  "status" : "offline",
+  "type" : "User"
+}, {
+  "id" : 4,
+  "email" : "4@gmail.com",
+  "username" : "4",
+  "password" : "7oyzg+1LYbv8PWbnZTNSmnLwIGFKgSCssO4en3P1x4w=",
+  "dateOfBirth" : [ 2024, 12, 1 ],
   "status" : "online",
   "type" : "User"
 }, {
@@ -21,5 +32,14 @@
   "password" : "7oyzg+1LYbv8PWbnZTNSmnLwIGFKgSCssO4en3P1x4w=",
   "dateOfBirth" : [ 2024, 12, 4 ],
   "status" : "offline",
+  "status" : "offline",
+  "type" : "User"
+}, {
+  "id" : 2,
+  "email" : "2@gmail.com",
+  "username" : "2",
+  "password" : "7oyzg+1LYbv8PWbnZTNSmnLwIGFKgSCssO4en3P1x4w=",
+  "dateOfBirth" : [ 2024, 12, 4 ],
+  "status" : "online",
   "type" : "User"
 } ]

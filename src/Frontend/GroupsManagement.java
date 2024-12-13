@@ -4,6 +4,12 @@
  */
 package Frontend;
 
+import connecthub.controllers.GroupController;
+import connecthub.entities.Group;
+import connecthub.entities.User;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mahinour Mohamed
@@ -13,8 +19,11 @@ public class GroupsManagement extends javax.swing.JFrame {
     /**
      * Creates new form GroupsManagement
      */
-    public GroupsManagement() {
+    User user;
+    List<Group> groups;
+    public GroupsManagement(User user) {
         initComponents();
+        this.user=user;
     }
 
     /**
@@ -96,19 +105,90 @@ public class GroupsManagement extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void groupsListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_groupsListActionPerformed
+           if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
 
+            GroupsList group = new GroupsList(user,this);
+            group.setVisible(true);
+            group.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_groupsListActionPerformed
 
     private void createGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createGroupActionPerformed
-        // TODO add your handling code here:
+        if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            CreateGroup createGroup = new CreateGroup(user,this);
+            createGroup.setVisible(true);
+            createGroup.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
+        
     }//GEN-LAST:event_createGroupActionPerformed
 
     private void groupSuggestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_groupSuggestionsActionPerformed
-        // TODO add your handling code here:
+        if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+             groups = GroupController.suggestGroups(user.getID());
+
+            if (groups == null || groups.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No group to suggest.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            GroupSuggestion groupSuggestion = new GroupSuggestion(user,this);
+            groupSuggestion.setVisible(true);
+            groupSuggestion.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_groupSuggestionsActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+        if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            FrontProfile f = FrontProfile.getInstanceOf();
+            f.setVisible(true);
+            f.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+
+        }
+        
     }//GEN-LAST:event_formWindowClosing
 
     /**

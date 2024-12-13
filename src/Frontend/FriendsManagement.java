@@ -4,7 +4,10 @@
  */
 package Frontend;
 
+import connecthub.controllers.FriendController;
+import connecthub.entities.Friend;
 import connecthub.entities.User;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,7 +17,7 @@ import javax.swing.JOptionPane;
 public class FriendsManagement extends javax.swing.JFrame {
 
     User u;
-
+    List<User> friends;
     /**
      * Creates new form FriendsManegment
      */
@@ -169,7 +172,12 @@ public class FriendsManagement extends javax.swing.JFrame {
             return;
         }
         try {
+            friends = FriendController.suggestFriends(u.getID());
 
+            if (friends == null || friends.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No friends to suggest.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             FriendSuggestion f = new FriendSuggestion(u, this);
             f.setVisible(true);
             f.setLocationRelativeTo(null);

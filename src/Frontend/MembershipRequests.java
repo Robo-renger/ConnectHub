@@ -4,11 +4,11 @@
  */
 package Frontend;
 
-import connecthub.FriendsManager;
-import connecthub.controllers.FriendController;
-import connecthub.entities.FriendRequest;
+import connecthub.GroupAuthorityManager;
+import connecthub.entities.Group;
+import connecthub.entities.MembershipRequest;
 import connecthub.entities.User;
-import connecthub.mappers.FriendRequestMapper;
+import connecthub.mappers.MembershipRequestMapper;
 import connecthub.mappers.UserMapper;
 import java.util.List;
 import java.util.Optional;
@@ -19,34 +19,33 @@ import javax.swing.JOptionPane;
  *
  * @author Mahinour Mohamed
  */
-public class FriendsRequest extends javax.swing.JFrame {
-
-    User u;
-    FriendsManagement f;
-    List<FriendRequest> friendRequestList;
+public class MembershipRequests extends javax.swing.JFrame {
 
     /**
-     * Creates new form FriendsRequest
+     * Creates new form MembershipRequests
      */
-    public FriendsRequest(User u, FriendsManagement f) {
+    Group group;
+    User user;
+    GroupProfile groupProfile;
+    List<MembershipRequest> requests;
+    public MembershipRequests(Group group,GroupProfile groupProfile,User user) {
         initComponents();
-        this.f = f;
-        this.u = u;
-        fillList();
+        this.group=group;
+        this.groupProfile=groupProfile;
+        this.user=user;
     }
-
     private void fillList() {
-        if (u == null) {
+        if (group == null) {
             JOptionPane.showMessageDialog(this,
-                    "User or Newsfeed data is missing. Please log in again.",
+                    "Group or GroupProfile data is missing. Please log in again.",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        friendRequestList = FriendController.getFriendRequests(u.getID());
-        for (FriendRequest friendRequest : friendRequestList) {
-            Optional<User> user = UserMapper.get(friendRequest.getSenderId());
+        requests = MembershipRequestMapper.getAllForGroup(group.getID());
+        for (MembershipRequest request : requests) {
+            Optional<User> user = UserMapper.get(request.getUserID());
             if (user.isPresent()) {
                 User foundUser = user.get();
                 listModel.addElement(foundUser.getUsername());
@@ -66,13 +65,13 @@ public class FriendsRequest extends javax.swing.JFrame {
     private void initComponents() {
 
         label = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        requestList = new javax.swing.JList<>();
         accept = new javax.swing.JToggleButton();
         decline = new javax.swing.JToggleButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        requestList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Friends Requests");
+        setTitle("Membersip Requests");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -81,9 +80,7 @@ public class FriendsRequest extends javax.swing.JFrame {
 
         label.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
         label.setForeground(new java.awt.Color(0, 51, 102));
-        label.setText("        Friends Requests");
-
-        jScrollPane1.setViewportView(requestList);
+        label.setText("   Membership Requests");
 
         accept.setBackground(new java.awt.Color(0, 51, 102));
         accept.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
@@ -105,44 +102,50 @@ public class FriendsRequest extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane1.setViewportView(requestList);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(accept, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(decline, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(82, 82, 82)
+                .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(accept, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addComponent(decline, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(18, 18, 18)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(19, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 224, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(accept)
                     .addComponent(decline))
-                .addGap(19, 19, 19))
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(56, 56, 56)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                    .addGap(57, 57, 57)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void acceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptActionPerformed
-        if (u == null) {
+         if (group == null) {
             JOptionPane.showMessageDialog(this,
                     "User or Newsfeed data is missing. Please log in again.",
                     "Error",
@@ -153,7 +156,7 @@ public class FriendsRequest extends javax.swing.JFrame {
             int index = requestList.getSelectedIndex();
 
             if (index >= 0) {
-                FriendsManager.acceptFriendRequest(friendRequestList.get(index));
+                GroupAuthorityManager.acceptMembershipRequest(requests.get(index),user.getID());
                 fillList();
                 javax.swing.JOptionPane.showMessageDialog(null, " Successfully", "Message", javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
@@ -165,7 +168,7 @@ public class FriendsRequest extends javax.swing.JFrame {
     }//GEN-LAST:event_acceptActionPerformed
 
     private void declineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineActionPerformed
-        if (u == null) {
+        if (group == null) {
             JOptionPane.showMessageDialog(this,
                     "User or Newsfeed data is missing. Please log in again.",
                     "Error",
@@ -176,40 +179,40 @@ public class FriendsRequest extends javax.swing.JFrame {
             int index = requestList.getSelectedIndex();
 
             if (index >= 0) {
-                FriendsManager.rejectFriendRequest(friendRequestList.get(index));
-                javax.swing.JOptionPane.showMessageDialog(null, "Remove Successfully", "Message", javax.swing.JOptionPane.ERROR_MESSAGE);
-
+                GroupAuthorityManager.declineMembershipRequest(requests.get(index),user.getID());
                 fillList();
+                javax.swing.JOptionPane.showMessageDialog(null, " Successfully", "Message", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
             }
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
-
     }//GEN-LAST:event_declineActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (u == null) {
+        if (user == null||group==null||groupProfile==null) {
             JOptionPane.showMessageDialog(this,
-                    "User or Newsfeed data is missing. Please log in again.",
+                    "User or GroupProfile or group data is missing. Please log in again.",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
 
-            f.setVisible(true);
-            f.setLocationRelativeTo(null);
+            groupProfile.setVisible(true);
+            groupProfile.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
-
     }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
      */
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton accept;

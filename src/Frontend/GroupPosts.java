@@ -4,6 +4,17 @@
  */
 package Frontend;
 
+import connecthub.GroupAuthorityManager;
+import connecthub.controllers.GroupController;
+import connecthub.entities.Group;
+import connecthub.entities.Post;
+import connecthub.entities.PostGroup;
+import connecthub.entities.User;
+import connecthub.mappers.PostGroupMapper;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mahinour Mohamed
@@ -13,8 +24,31 @@ public class GroupPosts extends javax.swing.JFrame {
     /**
      * Creates new form GroupPosts
      */
-    public GroupPosts() {
+    Group group;
+    User user;
+    List<PostGroup> posts;
+    GroupProfile groupProfile;
+    public GroupPosts(Group group, User user,GroupProfile groupProfile) {
         initComponents();
+        this.group = group;
+        this.user = user;
+        this.groupProfile=groupProfile;
+        fillList();
+    }
+
+    private void fillList() {
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        posts = PostGroupMapper.getAllGroupPosts(group.getID());
+        for (PostGroup post : posts) {
+            listModel.addElement(post.getContent());
+        }
+
+        postsList.setModel(listModel);
+        if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Member")) {
+            deletePost.setVisible(false);
+            editPost.setVisible(false);
+        }
+
     }
 
     /**
@@ -28,7 +62,7 @@ public class GroupPosts extends javax.swing.JFrame {
 
         label1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Posts = new javax.swing.JList<>();
+        postsList = new javax.swing.JList<>();
         createPost = new javax.swing.JToggleButton();
         editPost = new javax.swing.JToggleButton();
         deletePost = new javax.swing.JToggleButton();
@@ -48,7 +82,7 @@ public class GroupPosts extends javax.swing.JFrame {
         label1.setForeground(new java.awt.Color(0, 51, 102));
         label1.setText("              Posts");
 
-        jScrollPane1.setViewportView(Posts);
+        jScrollPane1.setViewportView(postsList);
 
         createPost.setBackground(new java.awt.Color(0, 51, 102));
         createPost.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
@@ -161,23 +195,113 @@ public class GroupPosts extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void createPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPostActionPerformed
-       
+        if (user == null || group == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        AddGroupPost addPostWindow = new AddGroupPost(group, this, user);
+        addPostWindow.setVisible(true);
+        addPostWindow.setLocationRelativeTo(null); // Center the window
+        setVisible(false);
+        fillList();
     }//GEN-LAST:event_createPostActionPerformed
 
     private void editPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editPostActionPerformed
-        // TODO add your handling code here:
+        if (user == null || group == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int index = postsList.getSelectedIndex();
+
+            if (posts.get(index).getAuthorId() == user.getID()) {
+                editPost.setVisible(true);
+            }
+            if (index >= 0) {
+                EditPost editPost = new EditPost(posts.get(postsList.getSelectedIndex()), this, user);
+                editPost.setVisible(true);
+                editPost.setLocationRelativeTo(null); // Center the window
+                setVisible(false);
+                fillList();
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_editPostActionPerformed
 
     private void deletePostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePostActionPerformed
-        // TODO add your handling code here:
+        if (user == null || group == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int index= postsList.getSelectedIndex();
+             if (posts.get(index).getAuthorId() == user.getID()) {
+                deletePost.setVisible(true);
+            }
+            if ( index>= 0) {
+                PostGroupMapper.delete(posts.get(index).getID());
+              javax.swing.JOptionPane.showMessageDialog(null, "Deleted successfully!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+               fillList();
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_deletePostActionPerformed
 
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
-        // TODO add your handling code here:
+         if (user == null || group == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or profile data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int index= postsList.getSelectedIndex();
+            if ( index>= 0) {
+                 ShowGroupPost showGroupPost = new ShowGroupPost(posts.get(index),this);
+        showGroupPost.setVisible(true);
+        showGroupPost.setLocationRelativeTo(null); // Center the window
+        setVisible(false);
+        fillList();
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
+
     }//GEN-LAST:event_viewActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+        if (user == null||group==null||groupProfile==null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or GroupProfile or group data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+
+            groupProfile.setVisible(true);
+            groupProfile.setLocationRelativeTo(null);
+            setVisible(false);
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_formWindowClosing
 
     private void commentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commentsActionPerformed
@@ -191,10 +315,8 @@ public class GroupPosts extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> Posts;
     private javax.swing.JToggleButton comments;
     private javax.swing.JToggleButton createPost;
     private javax.swing.JToggleButton deletePost;
@@ -202,6 +324,7 @@ public class GroupPosts extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label1;
     private javax.swing.JToggleButton like;
+    private javax.swing.JList<String> postsList;
     private javax.swing.JToggleButton view;
     // End of variables declaration//GEN-END:variables
 }
