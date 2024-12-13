@@ -28,6 +28,7 @@ public class GroupProfile extends javax.swing.JFrame {
     Group group;
     User user;
     GroupsList groupList;
+    Search search;
     List<User> members;
     public GroupProfile(Group group,User user,GroupsList groupList) {
         initComponents();
@@ -43,7 +44,7 @@ public class GroupProfile extends javax.swing.JFrame {
          this.group=group;
          this.user=user;
          this.groupList=groupList;
-
+         search=null;
         // Set user cover photo
         ImageIcon cover = new ImageIcon(group.getImagePath());
         Image coverImg = cover.getImage();
@@ -65,6 +66,69 @@ public class GroupProfile extends javax.swing.JFrame {
         { addAdmin.setVisible(false);
           demoteAdmin.setVisible(false);
           deleteGroup.setVisible(false);
+        }
+        else if(GroupAuthorityManager.validateRole(group.getID(),user.getID()).equals("Creator"))
+        { 
+        }
+        else{
+        addAdmin.setVisible(false);
+          demoteAdmin.setVisible(false);
+          deleteGroup.setVisible(false);
+          removeMember.setVisible(false);
+          membershipRequests.setVisible(false);
+          leave.setVisible(false);
+          posts.setVisible(false);
+        }
+        fillList();
+    }
+    public GroupProfile(Group group,User user,Search search) {
+        initComponents();
+       
+        if (group == null||user==null) {
+            JOptionPane.showMessageDialog(this,
+                    "Error initializing profile: User or profile data is missing.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+         this.group=group;
+         this.user=user;
+         this.search=search;
+         groupList=null;
+        // Set user cover photo
+        ImageIcon cover = new ImageIcon(group.getImagePath());
+        Image coverImg = cover.getImage();
+        Image scaledImg2 = coverImg.getScaledInstance(coverPhoto.getWidth(), coverPhoto.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon coverScaledIcon = new ImageIcon(scaledImg2);
+
+        coverPhoto.setIcon(coverScaledIcon);
+
+        name.setText(group.getName());
+        description.setText(group.getDescription());
+        if(GroupAuthorityManager.validateRole(group.getID(),user.getID()).equals("Member"))
+        { addAdmin.setVisible(false);
+          demoteAdmin.setVisible(false);
+          deleteGroup.setVisible(false);
+          removeMember.setVisible(false);
+          membershipRequests.setVisible(false);
+        }
+        else if(GroupAuthorityManager.validateRole(group.getID(),user.getID()).equals("Admin"))
+        { addAdmin.setVisible(false);
+          demoteAdmin.setVisible(false);
+          deleteGroup.setVisible(false);
+        }
+        else if(GroupAuthorityManager.validateRole(group.getID(),user.getID()).equals("Creator"))
+        { 
+        }
+        else{
+        addAdmin.setVisible(false);
+          demoteAdmin.setVisible(false);
+          deleteGroup.setVisible(false);
+          removeMember.setVisible(false);
+          membershipRequests.setVisible(false);
+          leave.setVisible(false);
+          posts.setVisible(false);
         }
         fillList();
     }
@@ -396,9 +460,15 @@ public class GroupProfile extends javax.swing.JFrame {
             return;
         }
         try {
+            if(search==null){
             groupList.setVisible(true);
             groupList.setLocationRelativeTo(null);
+            setVisible(false);}
+            else{
+             search.setVisible(true);
+            search.setLocationRelativeTo(null);
             setVisible(false);
+            }
            
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);

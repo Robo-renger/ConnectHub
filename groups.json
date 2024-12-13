@@ -19,4 +19,11 @@
   "imagePath" : "src/assets/default-group.png",
   "description" : "asd",
   "type" : "Group"
+}, {
+  "id" : 10,
+  "creatorID" : 1,
+  "name" : "hellooo",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "hereee",
+  "type" : "Group"
 } ]

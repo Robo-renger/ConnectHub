@@ -26,4 +26,95 @@
   "profilePhotoPath" : "src/assets/default-profile.png",
   "coverPhotoPath" : "src/assets/default-cover.jpg",
   "type" : "Profile"
-}]
+}, {
+  "id" : 5,
+  "creatorID" : 1,
+  "name" : "helloooo",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "",
+  "type" : "Group"
+}, {
+  "id" : 6,
+  "userID" : 1,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 7,
+  "userID" : 1,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 8,
+  "userID" : 2,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 9,
+  "userID" : 2,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 10,
+  "userID" : 2,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 11,
+  "userID" : 2,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 12,
+  "userID" : 2,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 13,
+  "userID" : 2,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 14,
+  "userID" : 2,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 15,
+  "userID" : 2,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 16,
+  "userID" : 2,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 17,
+  "userID" : 2,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+} ]

@@ -14,6 +14,7 @@ public class FrontProfile extends javax.swing.JFrame {
 
     private static User user;
     private static Profile profile;
+    private static Search searchFrame;
     public static FrontProfile front = null;
 
     /**
@@ -24,6 +25,23 @@ public class FrontProfile extends javax.swing.JFrame {
      * @return
      */
     public static FrontProfile getInstanceOf(User u, Profile p) {
+           searchFrame=null;
+        if (front == null) {
+            if (u == null || p == null) {
+                throw new IllegalArgumentException("User and Profile cannot be null when initializing FrontProfile.");
+            }
+            front = new FrontProfile(u, p);
+        } else {
+            if (u != null && p != null) {
+                user = u;
+                profile = p;
+                front.initializeProfile(user, profile);
+            }
+        }
+        return front;
+    }
+     public static FrontProfile getInstanceOf(User u, Profile p,Search searchFrame) {
+                FrontProfile.searchFrame=searchFrame;
         if (front == null) {
             if (u == null || p == null) {
                 throw new IllegalArgumentException("User and Profile cannot be null when initializing FrontProfile.");
@@ -470,10 +488,16 @@ public class FrontProfile extends javax.swing.JFrame {
             return;
         }
         try {
+            if(searchFrame==null){
             Login loginPage=Login.getInstanceOf();
             loginPage.setVisible(true);
             loginPage.setLocationRelativeTo(null);
+            setVisible(false);}
+            else{
+            searchFrame.setVisible(true);
+            searchFrame.setLocationRelativeTo(null);
             setVisible(false);
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -507,7 +531,7 @@ public class FrontProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_groupsActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        Search searchPage = new Search (user);
+        Search searchPage = new Search (user,profile);
         searchPage.setVisible(true);
         searchPage.setLocationRelativeTo(null);
         setVisible(false);
