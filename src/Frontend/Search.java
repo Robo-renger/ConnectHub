@@ -461,13 +461,13 @@ public class Search extends javax.swing.JFrame {
                         GroupController.leave(optGroup.getID(), u.getID());
                         javax.swing.JOptionPane.showMessageDialog(null, "Leave Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                         return;
-                    } else if (optGroup.getCreatorID() == u.getID()) {
+                    } if (optGroup.getCreatorID() == u.getID()) {
                         javax.swing.JOptionPane.showMessageDialog(null, "Creator cannot leave!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        javax.swing.JOptionPane.showMessageDialog(null, "Not member!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    }
+                        return;                   
+                    } 
 
                 }
+                 javax.swing.JOptionPane.showMessageDialog(null, "Not member!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
             }
         } catch (Exception e) {
@@ -503,7 +503,7 @@ public class Search extends javax.swing.JFrame {
                         FriendController.removeFriend(u.getID(), optUser.getID());
                         fillList();
                         javax.swing.JOptionPane.showMessageDialog(null, "Removed Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-
+                              return;
                     }
                 }
                 javax.swing.JOptionPane.showMessageDialog(null, "Not friend!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);

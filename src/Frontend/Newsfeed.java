@@ -45,9 +45,9 @@ public class Newsfeed extends javax.swing.JFrame {
                 this.p = profile;
             }
         }
-        if (this.u == null || this.p == null) {
-            throw new IllegalArgumentException("User and Profile cannot be null");
-        }
+//        if (this.u == null || this.p == null) {
+//            throw new IllegalArgumentException("User and Profile cannot be null");
+//        }
         FillPostList();
         FillStoryList();
     }
@@ -240,19 +240,20 @@ public class Newsfeed extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (u == null || p == null) {
-            JOptionPane.showMessageDialog(this,
-                    "User or Newsfeed data is missing. Please log in again.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+//        if (u == null || p == null) {
+//            JOptionPane.showMessageDialog(this,
+//                    "User or Newsfeed data is missing. Please log in again.",
+//                    "Error",
+//                    JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
         try {
             FrontProfile f = FrontProfile.getInstanceOf();
             f.setVisible(true);
             f.setLocation(null);
             setVisible(false);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
     }//GEN-LAST:event_formWindowClosing

@@ -25,7 +25,6 @@ public class FrontProfile extends javax.swing.JFrame {
      * @return
      */
     public static FrontProfile getInstanceOf(User u, Profile p) {
-           searchFrame=null;
         if (front == null) {
             if (u == null || p == null) {
                 throw new IllegalArgumentException("User and Profile cannot be null when initializing FrontProfile.");
@@ -35,13 +34,13 @@ public class FrontProfile extends javax.swing.JFrame {
             if (u != null && p != null) {
                 user = u;
                 profile = p;
+           searchFrame=null;
                 front.initializeProfile(user, profile);
             }
         }
         return front;
     }
      public static FrontProfile getInstanceOf(User u, Profile p,Search searchFrame) {
-                FrontProfile.searchFrame=searchFrame;
         if (front == null) {
             if (u == null || p == null) {
                 throw new IllegalArgumentException("User and Profile cannot be null when initializing FrontProfile.");
@@ -51,6 +50,7 @@ public class FrontProfile extends javax.swing.JFrame {
             if (u != null && p != null) {
                 user = u;
                 profile = p;
+                FrontProfile.searchFrame=searchFrame;
                 front.initializeProfile(user, profile);
             }
         }

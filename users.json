@@ -7,12 +7,12 @@
   "status" : "offline",
   "type" : "User"
 }, {
-  "id" : 4,
-  "email" : "4@gmail.com",
-  "username" : "4",
+  "id" : 2,
+  "email" : "2@gmail.com",
+  "username" : "2",
   "password" : "7oyzg+1LYbv8PWbnZTNSmnLwIGFKgSCssO4en3P1x4w=",
-  "dateOfBirth" : [ 2024, 12, 1 ],
-  "status" : "offline",
+  "dateOfBirth" : [ 2024, 12, 4 ],
+  "status" : "online",
   "type" : "User"
 }, {
   "id" : 1,
@@ -20,14 +20,14 @@
   "username" : "1",
   "password" : "7oyzg+1LYbv8PWbnZTNSmnLwIGFKgSCssO4en3P1x4w=",
   "dateOfBirth" : [ 2024, 12, 1 ],
-  "status" : "online",
+  "status" : "offline",
   "type" : "User"
 }, {
-  "id" : 2,
-  "email" : "2@gmail.com",
-  "username" : "2",
+  "id" : 4,
+  "email" : "4@gmail.com",
+  "username" : "4",
   "password" : "7oyzg+1LYbv8PWbnZTNSmnLwIGFKgSCssO4en3P1x4w=",
-  "dateOfBirth" : [ 2024, 12, 4 ],
+  "dateOfBirth" : [ 2024, 12, 1 ],
   "status" : "online",
   "type" : "User"
 } ]

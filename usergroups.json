@@ -9,7 +9,7 @@
   "id" : 3,
   "userID" : 4,
   "groupID" : 8,
-  "status" : "joined",
-  "role" : "ADMIN",
+  "status" : "left",
+  "role" : "MEMBER",
   "type" : "UserGroup"
 } ]
