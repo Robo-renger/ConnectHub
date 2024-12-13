@@ -147,6 +147,7 @@ public class GroupsList extends javax.swing.JFrame {
         try {
             int index = list.getSelectedIndex();
             if (index >= 0) {
+                System.out.println(groups.get(index).getID());
                 GroupController.leave(groups.get(index).getID(), user.getID());
                 javax.swing.JOptionPane.showMessageDialog(null, "Leave Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 fillList();

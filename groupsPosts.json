@@ -7,4 +7,13 @@
   "timestamp" : [ 2024, 12, 13, 4, 27, 29, 320830300 ],
   "expired" : false,
   "type" : "PostGroup"
+}, {
+  "id" : 3,
+  "authorId" : 2,
+  "groupID" : 8,
+  "content" : "\n\n\n\n\n\nqwe",
+  "imagePath" : "",
+  "timestamp" : [ 2024, 12, 13, 5, 9, 12, 580968100 ],
+  "expired" : false,
+  "type" : "PostGroup"
 } ]

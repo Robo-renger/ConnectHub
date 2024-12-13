@@ -33,6 +33,7 @@ public class MembershipRequests extends javax.swing.JFrame {
         this.group=group;
         this.groupProfile=groupProfile;
         this.user=user;
+        fillList();
     }
     private void fillList() {
         if (group == null) {
