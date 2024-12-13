@@ -207,7 +207,6 @@ public class GroupAuthorityManager {
         }
         else
             throw new InvalidDataException("The user and the group are not related");
-        }
     }
 
     public static void editPost(PostGroup updatedPostGroup, int callerID) {
@@ -223,7 +222,7 @@ public class GroupAuthorityManager {
         Optional<UserGroup> optionalUserGroup = UserGroupMapper.get(updatedPostGroup.getGroupID(), updatedPostGroup.getAuthorId());
         if(optionalUserGroup.isPresent() || callerID == updatedPostGroup.getAuthorId()) //callerID == GroupMapper.get(updatedPostGroup.getGroupID()).get().getCreatorID())
             PostGroupMapper.update(updatedPostGroup.getID(), updatedPostGroup);
-        } else {
+        else {
             throw new InvalidDataException("The user and the group are not related");
         }
     }
@@ -241,7 +240,7 @@ public class GroupAuthorityManager {
         Optional<UserGroup> optionalUserGroup = UserGroupMapper.get(postGroup.getGroupID(), postGroup.getAuthorId());
         if(optionalUserGroup.isPresent() || callerID == postGroup.getAuthorId()) //callerID == GroupMapper.get(postGroup.getGroupID()).get().getCreatorID())
             PostGroupMapper.delete(postGroup.getID());
-        } else {
+        else {
             throw new InvalidDataException("The user and the group are not related");
         }
     }
