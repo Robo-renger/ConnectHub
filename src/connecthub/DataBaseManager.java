@@ -60,6 +60,7 @@ public class DataBaseManager {
         entity.setID(latestId + 1); // Increment ID by one
         entities.add(entity);        
         writeEntities(entities);
+        return latestId + 1;
     }
 
     public <T extends Identifiable> void createEntity(T entity) throws IOException {
