@@ -31,170 +31,134 @@ public class GroupProfile extends javax.swing.JFrame {
     Search search;
     List<User> members;
 
-    public GroupProfile(Group group, User user, Search search) {
-        initComponents();
-
-        if (group == null || user == null) {
-
-            if (group == null || user == null) {
-                JOptionPane.showMessageDialog(this,
-                        "Error initializing profile: User or profile data is missing.",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            this.group = group;
-            this.user = user;
-            this.search = search;
-            groupList = null;
-            this.group = group;
-            this.user = user;
-            this.search = search;
-            groupList = null;
-            // Set user cover photo
-            ImageIcon cover = new ImageIcon(group.getImagePath());
-            Image coverImg = cover.getImage();
-            Image scaledImg2 = coverImg.getScaledInstance(coverPhoto.getWidth(), coverPhoto.getHeight(), Image.SCALE_SMOOTH);
-            ImageIcon coverScaledIcon = new ImageIcon(scaledImg2);
-
-            coverPhoto.setIcon(coverScaledIcon);
-
-            name.setText(group.getName());
-            description.setText(group.getDescription());
-            if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Member")) {
-                addAdmin.setVisible(false);
-                demoteAdmin.setVisible(false);
-                deleteGroup.setVisible(false);
-                removeMember.setVisible(false);
-                membershipRequests.setVisible(false);
-            } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Admin")) {
-                addAdmin.setVisible(false);
-                demoteAdmin.setVisible(false);
-                deleteGroup.setVisible(false);
-            } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Creator")) {
-            } else {
-                addAdmin.setVisible(false);
-                demoteAdmin.setVisible(false);
-                deleteGroup.setVisible(false);
-                removeMember.setVisible(false);
-                membershipRequests.setVisible(false);
-                leave.setVisible(false);
-                posts.setVisible(false);
-                if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Member")) {
-                    addAdmin.setVisible(false);
-                    demoteAdmin.setVisible(false);
-                    deleteGroup.setVisible(false);
-                    removeMember.setVisible(false);
-                    membershipRequests.setVisible(false);
-                } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Admin")) {
-                    addAdmin.setVisible(false);
-                    demoteAdmin.setVisible(false);
-                    deleteGroup.setVisible(false);
-                } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Creator")) {
-                } else {
-                    addAdmin.setVisible(false);
-                    demoteAdmin.setVisible(false);
-                    deleteGroup.setVisible(false);
-                    removeMember.setVisible(false);
-                    membershipRequests.setVisible(false);
-                    leave.setVisible(false);
-                    posts.setVisible(false);
-                }
-                fillList();
-            }
-        }
-    }
-
     public GroupProfile(Group group, User user, GroupsList groupList) {
         initComponents();
 
         if (group == null || user == null) {
-
-            if (group == null || user == null) {
-                JOptionPane.showMessageDialog(this,
-                        "Error initializing profile: User or profile data is missing.",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            this.group = group;
-            this.user = user;
-            this.groupList = groupList;
-            search = null;
-            this.group = group;
-            this.user = user;
-            this.groupList = groupList;
-            search = null;
-            // Set user cover photo
-            ImageIcon cover = new ImageIcon(group.getImagePath());
-            Image coverImg = cover.getImage();
-            Image scaledImg2 = coverImg.getScaledInstance(coverPhoto.getWidth(), coverPhoto.getHeight(), Image.SCALE_SMOOTH);
-            ImageIcon coverScaledIcon = new ImageIcon(scaledImg2);
-
-            coverPhoto.setIcon(coverScaledIcon);
-
-            name.setText(group.getName());
-            description.setText(group.getDescription());
-            if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Member")) {
-                addAdmin.setVisible(false);
-                demoteAdmin.setVisible(false);
-                deleteGroup.setVisible(false);
-                removeMember.setVisible(false);
-                membershipRequests.setVisible(false);
-            } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Admin")) {
-                addAdmin.setVisible(false);
-                demoteAdmin.setVisible(false);
-                deleteGroup.setVisible(false);
-            } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Creator")) {
-            } else {
-                addAdmin.setVisible(false);
-                demoteAdmin.setVisible(false);
-                deleteGroup.setVisible(false);
-                removeMember.setVisible(false);
-                membershipRequests.setVisible(false);
-                leave.setVisible(false);
-                posts.setVisible(false);
-                if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Member")) {
-                    addAdmin.setVisible(false);
-                    demoteAdmin.setVisible(false);
-                    deleteGroup.setVisible(false);
-                    removeMember.setVisible(false);
-                    membershipRequests.setVisible(false);
-                } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Admin")) {
-                    addAdmin.setVisible(false);
-                    demoteAdmin.setVisible(false);
-                    deleteGroup.setVisible(false);
-                } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Creator")) {
-                } else {
-                    addAdmin.setVisible(false);
-                    demoteAdmin.setVisible(false);
-                    deleteGroup.setVisible(false);
-                    removeMember.setVisible(false);
-                    membershipRequests.setVisible(false);
-                    leave.setVisible(false);
-                    posts.setVisible(false);
-                }
-                fillList();
-            }
-
+            JOptionPane.showMessageDialog(this,
+                    "Error initializing profile: User or profile data is missing.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
         }
+
+        this.group = group;
+        this.user = user;
+        this.groupList = groupList;
+        search = null;
+        // Set user cover photo
+        ImageIcon cover = new ImageIcon(group.getImagePath());
+        Image coverImg = cover.getImage();
+        Image scaledImg2 = coverImg.getScaledInstance(coverPhoto.getWidth(), coverPhoto.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon coverScaledIcon = new ImageIcon(scaledImg2);
+
+        coverPhoto.setIcon(coverScaledIcon);
+
+        name.setText(group.getName());
+        description.setText(group.getDescription());
+        if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Member")) {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+            removeMember.setVisible(false);
+            membershipRequests.setVisible(false);
+        } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Admin")) {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+        } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Creator")) {
+        } else {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+            removeMember.setVisible(false);
+            membershipRequests.setVisible(false);
+            leave.setVisible(false);
+            posts.setVisible(false);
+        }
+        fillList();
     }
 
-    public void fillList() {
+//    public void handleButtonsFalse() {
+//        addAdmin.setVisible(false);
+//        demoteAdmin.setVisible(false);
+//        deleteGroup.setVisible(false);
+//        removeMember.setVisible(false);
+//        membershipRequests.setVisible(false);
+//        leave.setVisible(false);
+//        posts.setVisible(false);
+//    }
+//
+//    public void handleButtonsTrue() {
+//        addAdmin.setVisible(true);
+//        demoteAdmin.setVisible(true);
+//        deleteGroup.setVisible(true);
+//        removeMember.setVisible(true);
+//        membershipRequests.setVisible(true);
+//        leave.setVisible(true);
+//        posts.setVisible(true);
+//    }
+
+    public GroupProfile(Group group, User user, Search search) {
+        initComponents();
+
+        if (group == null || user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Error initializing profile: User or profile data is missing.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        this.group = group;
+        this.user = user;
+        this.search = search;
+        groupList = null;
+        // Set user cover photo
+        ImageIcon cover = new ImageIcon(group.getImagePath());
+        Image coverImg = cover.getImage();
+        Image scaledImg2 = coverImg.getScaledInstance(coverPhoto.getWidth(), coverPhoto.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon coverScaledIcon = new ImageIcon(scaledImg2);
+
+        coverPhoto.setIcon(coverScaledIcon);
+
+        name.setText(group.getName());
+        description.setText(group.getDescription());
+        if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Member")) {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+            removeMember.setVisible(false);
+            membershipRequests.setVisible(false);
+        } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Admin")) {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+        } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Creator")) {
+        } else {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+            removeMember.setVisible(false);
+            membershipRequests.setVisible(false);
+            leave.setVisible(false);
+            posts.setVisible(false);
+        }
+        fillList();
+    }
+
+    private void fillList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        members = GroupController.getJoinedMembers(group.getID());
         members = GroupController.getJoinedMembers(group.getID());
         for (User user : members) {
             listModel.addElement(user.getUsername());
         }
-//        Optional<User> user=UserMapper.get(group.getCreatorID());
-//        if(user.isPresent())
-//        {  User foundUser = user.get();
-//          members.add(foundUser);
-//        listModel.addElement(foundUser.getUsername());
-//        }
+        Optional<User> user = UserMapper.get(group.getCreatorID());
+        if (user.isPresent()) {
+            User foundUser = user.get();
+            members.add(foundUser);
+            listModel.addElement(foundUser.getUsername());
+        }
         membersList.setModel(listModel);
 
     }
@@ -384,30 +348,27 @@ public class GroupProfile extends javax.swing.JFrame {
 
     private void leaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveActionPerformed
         if (user == null || group == null) {
-            if (user == null || group == null) {
-                JOptionPane.showMessageDialog(this,
-                        "User or Newsfeed data is missing. Please log in again.",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (user.getID() == group.getCreatorID()) {
-                try {
-                    if (user.getID() == group.getCreatorID()) {
-                        javax.swing.JOptionPane.showMessageDialog(null, "Creator cannot leave the group", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        GroupController.leave(group.getID(), user.getID());
-                        javax.swing.JOptionPane.showMessageDialog(null, "Left successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                        groupList.setVisible(true);
-                        groupList.setLocationRelativeTo(null);
-                        setVisible(false);
-                    }
-                } catch (Exception e) {
-                    javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-
-                }
-            }
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        try {
+            if (user.getID() == group.getCreatorID()) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Creator cannot leave the group", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            } else {
+                GroupController.leave(group.getID(), user.getID());
+                javax.swing.JOptionPane.showMessageDialog(null, "Left successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                groupList.setVisible(true);
+                groupList.setLocationRelativeTo(null);
+                setVisible(false);
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
+
     }//GEN-LAST:event_leaveActionPerformed
 
     private void addAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAdminActionPerformed
@@ -422,12 +383,9 @@ public class GroupProfile extends javax.swing.JFrame {
             int index = membersList.getSelectedIndex();
             if (GroupAuthorityManager.validateRole(group.getID(), members.get(index).getID()).equals("Admin")) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Already admin!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                if (GroupAuthorityManager.validateRole(group.getID(), members.get(index).getID()).equals("Admin")) {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Already admin!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                }
+
             }
             if (index >= 0) {
-                GroupAuthorityManager.promoteToAdmin(group.getID(), members.get(index).getID(), user.getID());
                 GroupAuthorityManager.promoteToAdmin(group.getID(), members.get(index).getID(), user.getID());
                 javax.swing.JOptionPane.showMessageDialog(null, "Promote to admin Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 fillList();
@@ -436,80 +394,65 @@ public class GroupProfile extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
-
     }//GEN-LAST:event_addAdminActionPerformed
 
     private void demoteAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_demoteAdminActionPerformed
         if (user == null) {
-            if (user == null) {
-                JOptionPane.showMessageDialog(this,
-                        "User or Newsfeed data is missing. Please log in again.",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            try {
-                int index = membersList.getSelectedIndex();
-                if (!GroupAuthorityManager.validateRole(group.getID(), members.get(index).getID()).equals("Admin")) {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Not admin!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    if (!GroupAuthorityManager.validateRole(group.getID(), members.get(index).getID()).equals("Admin")) {
-                        javax.swing.JOptionPane.showMessageDialog(null, "Not admin!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-                if (index >= 0) {
-                    GroupAuthorityManager.demoteFromAdmin(group.getID(), members.get(index).getID(), user.getID());
-                    GroupAuthorityManager.demoteFromAdmin(group.getID(), members.get(index).getID(), user.getID());
-                    javax.swing.JOptionPane.showMessageDialog(null, "Demote from admin Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                    fillList();
-                }
-            } catch (Exception e) {
-                javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int index = membersList.getSelectedIndex();
+            if (!GroupAuthorityManager.validateRole(group.getID(), members.get(index).getID()).equals("Admin")) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Not admin!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
             }
+            if (index >= 0) {
+                GroupAuthorityManager.demoteFromAdmin(group.getID(), members.get(index).getID(), user.getID());
+                javax.swing.JOptionPane.showMessageDialog(null, "Demote from admin Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                fillList();
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
         }
     }//GEN-LAST:event_demoteAdminActionPerformed
 
     private void removeMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMemberActionPerformed
         if (user == null) {
-            if (user == null) {
-                JOptionPane.showMessageDialog(this,
-                        "User or Newsfeed data is missing. Please log in again.",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int index = membersList.getSelectedIndex();
+            if (members.get(index).getID() == group.getCreatorID()) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Creator cannot be removed!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            try {
-                int index = membersList.getSelectedIndex();
-                if (members.get(index).getID() == group.getCreatorID()) {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Creator cannot be removed!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                if (members.get(index).getID() == group.getCreatorID()) {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Creator cannot be removed!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                if (index >= 0) {
-                    GroupAuthorityManager.removeMember(group.getID(), members.get(index).getID(), user.getID());
-                    GroupAuthorityManager.removeMember(group.getID(), members.get(index).getID(), user.getID());
-                    javax.swing.JOptionPane.showMessageDialog(null, "Remove member Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                    fillList();
-                }
-            } catch (Exception e) {
-                javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-
+            if (index >= 0) {
+                GroupAuthorityManager.removeMember(group.getID(), members.get(index).getID(), user.getID());
+                javax.swing.JOptionPane.showMessageDialog(null, "Remove member Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                fillList();
             }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
         }
     }//GEN-LAST:event_removeMemberActionPerformed
 
     private void postsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postsActionPerformed
         if (user == null) {
-            if (user == null) {
-                JOptionPane.showMessageDialog(this,
-                        "User or Newsfeed data is missing. Please log in again.",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
         }
         try {
             GroupPosts groupPosts = new GroupPosts(group, user, this);
@@ -519,81 +462,63 @@ public class GroupProfile extends javax.swing.JFrame {
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
 
+        }
     }//GEN-LAST:event_postsActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if (user == null) {
-            if (user == null) {
-                JOptionPane.showMessageDialog(this,
-                        "User or Newsfeed data is missing. Please log in again.",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            if (search == null) {
+                groupList.setVisible(true);
+                groupList.setLocationRelativeTo(null);
+                setVisible(false);
+            } else {
+                search.setVisible(true);
+                search.setLocationRelativeTo(null);
+                setVisible(false);
             }
-            try {
-                if (search == null) {
-                    groupList.setVisible(true);
-                    groupList.setLocationRelativeTo(null);
-                    setVisible(false);
-                } else {
-                    search.setVisible(true);
-                    search.setLocationRelativeTo(null);
-                    setVisible(false);
-                }
-                if (search == null) {
-                    groupList.setVisible(true);
-                    groupList.setLocationRelativeTo(null);
-                    setVisible(false);
-                } else {
-                    search.setVisible(true);
-                    search.setLocationRelativeTo(null);
-                    setVisible(false);
-                }
 
-            } catch (Exception e) {
-                javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
-            }
         }
     }//GEN-LAST:event_formWindowClosing
 
     private void deleteGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteGroupActionPerformed
         if (user == null) {
-            if (user == null) {
-                JOptionPane.showMessageDialog(this,
-                        "User or Newsfeed data is missing. Please log in again.",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            try {
-                GroupAuthorityManager.deleteGroup(group.getID(), user.getID());
-                javax.swing.JOptionPane.showMessageDialog(null, "Delete group Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                groupList.setVisible(true);
-                GroupAuthorityManager.deleteGroup(group.getID(), user.getID());
-                javax.swing.JOptionPane.showMessageDialog(null, "Delete group Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                groupList.setVisible(true);
-                groupList.setLocationRelativeTo(null);
-                setVisible(false);
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            GroupAuthorityManager.deleteGroup(group.getID(), user.getID());
+            javax.swing.JOptionPane.showMessageDialog(null, "Delete group Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            groupList.setVisible(true);
+            groupList.setLocationRelativeTo(null);
+            setVisible(false);
 
-            } catch (Exception e) {
-                javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
-            }
         }
     }//GEN-LAST:event_deleteGroupActionPerformed
 
     private void membershipRequestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_membershipRequestsActionPerformed
         if (user == null) {
-            if (user == null) {
-                JOptionPane.showMessageDialog(this,
-                        "User or Newsfeed data is missing. Please log in again.",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
         }
         try {
             MembershipRequests membershipRequests = new MembershipRequests(group, this, user);
@@ -610,6 +535,7 @@ public class GroupProfile extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton addAdmin;
     private javax.swing.JLabel coverPhoto;
