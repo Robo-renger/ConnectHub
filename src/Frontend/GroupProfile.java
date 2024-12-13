@@ -9,6 +9,7 @@ import connecthub.controllers.GroupController;
 import connecthub.entities.Group;
 import connecthub.entities.User;
 import connecthub.mappers.UserMapper;
+import java.awt.HeadlessException;
 import java.awt.Image;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,56 @@ public class GroupProfile extends javax.swing.JFrame {
     GroupsList groupList;
     Search search;
     List<User> members;
+    Newsfeed newsFeed;
+
+    public GroupProfile(Group group, User user, Newsfeed newsFeed) {
+        initComponents();
+
+        if (group == null || user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Error initializing profile: User or profile data is missing.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        this.group = group;
+        this.user = user;
+        this.newsFeed = newsFeed;
+        this.search = null;
+        groupList = null;
+        // Set user cover photo
+        ImageIcon cover = new ImageIcon(group.getImagePath());
+        Image coverImg = cover.getImage();
+        Image scaledImg2 = coverImg.getScaledInstance(coverPhoto.getWidth(), coverPhoto.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon coverScaledIcon = new ImageIcon(scaledImg2);
+
+        coverPhoto.setIcon(coverScaledIcon);
+
+        name.setText(group.getName());
+        description.setText(group.getDescription());
+        if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Member")) {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+            removeMember.setVisible(false);
+            membershipRequests.setVisible(false);
+        } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Admin")) {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+        } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("Creator")) {
+        } else if (GroupAuthorityManager.validateRole(group.getID(), user.getID()).equals("NotJoined")) {
+            addAdmin.setVisible(false);
+            demoteAdmin.setVisible(false);
+            deleteGroup.setVisible(false);
+            removeMember.setVisible(false);
+            membershipRequests.setVisible(false);
+            leave.setVisible(false);
+            posts.setVisible(false);
+        }
+        fillList();
+    }
 
     public GroupProfile(Group group, User user, GroupsList groupList) {
         initComponents();
@@ -44,6 +95,7 @@ public class GroupProfile extends javax.swing.JFrame {
 
         this.group = group;
         this.user = user;
+        this.newsFeed = null;
         this.groupList = groupList;
         search = null;
         // Set user cover photo
@@ -98,7 +150,6 @@ public class GroupProfile extends javax.swing.JFrame {
 //        leave.setVisible(true);
 //        posts.setVisible(true);
 //    }
-
     public GroupProfile(Group group, User user, Search search) {
         initComponents();
 
@@ -112,6 +163,7 @@ public class GroupProfile extends javax.swing.JFrame {
 
         this.group = group;
         this.user = user;
+        this.newsFeed = null;
         this.search = search;
         groupList = null;
         // Set user cover photo
@@ -150,17 +202,11 @@ public class GroupProfile extends javax.swing.JFrame {
     private void fillList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         members = GroupController.getJoinedMembers(group.getID());
+
         for (User user : members) {
             listModel.addElement(user.getUsername());
         }
-//        Optional<User> user = UserMapper.get(group.getCreatorID());
-//        if (user.isPresent()) {
-//            User foundUser = user.get();
-//            members.add(foundUser);
-//            listModel.addElement(foundUser.getUsername());
-//        }
         membersList.setModel(listModel);
-
     }
 
     /**
@@ -360,11 +406,15 @@ public class GroupProfile extends javax.swing.JFrame {
             } else {
                 GroupController.leave(group.getID(), user.getID());
                 javax.swing.JOptionPane.showMessageDialog(null, "Left successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                groupList.setVisible(true);
-                groupList.setLocationRelativeTo(null);
-                setVisible(false);
+                if (groupList != null) {
+
+                    groupList.setVisible(true);
+                    groupList.setLocationRelativeTo(null);
+                    setVisible(false);
+                }
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
@@ -475,13 +525,17 @@ public class GroupProfile extends javax.swing.JFrame {
             return;
         }
         try {
-            if (search == null) {
+            if (search == null && newsFeed == null) {
                 groupList.setVisible(true);
                 groupList.setLocationRelativeTo(null);
                 setVisible(false);
-            } else {
+            } else if (groupList == null && newsFeed == null) {
                 search.setVisible(true);
                 search.setLocationRelativeTo(null);
+                setVisible(false);
+            } else if (search == null && groupList == null) {
+                newsFeed.setVisible(true);
+                newsFeed.setLocationRelativeTo(null);
                 setVisible(false);
             }
 

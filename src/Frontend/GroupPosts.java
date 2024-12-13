@@ -281,7 +281,7 @@ public class GroupPosts extends javax.swing.JFrame {
                 deletePost.setVisible(true);
             }
             if (index >= 0) {
-                PostGroupMapper.delete(posts.get(index).getID());
+                GroupAuthorityManager.deletePost(posts.get(index), user.getID());
                 javax.swing.JOptionPane.showMessageDialog(null, "Deleted successfully!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 fillList();
             }

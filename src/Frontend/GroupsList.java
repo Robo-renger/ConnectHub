@@ -8,6 +8,9 @@ import connecthub.controllers.GroupController;
 import connecthub.entities.Group;
 import connecthub.entities.User;
 import connecthub.mappers.GroupMapper;
+import connecthub.mappers.NotificationMapper;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -31,6 +34,18 @@ public class GroupsList extends javax.swing.JFrame {
         this.user = user;
         this.group = group;
         fillList();
+        this.addWindowFocusListener(new WindowFocusListener() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                // Refetch notifications and reload them
+                fillList();
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+                // Do nothing when the window loses focus
+            }
+        });
     }
 
     private void fillList() {

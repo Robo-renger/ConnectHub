@@ -1,5 +1,6 @@
 package Frontend;
 
+import connecthub.GroupAuthorityManager;
 import connecthub.entities.Group;
 import connecthub.entities.Post;
 import connecthub.entities.PostGroup;
@@ -150,7 +151,7 @@ public class AddGroupPost extends javax.swing.JFrame {
 
             PostGroup postGroup = new PostGroup(user.getID(),group.getID(), content.getText().trim(),
                     selectedFile != null ? selectedFile.getAbsolutePath() : null);
-            PostGroupMapper.create(postGroup);
+            GroupAuthorityManager.addPost(postGroup, user.getID());
 
             javax.swing.JOptionPane.showMessageDialog(
                     null,
