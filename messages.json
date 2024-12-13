@@ -1,0 +1,55 @@
+[ {
+  "id" : 1,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 13, 20, 31, 59, 695843600 ],
+  "status" : "seen",
+  "content" : "Hello my friend",
+  "type" : "Message"
+}, {
+  "id" : 2,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 13, 20, 35, 7, 643599100 ],
+  "status" : "seen",
+  "content" : "Heyyy",
+  "type" : "Message"
+}, {
+  "id" : 3,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 13, 20, 37, 9, 304148700 ],
+  "status" : "seen",
+  "content" : "IIII",
+  "type" : "Message"
+}, {
+  "id" : 4,
+  "senderId" : 2,
+  "recieverId" : 1,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 13, 20, 38, 28, 148846400 ],
+  "status" : "seen",
+  "content" : "Heyyyyyyyy",
+  "type" : "Message"
+}, {
+  "id" : 5,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 13, 20, 42, 19, 376567200 ],
+  "status" : "seen",
+  "content" : "errrrrr",
+  "type" : "Message"
+}, {
+  "id" : 6,
+  "senderId" : 1,
+  "recieverId" : 2,
+  "chatId" : 1,
+  "date" : [ 2024, 12, 13, 20, 52, 3, 70790800 ],
+  "status" : "seen",
+  "content" : "dude",
+  "type" : "Message"
+} ]

@@ -4,7 +4,9 @@
  */
 package Frontend;
 
+import connecthub.DataBaseManager;
 import connecthub.GroupAuthorityManager;
+import connecthub.NotificationManager;
 import connecthub.controllers.GroupController;
 import connecthub.entities.Comment;
 import connecthub.entities.Group;
@@ -12,6 +14,7 @@ import connecthub.entities.Post;
 import connecthub.mappers.CommentMapper;
 import connecthub.entities.PostGroup;
 import connecthub.entities.User;
+import connecthub.mappers.ContentMapper;
 import connecthub.mappers.PostGroupMapper;
 import static java.util.Collections.list;
 import java.util.List;
@@ -371,6 +374,8 @@ public class GroupPosts extends javax.swing.JFrame {
                 if (liked == false) {
                     selectedPost.like();
                     liked = true;
+                    NotificationManager notificationManager = new NotificationManager();
+                    notificationManager.sendNotification(selectedPost.getAuthorId(), "Like", "You have a new like on your post " + selectedPost.getAuthorId());
                     JOptionPane.showMessageDialog(this,
                             "You have liked this post!",
                             "Information",

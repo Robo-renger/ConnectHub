@@ -1,22 +1,22 @@
 [ {
-  "id" : 2,
-  "recepientID" : 1,
-  "notificationType" : "Friend request accepted",
-  "message" : "Your friend request has been accepted by User 2",
-  "read" : true,
-  "type" : "Notification"
-}, {
-  "id" : 3,
-  "recepientID" : 1,
-  "notificationType" : "Promoted to an admin",
-  "message" : "You have been promoted to an admin in group 2",
-  "read" : false,
-  "type" : "Notification"
-}, {
   "id" : 1,
   "recepientID" : 4,
   "notificationType" : "Chat",
   "message" : "You have a new message!",
+  "read" : true,
+  "type" : "Notification"
+}, {
+  "id" : 3,
+  "recepientID" : 2,
+  "notificationType" : "Chat",
+  "message" : "You have a new message from 1",
+  "read" : true,
+  "type" : "Notification"
+}, {
+  "id" : 4,
+  "recepientID" : 2,
+  "notificationType" : "Chat",
+  "message" : "You have a new message from 1",
   "read" : true,
   "type" : "Notification"
 }, {
