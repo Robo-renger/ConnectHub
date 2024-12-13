@@ -12,17 +12,21 @@ import connecthub.entities.Friend;
 import connecthub.entities.Group;
 import connecthub.entities.User;
 import connecthub.entities.UserGroup;
+import connecthub.exceptions.InvalidDataException;
 import connecthub.mappers.UserGroupMapper;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 public class Search extends javax.swing.JFrame {
-    
+
     User u;
     List<User> users;
     List<Group> groups;
-    
+    List<Object> entities = new ArrayList<>();
+
     public Search(User u) {
         initComponents();
         this.u = u;
@@ -30,7 +34,7 @@ public class Search extends javax.swing.JFrame {
         join.setVisible(false);
         initListSelectionListener();
     }
-    
+
     private void fillList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         for (User user : users) {
@@ -45,10 +49,10 @@ public class Search extends javax.swing.JFrame {
         }
         list.setModel(listModel);
     }
-    
+
     private void onListSelectionChanged(javax.swing.event.ListSelectionEvent evt) {
         String selectedValue = list.getSelectedValue();
-        
+
         if (selectedValue != null) {
             // Check if the selected item is a User or Group
             boolean isUserSelected = false;
@@ -82,7 +86,7 @@ public class Search extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void initListSelectionListener() {
         list.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -90,7 +94,7 @@ public class Search extends javax.swing.JFrame {
             }
         });
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -204,6 +208,7 @@ public class Search extends javax.swing.JFrame {
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
         try {
+            entities = new ArrayList<>();
             if (!name.getText().isEmpty()) {
                 users = FriendController.searchUsers(name.getText());
                 groups = GroupController.search(name.getText());
@@ -211,35 +216,44 @@ public class Search extends javax.swing.JFrame {
                     System.out.println("USER");
                     System.out.println(user);
                 }
-//                System.out.println(name.getText());
+                for (User user : users) {
+                    entities.add(user);
+                }
+
+                for (Group group : groups) {
+                    entities.add(group);
+                }
                 fillList();
             }
-            
+
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            
+
         }
     }//GEN-LAST:event_searchActionPerformed
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         try {
-            for (User user : users) {
-                if (list.getSelectedValue().equals(user)) {
-                }
-            }
+
             List<User> friends = FriendController.getAllFriends(u.getID());
-            for (User friend : friends) {
-                if (users.get(list.getSelectedIndex()).getID() == (friend.getID())) {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Already friend!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    return;
+            if (entities.get(list.getSelectedIndex()) instanceof User) {
+                User optUser = (User) entities.get(list.getSelectedIndex());
+                for (User friend : friends) {
+                    if (optUser.getID() == (friend.getID())) {
+                        javax.swing.JOptionPane.showMessageDialog(null, "Already friend!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                 }
+                FriendsManager.sendFriendRequest(u.getID(), optUser.getID());
+                fillList();
+                javax.swing.JOptionPane.showMessageDialog(null, "Added Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            } else {
             }
-            FriendsManager.sendFriendRequest(u.getID(), users.get(list.getSelectedIndex()).getID());
-            fillList();
-            javax.swing.JOptionPane.showMessageDialog(null, "Added Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            
+
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            System.out.println(e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_addActionPerformed
 
@@ -252,23 +266,35 @@ public class Search extends javax.swing.JFrame {
             return;
         }
         try {
-            
+
             FrontProfile f = FrontProfile.getInstanceOf();
             f.setVisible(true);
             f.setLocation(null);
             setVisible(false);
         } catch (Exception e) {
-            
+
         }
     }//GEN-LAST:event_formWindowClosing
 
     private void joinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinActionPerformed
         try {
-            int index = list.getSelectedIndex();
-            System.out.println(index);
+            List<Group> userGroups = GroupController.joinedGroups(u.getID());
+            if (entities.get(list.getSelectedIndex()) instanceof Group) {
+                Group optGroup = (Group) entities.get(list.getSelectedIndex());
+                for (Group userGroup : userGroups) {
+                    if (optGroup.getID() == userGroup.getID() || optGroup.getCreatorID() == u.getID()) {
+                        javax.swing.JOptionPane.showMessageDialog(null, "Already Joined!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+                GroupAuthorityManager.sendMembershipRequest(optGroup.getID(), u.getID());
+                javax.swing.JOptionPane.showMessageDialog(null, "Joined Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+            }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            
+
         }
 
     }//GEN-LAST:event_joinActionPerformed

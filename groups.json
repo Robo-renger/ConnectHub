@@ -12,4 +12,11 @@
   "imagePath" : "src/assets/default-group.png",
   "description" : "alooo",
   "type" : "Group"
+}, {
+  "id" : 9,
+  "creatorID" : 2,
+  "name" : "test",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "asd",
+  "type" : "Group"
 } ]

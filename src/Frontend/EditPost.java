@@ -4,8 +4,10 @@
  */
 package Frontend;
 
+import connecthub.GroupAuthorityManager;
 import connecthub.entities.PostGroup;
 import connecthub.entities.User;
+import connecthub.mappers.PostGroupMapper;
 import java.awt.Image;
 import java.io.File;
 import javax.swing.ImageIcon;
@@ -24,11 +26,12 @@ public class EditPost extends javax.swing.JFrame {
     PostGroup groupPost;
     User user;
     GroupPosts groupPosts;
-    public EditPost(PostGroup groupPost,GroupPosts groupPosts,User user) {
+
+    public EditPost(PostGroup groupPost, GroupPosts groupPosts, User user) {
         initComponents();
-        this.groupPost=groupPost;
-        this.groupPosts=groupPosts;
-        this.user=user;
+        this.groupPost = groupPost;
+        this.groupPosts = groupPosts;
+        this.user = user;
     }
 
     /**
@@ -151,11 +154,16 @@ public class EditPost extends javax.swing.JFrame {
                 photo.setIcon(scaledIcon);
             }
 
-           groupPost.setContent(content.getText());
-           if(selectedFile.getAbsolutePath()==null)
-           groupPost.setImagePath("");
-            if(selectedFile.getAbsolutePath()!=null)
-           groupPost.setImagePath(selectedFile.getAbsolutePath());
+            groupPost.setContent(content.getText());
+            if (selectedFile == null) {
+                groupPost.setImagePath("");
+            }
+            if (selectedFile != null) {
+                if (selectedFile.getAbsolutePath() != null) {
+                    groupPost.setImagePath(selectedFile.getAbsolutePath());
+                }
+            }
+            GroupAuthorityManager.editPost(groupPost, user.getID());
             javax.swing.JOptionPane.showMessageDialog(
                     null,
                     "Post edited successfully!",
@@ -171,12 +179,12 @@ public class EditPost extends javax.swing.JFrame {
             );
             e.printStackTrace();
         }
-     
-        
+
+
     }//GEN-LAST:event_editActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (groupPost == null || user == null|| groupPosts==null) {
+        if (groupPost == null || user == null || groupPosts == null) {
             JOptionPane.showMessageDialog(this,
                     "User or groupPosts or group data is missing. Please log in again.",
                     "Error",
@@ -184,14 +192,13 @@ public class EditPost extends javax.swing.JFrame {
             return;
         }
         groupPosts.setVisible(true);
-       groupPosts.setLocationRelativeTo(null); // Center the window
+        groupPosts.setLocationRelativeTo(null); // Center the window
         setVisible(false);
     }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea content;
