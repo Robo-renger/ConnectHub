@@ -19,4 +19,25 @@
   "message" : "You have a new message from 1",
   "read" : true,
   "type" : "Notification"
+}, {
+  "id" : 6,
+  "recepientID" : 1,
+  "notificationType" : "Friend request accepted",
+  "message" : "Your friend request has been accepted by User 3",
+  "read" : true,
+  "type" : "Notification"
+}, {
+  "id" : 5,
+  "recepientID" : 3,
+  "notificationType" : "FriendRequest",
+  "message" : "You have a new friend request from User 1",
+  "read" : true,
+  "type" : "Notification"
+}, {
+  "id" : 7,
+  "recepientID" : 3,
+  "notificationType" : "Group",
+  "message" : "A new post has been added to group 5",
+  "read" : true,
+  "type" : "Notification"
 } ]

@@ -14,6 +14,7 @@ import connecthub.entities.Profile;
 import connecthub.entities.User;
 import connecthub.interfaces.Observer;
 import connecthub.mappers.ContentMapper;
+import connecthub.mappers.GroupMapper;
 import connecthub.mappers.NotificationMapper;
 import connecthub.mappers.ProfileMapper;
 import connecthub.mappers.UserMapper;
@@ -33,6 +34,7 @@ public class Newsfeed extends javax.swing.JFrame implements Observer{
     Profile p;
     List<Content> allStories;
     List<Content> allPosts;
+    List<Notification> notificationList; 
 
     NotificationManager notificationManager = new NotificationManager();
     NotificationService notificationService = new NotificationService(notificationManager);
@@ -55,6 +57,7 @@ public class Newsfeed extends javax.swing.JFrame implements Observer{
             }
         }
         
+        notificationList = NotificationMapper.getAllForRecipient(u.getID());
         loadNotifications();
         notificationManager.addObserver(this);
         notificationService.start();
@@ -68,7 +71,6 @@ public class Newsfeed extends javax.swing.JFrame implements Observer{
     
     private void loadNotifications() {
         // Fetch all notifications from the database
-        List<Notification> notificationList = NotificationMapper.getAllForRecipient(u.getID());
 
         // Display the notifications in the notifications list
         DefaultListModel<String> notificationListModel = new DefaultListModel<>();
@@ -357,7 +359,8 @@ public class Newsfeed extends javax.swing.JFrame implements Observer{
         try {
             int i = Posts.getSelectedIndex(); // Get the selected index of Posts
             int j = Stories.getSelectedIndex(); // Get the selected index of Stories
-
+            int n = notifications.getSelectedIndex();
+            
             // Check if a story is selected
             if (j >= 0) {
                 // Ensure a valid story is selected
@@ -372,7 +375,47 @@ public class Newsfeed extends javax.swing.JFrame implements Observer{
                 s.setVisible(true); // Show the content
                 s.setLocationRelativeTo(null); // Center the window
                 setVisible(false); // Hide the current window
-            } else {
+            }else if (n >= 0) {
+                // Check if a post is selected
+                Notification selectedNotification = notificationList.get(n);
+                if(selectedNotification.getNotificationType().equalsIgnoreCase("Friend request accepted"))
+                {
+                    FriendsList child = new FriendsList(u, this);
+                    child.setVisible(true);
+                    child.setLocationRelativeTo(null);
+                    setVisible(false);
+                }else if(selectedNotification.getNotificationType().equalsIgnoreCase("FriendRequest"))
+                {
+                    FriendsRequest friendsRequest = new FriendsRequest(u, this);
+                    friendsRequest.setVisible(true);
+                    friendsRequest.setLocationRelativeTo(null);
+                    setVisible(false);
+                }else if(selectedNotification.getNotificationType().equalsIgnoreCase("Group"))
+                {
+                    String message = selectedNotification.getMessage();
+                    int lastSpaceIndex = message.lastIndexOf(" ");
+                    int groupID = -1;
+
+                    if (lastSpaceIndex != -1) {
+                        String groupIdString = message.substring(lastSpaceIndex + 1);
+                        try {
+                            // Try to parse the groupID as an integer
+                            groupID = Integer.parseInt(groupIdString);
+                            System.out.println("Extracted groupID: " + groupID);
+                        } catch (NumberFormatException e) {
+                            System.err.println("Failed to parse groupID: " + e.getMessage());
+                        }
+                    } else {
+                        System.err.println("Message format is incorrect.");
+                    }
+                    GroupProfile groupProfile = new GroupProfile(GroupMapper.get(groupID).get(), u, this);
+                    groupProfile.setVisible(true);
+                    groupProfile.setLocationRelativeTo(null);
+                    setVisible(false);
+                }
+            }
+            
+            else {
                 javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
 
@@ -380,8 +423,6 @@ public class Newsfeed extends javax.swing.JFrame implements Observer{
             System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-
-
     }//GEN-LAST:event_viewActionPerformed
 
     /**

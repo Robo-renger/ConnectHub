@@ -42,7 +42,7 @@ public class GroupAuthorityManager {
         userGroup.setRole("ADMIN");
         UserGroupMapper.update(userGroup.getID(), userGroup);
 
-        notificationManager.sendNotification(userID, "Promotion to admin", "You have been promoted to Admin in group " + groupID);
+        notificationManager.sendNotification(userID, "Group", "You have been promoted to Admin in group " + groupID);
         System.out.println("User " + userID + " has been promoted to Admin in group " + groupID);
     }
 
@@ -68,7 +68,7 @@ public class GroupAuthorityManager {
         userGroup.setRole("MEMBER");
         UserGroupMapper.update(userGroup.getID(), userGroup);
 
-        notificationManager.sendNotification(userID, "Demotion from Admin", "You have been demoted to Member in group " + groupID);
+        notificationManager.sendNotification(userID, "Group", "You have been demoted to Member in group " + groupID);
         System.out.println("User " + userID + " has been demoted to Member in group " + groupID);
     }
 
@@ -110,7 +110,7 @@ public class GroupAuthorityManager {
         // Remove the request from the database
         MembershipRequestMapper.delete(request.getID());
 
-        notificationManager.sendNotification(request.getUserID(), "UserGroup", "Your membership request to group " + request.getGroupID() + " has been accepted");
+        notificationManager.sendNotification(request.getUserID(), "Group", "Your membership request approved in group " + request.getGroupID());
         System.out.println("Membership request for user " + request.getUserID() + " to group " + request.getGroupID() + " has been accepted");
     }
 
@@ -201,7 +201,7 @@ public class GroupAuthorityManager {
             List<User> groubMembers = GroupController.getJoinedMembers(postGroup.getGroupID());
             for (User member : groubMembers) {
                 if (member.getID() != postGroup.getAuthorId()) {
-                    notificationManager.sendNotification(member.getID(), "PostGroup", "A new post has been added to group " + postGroup.getGroupID());
+                    notificationManager.sendNotification(member.getID(), "Group", "A new post has been added to group " + postGroup.getGroupID());
                 }
             }
         }
