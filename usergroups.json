@@ -15,9 +15,9 @@
 }, {
   "id" : 3,
   "userID" : 1,
-  "groupID" : 2,
+  "groupID" : 8,
   "status" : "joined",
-  "role" : "MEMBER",
+  "role" : "ADMIN",
   "type" : "UserGroup"
 }, {
   "id" : 4,

@@ -133,6 +133,7 @@ public class GroupAuthorityManager {
             System.out.println("Membership request for user " + request.getUserID() + " to group " + request.getGroupID() + " has been declined");
         } else {
             System.out.println("Failed to decline membership request for user " + request.getUserID() + " to group " + request.getGroupID());
+        }
     }
 
     public static void removeMember(int groupID, int userID, int callerID) {
@@ -221,8 +222,9 @@ public class GroupAuthorityManager {
         Optional<UserGroup> optionalUserGroup = UserGroupMapper.get(updatedPostGroup.getGroupID(), updatedPostGroup.getAuthorId());
         if (optionalUserGroup.isPresent() || callerID == GroupMapper.get(updatedPostGroup.getGroupID()).get().getCreatorID()) {
             PostGroupMapper.update(updatedPostGroup.getID(), updatedPostGroup);
-        else
+        } else {
             throw new InvalidDataException("The user and the group are not related");
+        }
     }
 
     public static void deletePost(PostGroup postGroup, int callerID) {
@@ -238,8 +240,9 @@ public class GroupAuthorityManager {
         Optional<UserGroup> optionalUserGroup = UserGroupMapper.get(postGroup.getGroupID(), postGroup.getAuthorId());
         if (optionalUserGroup.isPresent() || callerID == GroupMapper.get(postGroup.getGroupID()).get().getCreatorID()) {
             PostGroupMapper.delete(postGroup.getID());
-        else
+        } else {
             throw new InvalidDataException("The user and the group are not related");
+        }
     }
 
     public static String validateRole(int groupID, int id) {
@@ -264,8 +267,9 @@ public class GroupAuthorityManager {
             } else {
                 throw new InvalidDataException("Invalid role");
             }
-        } else
+        } else {
             return "";
+        }
     }
 
 }
