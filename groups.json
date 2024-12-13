@@ -26,4 +26,11 @@
   "imagePath" : "src/assets/default-group.png",
   "description" : "hereee",
   "type" : "Group"
+}, {
+  "id" : 4,
+  "creatorID" : 5,
+  "name" : "zerbewelnew",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "zerbewzzz",
+  "type" : "Group"
 } ]

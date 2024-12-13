@@ -3,6 +3,7 @@ package connecthub.entities;
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import connecthub.interfaces.Identifiable;
+import connecthub.mappers.UserGroupMapper;
 
 @JsonTypeName("Group")
 public class Group implements Identifiable {
@@ -19,14 +20,16 @@ public class Group implements Identifiable {
     public Group() {
     }
 
-    public Group(String name, String description, String imagePath, int creatorID) {
+    public Group(int creatorID, String name, String description, String imagePath) {
+        this.creatorID = creatorID;
         this.name = name;
         this.creatorID = creatorID;
         this.description = description;
         setImagePath(imagePath);
     }
 
-    public Group(String name, String description, int creatorID) {
+    public Group(int creatorID, String name, String description) {
+        this.creatorID = creatorID;
         this.name = name;
         this.creatorID = creatorID;
         this.description = description;
@@ -83,6 +86,16 @@ public class Group implements Identifiable {
 
     public void setDescription(String data) {
         description = data;
+    }
+    
+    public void creatorGroup()
+    {
+        if(id != 0)
+        {
+            UserGroup creatorGroup = new UserGroup(id, creatorID);
+            creatorGroup.setRole("CREATOR");
+            UserGroupMapper.create(creatorGroup);
+        }
     }
 
     @Override

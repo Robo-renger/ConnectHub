@@ -306,8 +306,8 @@ public class Search extends javax.swing.JFrame {
         try {
             entities = new ArrayList<>();
             if (!name.getText().isEmpty()) {
-                users = FriendController.searchUsers(name.getText());
-                groups = GroupController.search(name.getText());
+                users = FriendController.searchUsers(name.getText(), u.getID());
+                groups=GroupController.search(name.getText());
                 for (User user : users) {
                     System.out.println("USER");
                     System.out.println(user);

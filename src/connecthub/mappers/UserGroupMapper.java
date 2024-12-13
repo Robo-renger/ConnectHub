@@ -41,7 +41,7 @@ public class UserGroupMapper {
         }
     }
     
-    // Retrieve all UserGroup entities by groupID
+    // Retrieve all UserGroup entities by UserID
     public static List<UserGroup> getAllMembers(int userGroupID) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
