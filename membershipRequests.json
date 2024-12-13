@@ -4,8 +4,7 @@
   "groupID" : 8,
   "status" : "PENDING",
   "type" : "MembershipRequest"
-} ]
-[ {
+} ,{
   "id" : 3,
   "userID" : 7,
   "groupID" : 2,
