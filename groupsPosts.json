@@ -6,7 +6,9 @@
   "imagePath" : null,
   "timestamp" : [ 2024, 12, 13, 16, 50, 47, 690294700 ],
   "expired" : false,
-  "type" : "PostGroup"
+  "type" : "PostGroup",
+  "likesCount" : 0,
+  "commentsCount" : 0
 }, {
   "id" : 1,
   "authorId" : 2,
@@ -15,5 +17,18 @@
   "imagePath" : "",
   "timestamp" : [ 2024, 12, 13, 16, 31, 0, 395578000 ],
   "expired" : false,
-  "type" : "PostGroup"
+  "type" : "PostGroup",
+  "likesCount" : 0,
+  "commentsCount" : 0
+}, {
+  "id" : 3,
+  "authorId" : 1,
+  "groupID" : 6,
+  "content" : "test post",
+  "imagePath" : "C:\\Users\\User\\Pictures\\Screenshots\\Screenshot 2023-03-03 001313.png",
+  "timestamp" : [ 2024, 12, 13, 20, 6, 32, 288382300 ],
+  "expired" : false,
+  "type" : "PostGroup",
+  "likesCount" : 0,
+  "commentsCount" : 0
 } ]
