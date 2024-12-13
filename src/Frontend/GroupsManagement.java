@@ -134,9 +134,9 @@ public class GroupsManagement extends javax.swing.JFrame {
         }
         try {
 
-            CreateGroup createGroup = new CreateGroup(user,this);
-            createGroup.setVisible(true);
-            createGroup.setLocationRelativeTo(null);
+            CreateGroup creationGroup = new CreateGroup(user,this);
+            creationGroup.setVisible(true);
+            creationGroup.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -154,12 +154,6 @@ public class GroupsManagement extends javax.swing.JFrame {
             return;
         }
         try {
-             groups = GroupController.suggestGroups(user.getID());
-
-            if (groups == null || groups.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No group to suggest.", "Info", JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
 
             GroupSuggestion groupSuggestion = new GroupSuggestion(user,this);
             groupSuggestion.setVisible(true);
@@ -182,6 +176,7 @@ public class GroupsManagement extends javax.swing.JFrame {
         try {
 
             FrontProfile f = FrontProfile.getInstanceOf();
+            f.handleButtonsTrue();
             f.setVisible(true);
             f.setLocationRelativeTo(null);
             setVisible(false);

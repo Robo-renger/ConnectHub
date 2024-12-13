@@ -1,19 +1,19 @@
 [ {
-  "id" : 1,
-  "authorId" : 2,
-  "groupID" : 9,
-  "content" : "\n\n\n\n\n\nasdasd",
-  "imagePath" : "C:\\Users\\User\\Pictures\\Screenshots\\Screenshot 2023-03-01 173745.png",
-  "timestamp" : [ 2024, 12, 13, 4, 27, 29, 320830300 ],
+  "id" : 2,
+  "authorId" : 1,
+  "groupID" : 1,
+  "content" : "creator post",
+  "imagePath" : null,
+  "timestamp" : [ 2024, 12, 13, 16, 50, 47, 690294700 ],
   "expired" : false,
   "type" : "PostGroup"
 }, {
-  "id" : 3,
+  "id" : 1,
   "authorId" : 2,
-  "groupID" : 8,
-  "content" : "\n\n\n\n\n\nqwe",
+  "groupID" : 1,
+  "content" : "\n\n\n\nuser 2 post",
   "imagePath" : "",
-  "timestamp" : [ 2024, 12, 13, 5, 9, 12, 580968100 ],
+  "timestamp" : [ 2024, 12, 13, 16, 31, 0, 395578000 ],
   "expired" : false,
   "type" : "PostGroup"
 } ]

@@ -24,11 +24,11 @@ public class CreateGroup extends javax.swing.JFrame {
      */
     User user;
     GroupsManagement group;
-    
-    public CreateGroup(User user,GroupsManagement group) {
+
+    public CreateGroup(User user, GroupsManagement group) {
         initComponents();
-        this.user=user;
-        this.group=group;
+        this.user = user;
+        this.group = group;
     }
 
     /**
@@ -135,13 +135,14 @@ public class CreateGroup extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
-          if (user == null) {
+        if (user == null) {
             JOptionPane.showMessageDialog(this,
                     "User or Newsfeed data is missing. Please log in again.",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
-        } try {
+        }
+        try {
             JFileChooser fileChooser = new JFileChooser();
             int returnValue = fileChooser.showOpenDialog(this);
 
@@ -169,8 +170,8 @@ public class CreateGroup extends javax.swing.JFrame {
                 photo.setIcon(scaledIcon);
             }
 
-            Group group = new Group(name.getText(), description.getText().trim(),
-                    selectedFile != null ? selectedFile.getAbsolutePath() : "", user.getID());
+            Group group = new Group(user.getID(), name.getText(), description.getText().trim(),
+                    selectedFile != null ? selectedFile.getAbsolutePath() : "");
             GroupMapper.create(group);
 
             javax.swing.JOptionPane.showMessageDialog(
@@ -189,7 +190,7 @@ public class CreateGroup extends javax.swing.JFrame {
             e.printStackTrace();
         }
 
-       
+
     }//GEN-LAST:event_createActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -208,13 +209,9 @@ public class CreateGroup extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
-        
+
     }//GEN-LAST:event_formWindowClosing
 
-    /**
-     * @param args the command line arguments
-     */
-   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton create;
     private javax.swing.JTextArea description;

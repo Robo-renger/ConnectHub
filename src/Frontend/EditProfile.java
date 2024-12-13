@@ -171,7 +171,8 @@ public class EditProfile extends javax.swing.JFrame {
         try {
             FrontProfile.front = null;
 
-            FrontProfile front = FrontProfile.getInstanceOf(u,p); // Pass the required arguments
+            FrontProfile front = FrontProfile.getInstanceOf(u,p);
+            front.handleButtonsTrue();// Pass the required arguments
             front.setVisible(true);
             front.setLocationRelativeTo(null); // Center the window
             setVisible(false); // Hide the current window

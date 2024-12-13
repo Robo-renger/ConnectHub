@@ -148,9 +148,9 @@ public class AddGroupPost extends javax.swing.JFrame {
                 photo.setIcon(scaledIcon);
             }
 
-            PostGroup post = new PostGroup(user.getID(),group.getID(), content.getText().trim(),
+            PostGroup postGroup = new PostGroup(user.getID(),group.getID(), content.getText().trim(),
                     selectedFile != null ? selectedFile.getAbsolutePath() : null);
-            PostGroupMapper.create(post);
+            PostGroupMapper.create(postGroup);
 
             javax.swing.JOptionPane.showMessageDialog(
                     null,
