@@ -12,4 +12,18 @@
   "message" : "Group 6 has been deleted by the creator",
   "read" : false,
   "type" : "Notification"
+}, {
+  "id" : 3,
+  "recepientID" : 4,
+  "notificationType" : "UserGroup",
+  "message" : "Your membership request to group 6 has been accepted",
+  "read" : false,
+  "type" : "Notification"
+}, {
+  "id" : 4,
+  "recepientID" : 3,
+  "notificationType" : "UserGroup",
+  "message" : "Your membership request to group 6 has been accepted",
+  "read" : false,
+  "type" : "Notification"
 } ]

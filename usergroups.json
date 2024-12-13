@@ -19,4 +19,18 @@
   "status" : "joined",
   "role" : "CREATOR",
   "type" : "UserGroup"
+}, {
+  "id" : 4,
+  "userID" : 4,
+  "groupID" : 6,
+  "status" : "left",
+  "role" : "MEMBER",
+  "type" : "UserGroup"
+}, {
+  "id" : 5,
+  "userID" : 3,
+  "groupID" : 6,
+  "status" : "left",
+  "role" : "MEMBER",
+  "type" : "UserGroup"
 } ]

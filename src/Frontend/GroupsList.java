@@ -174,9 +174,6 @@ public class GroupsList extends javax.swing.JFrame {
         try {
             int index = list.getSelectedIndex();
             if (index >= 0) {
-                System.out.println(groups.get(index));
-                System.out.println(user);
-                System.out.println(this);
                 GroupProfile group = new GroupProfile(groups.get(index), user, this);
                 group.setVisible(true);
                 group.setLocationRelativeTo(null);
