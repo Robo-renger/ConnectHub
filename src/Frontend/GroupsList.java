@@ -194,6 +194,7 @@ public class GroupsList extends javax.swing.JFrame {
             group.setLocationRelativeTo(null);
             setVisible(false);
         } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_formWindowClosing

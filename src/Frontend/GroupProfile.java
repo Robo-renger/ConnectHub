@@ -352,6 +352,10 @@ public class GroupProfile extends javax.swing.JFrame {
         }
         try {
             int index = membersList.getSelectedIndex();
+            if(members.get(index).getID()==group.getCreatorID())
+            {javax.swing.JOptionPane.showMessageDialog(null, "Creator cannot be removed!", "error", javax.swing.JOptionPane.ERROR_MESSAGE);
+             return;
+            } 
             if (index >= 0) {
                 GroupAuthorityManager.removeMember(group.getID(),members.get(index).getID(),user.getID());
                 javax.swing.JOptionPane.showMessageDialog(null, "Remove member Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -372,7 +376,7 @@ public class GroupProfile extends javax.swing.JFrame {
             return;
         }
         try {
-            GroupPosts groupPosts=new GroupPosts(group);
+            GroupPosts groupPosts=new GroupPosts(group,user,this);
             groupPosts.setVisible(true);
             groupPosts.setLocationRelativeTo(null);
             setVisible(false);
@@ -384,15 +388,63 @@ public class GroupProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_postsActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+         if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            groupList.setVisible(true);
+            groupList.setLocationRelativeTo(null);
+            setVisible(false);
+           
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_formWindowClosing
 
     private void deleteGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteGroupActionPerformed
-        // TODO add your handling code here:
+       if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+               GroupAuthorityManager.deleteGroup(group.getID(),user.getID());
+                javax.swing.JOptionPane.showMessageDialog(null, "Delete group Successfully!", "success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                groupList.setVisible(true);
+            groupList.setLocationRelativeTo(null);
+            setVisible(false);
+            
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_deleteGroupActionPerformed
 
     private void membershipRequestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_membershipRequestsActionPerformed
-        // TODO add your handling code here:
+       if (user == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User or Newsfeed data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            MembershipRequests membershipRequests=new MembershipRequests(group,this,user);
+            membershipRequests.setVisible(true);
+            membershipRequests.setLocationRelativeTo(null);
+            setVisible(false);
+           
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_membershipRequestsActionPerformed
 
     /**

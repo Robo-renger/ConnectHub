@@ -45,11 +45,6 @@ public class FriendSuggestion extends javax.swing.JFrame {
         try {
             friends = FriendController.suggestFriends(u.getID());
 
-            if (friends == null || friends.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No friends to suggest.", "Info", JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-
             for (User user : friends) {
                 listModel.addElement(user.getUsername());
             }
