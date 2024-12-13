@@ -2,6 +2,7 @@ package connecthub.mappers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import connecthub.DataBaseManager;
+import connecthub.NotificationManager;
 import connecthub.entities.Chat;
 import connecthub.entities.Friend;
 import connecthub.entities.Message;
@@ -26,6 +27,12 @@ public class MessageMapper {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             DataBaseManager.getDBM().createEntityWithID(message);
+            if(message.getStatus().equalsIgnoreCase("sent"))
+            {
+                DataBaseManager.getDBM().setDataBaseFile("notifications.json");
+                NotificationManager notificationManager = new NotificationManager();
+                notificationManager.sendNotification(message.getRecieverId(), "Chat", "You have a new message from " + message.getSenderId());
+            }
         } catch (IOException e) {
             System.out.println("Error adding message to the data base: " + e.getMessage());
         }
