@@ -5,6 +5,7 @@
 package Frontend;
 
 import connecthub.entities.Content;
+import connecthub.entities.PostGroup;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -12,14 +13,15 @@ import javax.swing.JOptionPane;
 
 public class ShowGroupPost extends javax.swing.JFrame {
 
-    Content x;
-
-    public ShowGroupPost(Content x, ViewPosts viewPost) {
-        if (x == null) {
+    PostGroup groupPost;
+    GroupPosts groupPosts;
+    public ShowGroupPost(PostGroup groupPost,GroupPosts groupPosts) {
+        if (groupPost == null) {
             JOptionPane.showMessageDialog(this, "No content to display.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        this.x = x;
+        this.groupPost = groupPost;
+        this.groupPosts=groupPosts;
         initComponents();
         initializeContent();
 //        System.out.println("ana 5alst");
@@ -29,14 +31,14 @@ public class ShowGroupPost extends javax.swing.JFrame {
 
     private void initializeContent() {
         // Set the text content
-        content.setText("<html><p style='width: 400px;'>" + x.getContent() + "</p></html>"); // Wrap text
+        content.setText("<html><p style='width: 400px;'>" + groupPost.getContent() + "</p></html>"); // Wrap text
         content.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         content.setPreferredSize(new Dimension(400, 120)); // Explicit size for content label
 
         // Set the image
-        if (x.getImagePath() != null && !x.getImagePath().isEmpty()) {
+        if (groupPost.getImagePath() != null && !groupPost.getImagePath().isEmpty()) {
             try {
-                ImageIcon originalIcon = new ImageIcon(x.getImagePath());
+                ImageIcon originalIcon = new ImageIcon(groupPost.getImagePath());
                 Image img = originalIcon.getImage();
 
                 // Resize the image to fit the label
@@ -103,7 +105,7 @@ public class ShowGroupPost extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (x == null) {
+        if (groupPost == null) {
             JOptionPane.showMessageDialog(this,
                     "User or Newsfeed data is missing. Please log in again.",
                     "Error",
@@ -111,7 +113,9 @@ public class ShowGroupPost extends javax.swing.JFrame {
             return;
         }
         try {
-
+          groupPosts.setVisible(true);
+          groupPosts.setLocationRelativeTo(null);
+          setVisible(false);
            
         } catch (Exception e) {
 

@@ -31,12 +31,6 @@ public class GroupSuggestion extends javax.swing.JFrame {
         DefaultListModel<String> listModel = new DefaultListModel<>();
 
         try {
-            groups = GroupController.suggestGroups(user.getID());
-
-            if (groups == null || groups.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No group to suggest.", "Info", JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
 
             for (Group group : groups) {
                 listModel.addElement(group.getName());

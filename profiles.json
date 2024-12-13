@@ -19,4 +19,18 @@
   "profilePhotoPath" : "src/assets/default-profile.png",
   "coverPhotoPath" : "src/assets/default-cover.jpg",
   "type" : "Profile"
+}, {
+  "id" : 4,
+  "userID" : 5,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
+}, {
+  "id" : 5,
+  "userID" : 6,
+  "bio" : "",
+  "profilePhotoPath" : "src/assets/default-profile.png",
+  "coverPhotoPath" : "src/assets/default-cover.jpg",
+  "type" : "Profile"
 } ]

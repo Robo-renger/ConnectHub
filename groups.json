@@ -40,4 +40,11 @@
   "imagePath" : "src/assets/default-group.png",
   "description" : "looll",
   "type" : "Group"
+}, {
+  "id" : 8,
+  "creatorID" : 1,
+  "name" : "alooo",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "alooo",
+  "type" : "Group"
 } ]

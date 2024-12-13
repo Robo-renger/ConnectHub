@@ -265,13 +265,8 @@ public class Newsfeed extends javax.swing.JFrame {
             return;
         }
 
-        System.out.println("POST WE USER");
-        System.out.println(u);
 
-        System.out.println("POST IDD");
-        System.out.println(p.getID()); // Debugging log for profile ID
-
-        AddGroupPost addPostWindow = new AddGroupPost(u, this);
+        AddPost addPostWindow = new AddPost(u, this);
         addPostWindow.setVisible(true);
         addPostWindow.setLocationRelativeTo(null); // Center the window
         setVisible(false);

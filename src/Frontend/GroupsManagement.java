@@ -4,7 +4,10 @@
  */
 package Frontend;
 
+import connecthub.controllers.GroupController;
+import connecthub.entities.Group;
 import connecthub.entities.User;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +20,7 @@ public class GroupsManagement extends javax.swing.JFrame {
      * Creates new form GroupsManagement
      */
     User user;
+    List<Group> groups;
     public GroupsManagement(User user) {
         initComponents();
         this.user=user;
@@ -150,6 +154,12 @@ public class GroupsManagement extends javax.swing.JFrame {
             return;
         }
         try {
+             groups = GroupController.suggestGroups(user.getID());
+
+            if (groups == null || groups.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No group to suggest.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
 
             GroupSuggestion groupSuggestion = new GroupSuggestion(user,this);
             groupSuggestion.setVisible(true);

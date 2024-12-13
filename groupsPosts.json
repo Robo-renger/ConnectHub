@@ -16,4 +16,13 @@
   "timestamp" : [ 2024, 12, 12, 2, 34, 34, 278276700 ],
   "expired" : false,
   "type" : "PostGroup"
+}, {
+  "id" : 4,
+  "authorId" : 1,
+  "groupID" : 8,
+  "content" : "lolllll",
+  "imagePath" : null,
+  "timestamp" : [ 2024, 12, 13, 2, 20, 40, 513980200 ],
+  "expired" : false,
+  "type" : "PostGroup"
 } ]
