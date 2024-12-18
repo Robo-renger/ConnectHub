@@ -7,10 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import connecthub.interfaces.Identifiable;
-import connecthub.mappers.CommentMapper;
-import connecthub.mappers.ContentMapper;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @JsonPropertyOrder({"id", "authorId", "content", "imagePath", "timestamp", "expired", "type"})
 public abstract class Content implements Identifiable {

@@ -32,7 +32,7 @@ public class GroupPosts extends javax.swing.JFrame {
      */
     Group group;
     User user;
-    List<PostGroup> posts;
+    List<Post> posts;
     GroupProfile groupProfile;
 
     public GroupPosts(Group group, User user, GroupProfile groupProfile) {
@@ -46,8 +46,8 @@ public class GroupPosts extends javax.swing.JFrame {
 
     public void fillList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        posts = PostGroupMapper.getAllGroupPosts(group.getID());
-        for (PostGroup post : posts) {
+        posts = PostGroupMapper.getAllPostsByGroupID(group.getID());
+        for (Post post : posts) {
             listModel.addElement(post.getContent());
         }
 
@@ -63,7 +63,7 @@ public class GroupPosts extends javax.swing.JFrame {
         int selectedValue = postsList.getSelectedIndex();
 
         if (selectedValue >= 0) {
-            PostGroup selectedPost = posts.get(selectedValue);
+            Post selectedPost = posts.get(selectedValue);
 
             boolean isMyPost = (selectedPost.getAuthorId() == user.getID()
                     || group.getCreatorID() == user.getID()
@@ -255,7 +255,7 @@ public class GroupPosts extends javax.swing.JFrame {
             int index = postsList.getSelectedIndex();
 
             if (index >= 0) {
-                EditPost editPost = new EditPost(posts.get(postsList.getSelectedIndex()), this, user);
+                EditPost editPost = new EditPost(posts.get(postsList.getSelectedIndex()), this, user, group);
                 editPost.setVisible(true);
                 editPost.setLocationRelativeTo(null); // Center the window
                 setVisible(false);
@@ -281,7 +281,7 @@ public class GroupPosts extends javax.swing.JFrame {
                 deletePost.setVisible(true);
             }
             if (index >= 0) {
-                GroupAuthorityManager.deletePost(posts.get(index), user.getID());
+                GroupAuthorityManager.deletePost(posts.get(index), group.getID(),user.getID());
                 javax.swing.JOptionPane.showMessageDialog(null, "Deleted successfully!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 fillList();
             }
@@ -347,7 +347,7 @@ public class GroupPosts extends javax.swing.JFrame {
             int selectedValue = postsList.getSelectedIndex();
 
             if (selectedValue >= 0) {
-                PostGroup selectedPost = posts.get(selectedValue);
+                Post selectedPost = posts.get(selectedValue);
 //                List<Comment> postComments = CommentMapper.getPostComments(selectedPost.getID());
                 Comments commentsPage = new Comments(selectedPost);
                 commentsPage.setLocationRelativeTo(null);
@@ -370,7 +370,7 @@ public class GroupPosts extends javax.swing.JFrame {
         try {
             int selectedValue = postsList.getSelectedIndex();
             if (selectedValue >= 0) {
-                PostGroup selectedPost = posts.get(selectedValue);
+                Post selectedPost = posts.get(selectedValue);
                 if (liked == false) {
                     selectedPost.like();
                     liked = true;

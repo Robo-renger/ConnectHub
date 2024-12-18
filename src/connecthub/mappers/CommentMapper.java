@@ -27,12 +27,19 @@ public class CommentMapper {
     public static int create(Comment comment) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
-                DataBaseManager.getDBM().setDataBaseFile("notifications.json");
-                NotificationManager notificationManager = new NotificationManager();
-                notificationManager.sendNotification(ContentMapper.get(comment.getPostId()).get().getAuthorId(), "Comment", "You have a new comment on your post " + comment.getPostId());
+                int authorID = ContentMapper.get(comment.getPostId()).get().getAuthorId();
+                
+                if(comment.getUserId() != authorID)
+                {
+                    DataBaseManager.getDBM().setDataBaseFile("notifications.json");
+                    NotificationManager notificationManager = new NotificationManager();
+                    notificationManager.sendNotification(ContentMapper.get(comment.getPostId()).get().getAuthorId(), "Comment", "You have a new comment on your post " + comment.getPostId());
+                }
+                
+                DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
                 return DataBaseManager.getDBM().createEntityWithID(comment);
         } catch (IOException e) {
-            System.out.println("Error adding chat to the data base: " + e.getMessage());
+            System.out.println("Error adding comment to the data base: " + e.getMessage());
         }
         return -1;
     }

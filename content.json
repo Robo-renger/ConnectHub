@@ -1,0 +1,21 @@
+[ {
+  "id" : 1,
+  "authorId" : 1,
+  "content" : "Test NORMAL post",
+  "imagePath" : null,
+  "timestamp" : [ 2024, 12, 18, 2, 2, 55, 84440000 ],
+  "expired" : false,
+  "type" : "Post",
+  "likesCount" : 0,
+  "commentsCount" : 0
+}, {
+  "id" : 2,
+  "authorId" : 1,
+  "content" : "\n\n\n\n\n\nThats a test GROUP post",
+  "imagePath" : "",
+  "timestamp" : [ 2024, 12, 18, 2, 6, 54, 812688400 ],
+  "expired" : false,
+  "type" : "Post",
+  "likesCount" : 3,
+  "commentsCount" : 4
+} ]

@@ -1,0 +1,25 @@
+[ {
+  "id" : 1,
+  "userId" : 2,
+  "postId" : 2,
+  "content" : "\n\n\n\n\n\nNice post!!",
+  "type" : "Comment"
+}, {
+  "id" : 2,
+  "userId" : 1,
+  "postId" : 2,
+  "content" : "\n\n\n\n\n\nYe I know!!",
+  "type" : "Comment"
+}, {
+  "id" : 3,
+  "userId" : 2,
+  "postId" : 2,
+  "content" : "Thats cool man",
+  "type" : "Comment"
+}, {
+  "id" : 4,
+  "userId" : 1,
+  "postId" : 2,
+  "content" : "Lesgooooooo",
+  "type" : "Comment"
+} ]
