@@ -10,18 +10,24 @@ import connecthub.controllers.ContentController;
 import connecthub.controllers.FriendController;
 import connecthub.entities.Content;
 import connecthub.entities.Notification;
+import connecthub.entities.Post;
+import connecthub.entities.PostGroup;
 import connecthub.entities.Profile;
 import connecthub.entities.User;
 import connecthub.interfaces.Observer;
 import connecthub.mappers.ContentMapper;
 import connecthub.mappers.GroupMapper;
 import connecthub.mappers.NotificationMapper;
+import connecthub.mappers.PostGroupMapper;
 import connecthub.mappers.ProfileMapper;
 import connecthub.mappers.UserMapper;
+import java.awt.HeadlessException;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -37,6 +43,7 @@ public class Newsfeed extends javax.swing.JFrame implements Observer {
     List<Content> allStories;
     List<Content> allPosts;
     List<Notification> notificationList;
+    private Set<Integer> likedPosts = new HashSet<>();
 
     NotificationManager notificationManager = new NotificationManager();
     NotificationService notificationService = new NotificationService(notificationManager);
@@ -170,6 +177,8 @@ public class Newsfeed extends javax.swing.JFrame implements Observer {
         jScrollPane3 = new javax.swing.JScrollPane();
         notifications = new javax.swing.JList<>();
         label2 = new javax.swing.JLabel();
+        comment = new javax.swing.JToggleButton();
+        like = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Newsfeed");
@@ -237,6 +246,26 @@ public class Newsfeed extends javax.swing.JFrame implements Observer {
         label2.setForeground(new java.awt.Color(0, 51, 102));
         label2.setText("Notifications");
 
+        comment.setBackground(new java.awt.Color(0, 51, 102));
+        comment.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        comment.setForeground(new java.awt.Color(255, 255, 255));
+        comment.setText("Comment");
+        comment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                commentActionPerformed(evt);
+            }
+        });
+
+        like.setBackground(new java.awt.Color(0, 51, 102));
+        like.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        like.setForeground(new java.awt.Color(255, 255, 255));
+        like.setText("Like");
+        like.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                likeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,27 +275,36 @@ public class Newsfeed extends javax.swing.JFrame implements Observer {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(75, 75, 75)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(post))
-                                .addGap(56, 56, 56)
-                                .addComponent(story, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(55, 55, 55)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(278, 278, 278))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(53, 53, 53)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(53, 53, 53))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(61, 61, 61)
+                                        .addComponent(post))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(19, 19, 19)
+                                        .addComponent(comment, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(28, 28, 28)
+                                        .addComponent(like, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(story, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(82, 82, 82)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(refresh)
-                                .addGap(50, 50, 50)
-                                .addComponent(view, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(67, 67, 67))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(view, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(45, 45, 45))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(83, 83, 83)
@@ -276,7 +314,7 @@ public class Newsfeed extends javax.swing.JFrame implements Observer {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -287,12 +325,18 @@ public class Newsfeed extends javax.swing.JFrame implements Observer {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
                     .addComponent(jScrollPane3))
                 .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(refresh)
-                    .addComponent(view)
-                    .addComponent(story)
-                    .addComponent(post))
-                .addGap(52, 52, 52))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(story, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(view, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(post)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comment)
+                            .addComponent(like))))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -423,16 +467,138 @@ public class Newsfeed extends javax.swing.JFrame implements Observer {
                     groupProfile.setVisible(true);
                     groupProfile.setLocationRelativeTo(null);
                     setVisible(false);
-                }
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            }
+                } else if (selectedNotification.getNotificationType().equalsIgnoreCase("Comment")) {
+                    String message = selectedNotification.getMessage();
+                    int lastSpaceIndex = message.lastIndexOf(" ");
+                    int postID = -1;
 
+                    if (lastSpaceIndex != -1) {
+                        String postIdString = message.substring(lastSpaceIndex + 1);
+                        try {
+                            // Try to parse the postID as an integer
+                            postID = Integer.parseInt(postIdString);
+                            System.out.println("Extracted postID (Comment): " + postID);
+                        } catch (NumberFormatException e) {
+                            System.err.println("Failed to parse postID (Comment): " + e.getMessage());
+                        }
+                    } else {
+                        System.err.println("Message format is incorrect for Comment notification.");
+                    }
+
+                    Optional <PostGroup> optionalPostGroup = PostGroupMapper.getByPostID(postID);
+                    if (optionalPostGroup.isPresent()) {
+                        ShowGroupPost showGroupPost = new ShowGroupPost((Post)ContentMapper.get(postID).get(), this);
+                        showGroupPost.setVisible(true);
+                        showGroupPost.setLocationRelativeTo(null);
+                        setVisible(false);
+                        // Open a post details UI or handle the comment logic here
+                    } else {
+                        ShowContent showContent = new ShowContent(ContentMapper.get(postID).get(), this);
+                        showContent.setVisible(true);
+                        showContent.setLocationRelativeTo(null);
+                        setVisible(false);
+                    }
+
+                } else if (selectedNotification.getNotificationType().equalsIgnoreCase("Like")) {
+                    String message = selectedNotification.getMessage();
+                    int lastSpaceIndex = message.lastIndexOf(" ");
+                    int postID = -1;
+
+                    if (lastSpaceIndex != -1) {
+                        String postIdString = message.substring(lastSpaceIndex + 1);
+                        try {
+                            // Try to parse the postID as an integer
+                            postID = Integer.parseInt(postIdString);
+                            System.out.println("Extracted postID (Like): " + postID);
+                        } catch (NumberFormatException e) {
+                            System.err.println("Failed to parse postID (Like): " + e.getMessage());
+                        }
+                    } else {
+                        System.err.println("Message format is incorrect for Like notification.");
+                    }
+
+                    Optional <PostGroup> optionalPostGroup = PostGroupMapper.getByPostID(postID);
+                    if (optionalPostGroup.isPresent()) {
+                        ShowGroupPost showGroupPost = new ShowGroupPost((Post)ContentMapper.get(postID).get(), this);
+                        showGroupPost.setVisible(true);
+                        showGroupPost.setLocationRelativeTo(null);
+                        setVisible(false);
+                        // Open a post details UI or handle the comment logic here
+                    } else {
+                        ShowContent showContent = new ShowContent(ContentMapper.get(postID).get(), this);
+                        showContent.setVisible(true);
+                        showContent.setLocationRelativeTo(null);
+                        setVisible(false);
+                    }
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             javax.swing.JOptionPane.showMessageDialog(null, "ERROR", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_viewActionPerformed
+
+    private void commentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commentActionPerformed
+        // TODO add your handling code here:
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int selectedValue = Posts.getSelectedIndex();
+
+            if (selectedValue >= 0) {
+                Post selectedPost = (Post) allPosts.get(selectedValue);
+//                List<Comment> postComments = CommentMapper.getPostComments(selectedPost.getID());
+                Comments commentsPage = new Comments(selectedPost);
+                commentsPage.setLocationRelativeTo(null);
+                commentsPage.setVisible(true);
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_commentActionPerformed
+
+    private void likeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_likeActionPerformed
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "User data is missing. Please log in again.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            int selectedValue = Posts.getSelectedIndex();
+            if (selectedValue >= 0) {
+                Post selectedPost = (Post) allPosts.get(selectedValue);
+                
+                
+                int postID = selectedPost.getID();
+                if (!likedPosts.contains(postID)) {
+                    selectedPost.like();
+                    likedPosts.add(postID);
+                    
+                    NotificationManager notificationManagerLikes = new NotificationManager();
+                    notificationManagerLikes.sendNotification(selectedPost.getAuthorId(), "Like", "You have a new like on your post " + selectedPost.getID());
+                    
+                    JOptionPane.showMessageDialog(this,
+                            "You have liked this post!",
+                            "Information",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "You have ALREADY liked this post!",
+                            "Information",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        } catch (HeadlessException e) {
+        }
+    }//GEN-LAST:event_likeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -441,12 +607,14 @@ public class Newsfeed extends javax.swing.JFrame implements Observer {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> Posts;
     private javax.swing.JList<String> Stories;
+    private javax.swing.JToggleButton comment;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel label;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label2;
+    private javax.swing.JToggleButton like;
     private javax.swing.JList<String> notifications;
     private javax.swing.JToggleButton post;
     private javax.swing.JToggleButton refresh;

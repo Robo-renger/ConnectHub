@@ -665,21 +665,25 @@ public class ConnectHub {
         int authorID = 6;
         int groupID = 2;
         int callerID = 6;
-        PostGroup postGroup = new PostGroup(authorID, groupID, "This is a post", "");
-        GroupAuthorityManager.addPost(postGroup, callerID);
+        Post post = new Post(authorID, "This is a group post", "");
+        ContentMapper.create(post);
+        PostGroup postGroup = new PostGroup(groupID, post.getID());
+        GroupAuthorityManager.addPost(post, groupID);
     }
 
     public static void testEditPost() {
         int callerID = 6;
-        PostGroup postGroup = PostGroupMapper.get(2).get();
-        postGroup.setContent("This is an updated post");
-        GroupAuthorityManager.editPost(postGroup, callerID);
+        int groupID = 2;
+        Post updatedPost = (Post) ContentMapper.get(1).get();
+        updatedPost.setContent("This is an updated group post");
+        GroupAuthorityManager.editPost(updatedPost, groupID, callerID);
     }
 
     public static void testRemovePost() {
         int callerID = 4;
-        PostGroup postGroup = PostGroupMapper.get(1).get();
-        GroupAuthorityManager.deletePost(postGroup, callerID);
+        int groupID = 2;
+        Post post = (Post) ContentMapper.get(1).get();
+        GroupAuthorityManager.deletePost(post, groupID, callerID);
     }
 
     public static void testCreateGroup() {

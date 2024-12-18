@@ -40,16 +40,16 @@ public class UserGroupMapper {
             return List.of();
         }
     }
-    
+
     // Retrieve all UserGroup entities by UserID
     public static List<UserGroup> getAllMembers(int userGroupID) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             List<UserGroup> userGroups = getAll();
-
-            // Filter the UserGroup entities by groupID
+            
+//            System.out.println(userGroups);
             return userGroups.stream()
-                    .filter(userGroup -> userGroup.getGroupID() == userGroupID)
+                    .filter(userGroup -> userGroup.getGroupID() == userGroupID && !userGroup.getStatus().equals("left"))
                     .collect(Collectors.toList());
         } catch (Exception e) {
             System.out.println("Error retrieving user groups by groupID: " + e.getMessage());
@@ -72,8 +72,8 @@ public class UserGroupMapper {
             return List.of(); // Return an empty list in case of an error
         }
     }
-    
-    public static List<UserGroup> getAll(int userId,String status) {
+
+    public static List<UserGroup> getAll(int userId, String status) {
         DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
         try {
             List<UserGroup> userGroups = getAll();

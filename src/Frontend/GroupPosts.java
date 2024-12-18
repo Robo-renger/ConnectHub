@@ -17,7 +17,9 @@ import connecthub.entities.User;
 import connecthub.mappers.ContentMapper;
 import connecthub.mappers.PostGroupMapper;
 import static java.util.Collections.list;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -32,7 +34,7 @@ public class GroupPosts extends javax.swing.JFrame {
      */
     Group group;
     User user;
-    List<PostGroup> posts;
+    List<Post> posts;
     GroupProfile groupProfile;
 
     public GroupPosts(Group group, User user, GroupProfile groupProfile) {
@@ -46,8 +48,8 @@ public class GroupPosts extends javax.swing.JFrame {
 
     public void fillList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        posts = PostGroupMapper.getAllGroupPosts(group.getID());
-        for (PostGroup post : posts) {
+        posts = PostGroupMapper.getAllPostsByGroupID(group.getID());
+        for (Post post : posts) {
             listModel.addElement(post.getContent());
         }
 
@@ -63,7 +65,7 @@ public class GroupPosts extends javax.swing.JFrame {
         int selectedValue = postsList.getSelectedIndex();
 
         if (selectedValue >= 0) {
-            PostGroup selectedPost = posts.get(selectedValue);
+            Post selectedPost = posts.get(selectedValue);
 
             boolean isMyPost = (selectedPost.getAuthorId() == user.getID()
                     || group.getCreatorID() == user.getID()
@@ -255,7 +257,7 @@ public class GroupPosts extends javax.swing.JFrame {
             int index = postsList.getSelectedIndex();
 
             if (index >= 0) {
-                EditPost editPost = new EditPost(posts.get(postsList.getSelectedIndex()), this, user);
+                EditPost editPost = new EditPost(posts.get(postsList.getSelectedIndex()), this, user, group);
                 editPost.setVisible(true);
                 editPost.setLocationRelativeTo(null); // Center the window
                 setVisible(false);
@@ -281,7 +283,7 @@ public class GroupPosts extends javax.swing.JFrame {
                 deletePost.setVisible(true);
             }
             if (index >= 0) {
-                GroupAuthorityManager.deletePost(posts.get(index), user.getID());
+                GroupAuthorityManager.deletePost(posts.get(index), group.getID(),user.getID());
                 javax.swing.JOptionPane.showMessageDialog(null, "Deleted successfully!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 fillList();
             }
@@ -347,7 +349,7 @@ public class GroupPosts extends javax.swing.JFrame {
             int selectedValue = postsList.getSelectedIndex();
 
             if (selectedValue >= 0) {
-                PostGroup selectedPost = posts.get(selectedValue);
+                Post selectedPost = posts.get(selectedValue);
 //                List<Comment> postComments = CommentMapper.getPostComments(selectedPost.getID());
                 Comments commentsPage = new Comments(selectedPost);
                 commentsPage.setLocationRelativeTo(null);
@@ -370,12 +372,15 @@ public class GroupPosts extends javax.swing.JFrame {
         try {
             int selectedValue = postsList.getSelectedIndex();
             if (selectedValue >= 0) {
-                PostGroup selectedPost = posts.get(selectedValue);
-                if (liked == false) {
+                Post selectedPost = posts.get(selectedValue);
+                int postID = selectedPost.getID();
+                if (!likedPosts.contains(postID)) {
                     selectedPost.like();
-                    liked = true;
+                    likedPosts.add(postID);
+                    
                     NotificationManager notificationManager = new NotificationManager();
-                    notificationManager.sendNotification(selectedPost.getAuthorId(), "Like", "You have a new like on your post " + selectedPost.getAuthorId());
+                    notificationManager.sendNotification(selectedPost.getAuthorId(), "Like", "You have a new like on your post " + selectedPost.getID());
+                    
                     JOptionPane.showMessageDialog(this,
                             "You have liked this post!",
                             "Information",
@@ -394,7 +399,7 @@ public class GroupPosts extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    private boolean liked = false;
+    private Set <Integer> likedPosts = new HashSet<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton comments;
     private javax.swing.JToggleButton createPost;

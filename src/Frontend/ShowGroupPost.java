@@ -5,6 +5,7 @@
 package Frontend;
 
 import connecthub.entities.Content;
+import connecthub.entities.Post;
 import connecthub.entities.PostGroup;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -13,15 +14,32 @@ import javax.swing.JOptionPane;
 
 public class ShowGroupPost extends javax.swing.JFrame {
 
-    PostGroup groupPost;
+    Post post;
     GroupPosts groupPosts;
-    public ShowGroupPost(PostGroup groupPost,GroupPosts groupPosts) {
-        if (groupPost == null) {
+    Newsfeed newsFeed;
+    public ShowGroupPost(Post post,GroupPosts groupPosts) {
+        if (post == null) {
             JOptionPane.showMessageDialog(this, "No content to display.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        this.groupPost = groupPost;
+        this.post = post;
         this.groupPosts=groupPosts;
+        this.newsFeed = null;
+        initComponents();
+        initializeContent();
+//        System.out.println("ana 5alst");
+//        System.out.println(this.x.getImagePath());
+//        System.out.println(this.x.getContent());
+    }
+    
+    public ShowGroupPost(Post post,Newsfeed newsFeed) {
+        if (post == null) {
+            JOptionPane.showMessageDialog(this, "No content to display.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        this.post = post;
+        this.groupPosts=null;
+        this.newsFeed = newsFeed;
         initComponents();
         initializeContent();
 //        System.out.println("ana 5alst");
@@ -31,14 +49,14 @@ public class ShowGroupPost extends javax.swing.JFrame {
 
     private void initializeContent() {
         // Set the text content
-        content.setText("<html><p style='width: 400px;'>" + groupPost.getContent() + "</p></html>"); // Wrap text
+        content.setText("<html><p style='width: 400px;'>" + post.getContent() + "</p></html>"); // Wrap text
         content.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         content.setPreferredSize(new Dimension(400, 120)); // Explicit size for content label
 
         // Set the image
-        if (groupPost.getImagePath() != null && !groupPost.getImagePath().isEmpty()) {
+        if (post.getImagePath() != null && !post.getImagePath().isEmpty()) {
             try {
-                ImageIcon originalIcon = new ImageIcon(groupPost.getImagePath());
+                ImageIcon originalIcon = new ImageIcon(post.getImagePath());
                 Image img = originalIcon.getImage();
 
                 // Resize the image to fit the label
@@ -105,7 +123,7 @@ public class ShowGroupPost extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (groupPost == null) {
+        if (post == null) {
             JOptionPane.showMessageDialog(this,
                     "User or Newsfeed data is missing. Please log in again.",
                     "Error",
@@ -113,10 +131,16 @@ public class ShowGroupPost extends javax.swing.JFrame {
             return;
         }
         try {
-          groupPosts.setVisible(true);
-          groupPosts.setLocationRelativeTo(null);
-          setVisible(false);
-           
+          if(newsFeed == null)
+          {
+              groupPosts.setVisible(true);
+              groupPosts.setLocationRelativeTo(null);
+              setVisible(false);
+          } else if (groupPosts == null) {
+              newsFeed.setVisible(true);
+              newsFeed.setLocationRelativeTo(null);
+              setVisible(false);
+          }
         } catch (Exception e) {
 
         }

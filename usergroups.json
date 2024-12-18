@@ -1,0 +1,29 @@
+[ {
+  "id" : 1,
+  "userID" : 1,
+  "groupID" : 1,
+  "status" : "joined",
+  "role" : "CREATOR",
+  "type" : "UserGroup"
+}, {
+  "id" : 2,
+  "userID" : 2,
+  "groupID" : 1,
+  "status" : "joined",
+  "role" : "ADMIN",
+  "type" : "UserGroup"
+}, {
+  "id" : 4,
+  "userID" : 4,
+  "groupID" : 6,
+  "status" : "left",
+  "role" : "MEMBER",
+  "type" : "UserGroup"
+}, {
+  "id" : 5,
+  "userID" : 3,
+  "groupID" : 6,
+  "status" : "left",
+  "role" : "MEMBER",
+  "type" : "UserGroup"
+} ]

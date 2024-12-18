@@ -1,0 +1,8 @@
+[ {
+  "id" : 1,
+  "creatorID" : 1,
+  "name" : "TestGroup",
+  "imagePath" : "src/assets/default-group.png",
+  "description" : "",
+  "type" : "Group"
+} ]
