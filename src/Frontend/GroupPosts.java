@@ -17,7 +17,9 @@ import connecthub.entities.User;
 import connecthub.mappers.ContentMapper;
 import connecthub.mappers.PostGroupMapper;
 import static java.util.Collections.list;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -371,11 +373,14 @@ public class GroupPosts extends javax.swing.JFrame {
             int selectedValue = postsList.getSelectedIndex();
             if (selectedValue >= 0) {
                 Post selectedPost = posts.get(selectedValue);
-                if (liked == false) {
+                int postID = selectedPost.getID();
+                if (!likedPosts.contains(postID)) {
                     selectedPost.like();
-                    liked = true;
+                    likedPosts.add(postID);
+                    
                     NotificationManager notificationManager = new NotificationManager();
-                    notificationManager.sendNotification(selectedPost.getAuthorId(), "Like", "You have a new like on your post " + selectedPost.getAuthorId());
+                    notificationManager.sendNotification(selectedPost.getAuthorId(), "Like", "You have a new like on your post " + selectedPost.getID());
+                    
                     JOptionPane.showMessageDialog(this,
                             "You have liked this post!",
                             "Information",
@@ -394,7 +399,7 @@ public class GroupPosts extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    private boolean liked = false;
+    private Set <Integer> likedPosts = new HashSet<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton comments;
     private javax.swing.JToggleButton createPost;

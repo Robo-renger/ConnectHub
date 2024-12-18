@@ -65,6 +65,18 @@ public class PostGroupMapper {
         }
     }
     
+//    Retrieve a specific post group relation by postID
+    public static Optional<PostGroup> getByPostID(int postID) {
+        DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);
+        try {
+            List<PostGroup> postGroups = getAll();
+            return postGroups.stream().filter(postGroup -> postGroup.getPostID() == postID).findFirst();
+        } catch (Exception e) {
+            System.out.println("Error retrieving the post group relation by postID: " + e.getMessage());
+            return Optional.empty();
+        }
+    }
+    
 //    Retrieves all posts for the group
     public static List<Post> getAllPostsByGroupID(int groupID) {
     DataBaseManager.getDBM().setDataBaseFile(DATABASE_FILE);

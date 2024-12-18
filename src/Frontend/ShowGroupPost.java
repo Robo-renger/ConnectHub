@@ -16,6 +16,7 @@ public class ShowGroupPost extends javax.swing.JFrame {
 
     Post post;
     GroupPosts groupPosts;
+    Newsfeed newsFeed;
     public ShowGroupPost(Post post,GroupPosts groupPosts) {
         if (post == null) {
             JOptionPane.showMessageDialog(this, "No content to display.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -23,6 +24,22 @@ public class ShowGroupPost extends javax.swing.JFrame {
         }
         this.post = post;
         this.groupPosts=groupPosts;
+        this.newsFeed = null;
+        initComponents();
+        initializeContent();
+//        System.out.println("ana 5alst");
+//        System.out.println(this.x.getImagePath());
+//        System.out.println(this.x.getContent());
+    }
+    
+    public ShowGroupPost(Post post,Newsfeed newsFeed) {
+        if (post == null) {
+            JOptionPane.showMessageDialog(this, "No content to display.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        this.post = post;
+        this.groupPosts=null;
+        this.newsFeed = newsFeed;
         initComponents();
         initializeContent();
 //        System.out.println("ana 5alst");
@@ -114,10 +131,16 @@ public class ShowGroupPost extends javax.swing.JFrame {
             return;
         }
         try {
-          groupPosts.setVisible(true);
-          groupPosts.setLocationRelativeTo(null);
-          setVisible(false);
-           
+          if(newsFeed == null)
+          {
+              groupPosts.setVisible(true);
+              groupPosts.setLocationRelativeTo(null);
+              setVisible(false);
+          } else if (groupPosts == null) {
+              newsFeed.setVisible(true);
+              newsFeed.setLocationRelativeTo(null);
+              setVisible(false);
+          }
         } catch (Exception e) {
 
         }
