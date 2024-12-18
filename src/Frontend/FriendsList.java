@@ -10,6 +10,7 @@ import connecthub.entities.Friend;
 import connecthub.entities.User;
 import connecthub.mappers.FriendMapper;
 import connecthub.mappers.UserMapper;
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,13 +24,23 @@ import javax.swing.table.DefaultTableModel;
 public class FriendsList extends javax.swing.JFrame {
 
     User u;
+    Newsfeed newsFeed;
     FriendsManagement f;
     List<User> friends;
 
+    public FriendsList(User user, Newsfeed newsFeed)  {
+        initComponents();
+        this.u = user;
+        this.newsFeed = newsFeed;
+        this.f = null;
+        FriendsTable();
+    }
+    
     public FriendsList(User u, FriendsManagement f) {
         initComponents();
         this.u = u;
         this.f = f;
+        this.newsFeed = null;
         FriendsTable();
     }
 
@@ -201,11 +212,18 @@ public class FriendsList extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
         try {
-
-            f.setVisible(true);
-            f.setLocationRelativeTo(null);
-            setVisible(false);
+            if(newsFeed == null)
+            {
+                f.setVisible(true);
+                f.setLocationRelativeTo(null);
+                setVisible(false);
+            }else {
+                newsFeed.setVisible(true);
+                newsFeed.setLocationRelativeTo(null);
+                setVisible(false);
+            }
         } catch (Exception e) {
 
         }

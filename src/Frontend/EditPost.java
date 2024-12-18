@@ -5,6 +5,8 @@
 package Frontend;
 
 import connecthub.GroupAuthorityManager;
+import connecthub.entities.Group;
+import connecthub.entities.Post;
 import connecthub.entities.PostGroup;
 import connecthub.entities.User;
 import connecthub.mappers.PostGroupMapper;
@@ -23,15 +25,17 @@ public class EditPost extends javax.swing.JFrame {
     /**
      * Creates new form EditPost
      */
-    PostGroup groupPost;
+    Post post;
     User user;
+    Group group;
     GroupPosts groupPosts;
 
-    public EditPost(PostGroup groupPost, GroupPosts groupPosts, User user) {
+    public EditPost(Post post, GroupPosts groupPosts, User user, Group group) {
         initComponents();
-        this.groupPost = groupPost;
+        this.post = post;
         this.groupPosts = groupPosts;
         this.user = user;
+        this.group = group;
     }
 
     /**
@@ -154,16 +158,16 @@ public class EditPost extends javax.swing.JFrame {
                 photo.setIcon(scaledIcon);
             }
 
-            groupPost.setContent(content.getText());
+            post.setContent(content.getText());
             if (selectedFile == null) {
-                groupPost.setImagePath("");
+                post.setImagePath("");
             }
             if (selectedFile != null) {
                 if (selectedFile.getAbsolutePath() != null) {
-                    groupPost.setImagePath(selectedFile.getAbsolutePath());
+                    post.setImagePath(selectedFile.getAbsolutePath());
                 }
             }
-            GroupAuthorityManager.editPost(groupPost, user.getID());
+            GroupAuthorityManager.editPost(post, group.getID(), user.getID());
             javax.swing.JOptionPane.showMessageDialog(
                     null,
                     "Post edited successfully!",
@@ -184,7 +188,7 @@ public class EditPost extends javax.swing.JFrame {
     }//GEN-LAST:event_editActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (groupPost == null || user == null || groupPosts == null) {
+        if (post == null || user == null || groupPosts == null) {
             JOptionPane.showMessageDialog(this,
                     "User or groupPosts or group data is missing. Please log in again.",
                     "Error",

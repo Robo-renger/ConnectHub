@@ -1,23 +1,16 @@
 [ {
   "id" : 1,
-  "userID" : 2,
+  "userID" : 1,
   "groupID" : 1,
-  "status" : "left",
-  "role" : "MEMBER",
+  "status" : "joined",
+  "role" : "CREATOR",
   "type" : "UserGroup"
 }, {
   "id" : 2,
-  "userID" : 1,
-  "groupID" : 5,
+  "userID" : 2,
+  "groupID" : 1,
   "status" : "joined",
-  "role" : "CREATOR",
-  "type" : "UserGroup"
-}, {
-  "id" : 3,
-  "userID" : 1,
-  "groupID" : 6,
-  "status" : "joined",
-  "role" : "CREATOR",
+  "role" : "ADMIN",
   "type" : "UserGroup"
 }, {
   "id" : 4,

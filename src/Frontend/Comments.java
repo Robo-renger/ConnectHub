@@ -27,7 +27,7 @@ public class Comments extends javax.swing.JFrame {
     /**
      * Creates new form Comments
      */
-    public Comments(PostGroup post) {
+    public Comments(Post post) {
         this.post = post;
         Optional<User> optUser = UserMapper.getLoggedInUser();
         if (optUser.isPresent()) {
@@ -171,7 +171,7 @@ public class Comments extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    private PostGroup post;
+    private Post post;
     private User user;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton addComment;

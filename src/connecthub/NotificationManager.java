@@ -40,17 +40,16 @@ public class NotificationManager {
     
     // Check for new notifications and notify observers
     public void checkAndNotify() {
-        List<Notification> notifications = NotificationMapper.getAll();
+        List<Notification> notifications = NotificationMapper.getAllUnread();
 
         for (Notification notification : notifications) {
-            if (!notification.isRead()) {
+           
                 // Notify observers about the new notification
                 notifyObservers(notification);
 
                 // Mark the notification as read after notifying
-                notification.setRead(true);
-                NotificationMapper.update(notification.getID(), notification);
-            }
+//                notification.setRead(true);
+//                NotificationMapper.update(notification.getID(), notification);
         }
     }
 }

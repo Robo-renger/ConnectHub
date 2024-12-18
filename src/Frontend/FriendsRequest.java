@@ -21,10 +21,19 @@ import javax.swing.JOptionPane;
  */
 public class FriendsRequest extends javax.swing.JFrame {
 
+    Newsfeed newsFeed;
     User u;
     FriendsManagement f;
     List<FriendRequest> friendRequestList;
 
+    public FriendsRequest(User user, Newsfeed newsFeed)  {
+        initComponents();
+        this.u = user;
+        this.newsFeed = newsFeed;
+        this.f = null;
+        fillList();
+    }
+    
     /**
      * Creates new form FriendsRequest
      */
@@ -32,6 +41,7 @@ public class FriendsRequest extends javax.swing.JFrame {
         initComponents();
         this.f = f;
         this.u = u;
+        this.newsFeed = null;
         fillList();
     }
 
@@ -197,10 +207,16 @@ public class FriendsRequest extends javax.swing.JFrame {
             return;
         }
         try {
-
-            f.setVisible(true);
-            f.setLocationRelativeTo(null);
-            setVisible(false);
+            if(newsFeed == null)
+            {
+                f.setVisible(true);
+                f.setLocationRelativeTo(null);
+                setVisible(false);
+            }else {
+                newsFeed.setVisible(true);
+                newsFeed.setLocationRelativeTo(null);
+                setVisible(false);
+            }
         } catch (Exception e) {
 
         }

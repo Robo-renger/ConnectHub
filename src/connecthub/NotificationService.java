@@ -14,10 +14,10 @@ public class NotificationService extends Thread {
         try {
             while (true) {
                 notificationManager.checkAndNotify();
-                TimeUnit.SECONDS.sleep(5); // Check every 5 seconds
+                TimeUnit.SECONDS.sleep(1); // Check every 5 seconds
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }

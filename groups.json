@@ -1,36 +1,8 @@
 [ {
   "id" : 1,
   "creatorID" : 1,
-  "name" : "11",
-  "imagePath" : "src/assets/default-group.png",
-  "description" : "1",
-  "type" : "Group"
-}, {
-  "id" : 2,
-  "creatorID" : 2,
-  "name" : "aq",
+  "name" : "TestGroup",
   "imagePath" : "src/assets/default-group.png",
   "description" : "",
-  "type" : "Group"
-}, {
-  "id" : 4,
-  "creatorID" : 5,
-  "name" : "zerbewelnew",
-  "imagePath" : "src/assets/default-group.png",
-  "description" : "zerbewzzz",
-  "type" : "Group"
-}, {
-  "id" : 5,
-  "creatorID" : 1,
-  "name" : "aa",
-  "imagePath" : "src/assets/default-group.png",
-  "description" : "",
-  "type" : "Group"
-}, {
-  "id" : 6,
-  "creatorID" : 1,
-  "name" : "test Group",
-  "imagePath" : "C:\\Users\\User\\Pictures\\Screenshots\\Screenshot 2023-03-01 173745.png",
-  "description" : "leave group test",
   "type" : "Group"
 } ]

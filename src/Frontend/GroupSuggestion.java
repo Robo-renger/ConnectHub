@@ -9,6 +9,8 @@ import connecthub.controllers.FriendController;
 import connecthub.controllers.GroupController;
 import connecthub.entities.Group;
 import connecthub.entities.User;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -25,6 +27,17 @@ public class GroupSuggestion extends javax.swing.JFrame {
         this.group = group;
         this.groups = GroupController.suggestGroups(this.user.getID());
         fillList();
+        this.addWindowFocusListener(new WindowFocusListener() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                fillList();
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+                // Do nothing when the window loses focus
+            }
+        });
     }
 
     private void fillList() {
