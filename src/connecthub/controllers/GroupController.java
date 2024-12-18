@@ -48,7 +48,6 @@ public class GroupController {
                 .map(userGroup -> UserMapper.get(userGroup.getUserID()).orElse(null)) // Fetch user by userID
                 .filter(user -> user != null) // Filter out null users in case of missing data
                 .collect(Collectors.toList());
-
         return users;
     }
 
@@ -98,7 +97,9 @@ public class GroupController {
         for (int friendGroupId : friendGroupIDs) {
             Optional<Group> optGroup = GroupMapper.get(friendGroupId);
             if (optGroup.isPresent()) {
+            if (optGroup.isPresent()) {
                 friendsGroups.add(optGroup.get());
+            }
             }
         }
         // Remove groups the user has left, already joined, or belong to friends

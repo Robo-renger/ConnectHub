@@ -82,4 +82,18 @@
   "message" : "A new post has been added to group 1",
   "read" : true,
   "type" : "Notification"
+}, {
+  "id" : 3,
+  "recepientID" : 4,
+  "notificationType" : "UserGroup",
+  "message" : "Your membership request to group 6 has been accepted",
+  "read" : false,
+  "type" : "Notification"
+}, {
+  "id" : 4,
+  "recepientID" : 3,
+  "notificationType" : "UserGroup",
+  "message" : "Your membership request to group 6 has been accepted",
+  "read" : false,
+  "type" : "Notification"
 } ]
