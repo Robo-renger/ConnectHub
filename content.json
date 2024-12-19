@@ -1,0 +1,41 @@
+[ {
+  "id" : 2,
+  "authorId" : 1,
+  "content" : "bbbb",
+  "imagePath" : null,
+  "timestamp" : [ 2024, 12, 20, 0, 45, 49, 541837100 ],
+  "expired" : false,
+  "type" : "Post",
+  "likesCount" : 1,
+  "commentsCount" : 0
+}, {
+  "id" : 3,
+  "authorId" : 1,
+  "content" : "cccc",
+  "imagePath" : null,
+  "timestamp" : [ 2024, 12, 20, 0, 47, 26, 239755700 ],
+  "expired" : false,
+  "type" : "Post",
+  "likesCount" : 1,
+  "commentsCount" : 0
+}, {
+  "id" : 1,
+  "authorId" : 1,
+  "content" : "aaaaa",
+  "imagePath" : null,
+  "timestamp" : [ 2024, 12, 20, 0, 43, 27, 988344200 ],
+  "expired" : false,
+  "type" : "Post",
+  "likesCount" : 3,
+  "commentsCount" : 1
+}, {
+  "id" : 4,
+  "authorId" : 1,
+  "content" : "group post",
+  "imagePath" : null,
+  "timestamp" : [ 2024, 12, 20, 0, 54, 18, 473598500 ],
+  "expired" : false,
+  "type" : "Post",
+  "likesCount" : 1,
+  "commentsCount" : 1
+} ]
